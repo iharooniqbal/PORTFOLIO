@@ -690,4 +690,44 @@ section, .certificate-card, .project-card {
     height: 40px;
     font-size: 18px;
   }
+
+}/* Contact Section */
+#contact {
+  background: #0c1022;      /* dark background */
+  color: #fff;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+#contact h2 {
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: #00d9ff;
+  letter-spacing: 1px;
+}
+
+.contact-card {
+  background: #151a30;
+  display: inline-block;
+  padding: 25px 40px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+}
+
+.contact-card p {
+  margin: 15px 0;
+  font-size: 1.2rem;
+}
+
+.contact-card a {
+  color: #00d9ff;
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom: 2px solid transparent;
+  transition: 0.3s;
+}
+
+.contact-card a:hover {
+  border-bottom: 2px solid #00d9ff;
+  color: #fff;
 }
