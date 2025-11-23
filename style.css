@@ -690,8 +690,9 @@ section, .certificate-card, .project-card {
     height: 40px;
     font-size: 18px;
   }
+}
 
-}/* Contact Section */
+/* Contact Section */
 #contact {
   background: #0c1022;      /* dark background */
   color: #fff;
@@ -730,4 +731,25 @@ section, .certificate-card, .project-card {
 .contact-card a:hover {
   border-bottom: 2px solid #00d9ff;
   color: #fff;
+}
+
+.project-card .btn {
+    padding: 8px 12px;      /* smaller size */
+    font-size: 14px;        /* reduce font size */
+    border-radius: 6px;     /* nice rounded corners */
+    display: inline-block;
+    margin-right: 10px;
+    text-decoration: none;
+}
+
+.project-card .btn:hover {
+    background-color: #0056b3; /* darker on hover */
+    color: #fff;
+}
+
+
+.project-card img {
+    width: 100%;       /* fit container width */
+    height: auto;      /* maintain aspect ratio */
+    border-radius: 8px;
 }
