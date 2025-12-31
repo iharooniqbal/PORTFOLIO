@@ -865,6 +865,50 @@ section, .certificate-card, .project-card {
   color: #fff;
 }
 
+
+.contact-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-group label {
+  font-weight: 600;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #444;
+  border-radius: 5px;
+  background: #0c1022;
+  color: #fff;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #0b5cff;
+}
+
+.submit-btn {
+  padding: 10px 20px;
+  border: none;
+  background:#0b5cff;;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.submit-btn:hover {
+  background: #0941a3;
+}
+
 .project-card .btn {
     padding: 8px 12px;      /* smaller size */
     font-size: 14px;        /* reduce font size */
@@ -879,9 +923,88 @@ section, .certificate-card, .project-card {
     color: #fff;
 }
 
+.projects {
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.projects h2 {
+  font-size: 42px;
+  margin-bottom: 40px;
+}
+
+.projects-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.project-card {
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+}
 
 .project-card img {
-    width: 100%;       /* fit container width */
-    height: auto;      /* maintain aspect ratio */
-    border-radius: 8px;
+  width: 100%;
+  height: 200px;
+  object-fit: ;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.project-card h3 {
+  font-size: 22px;
+  margin-bottom: 12px;
+  color: #fff;
+}
+
+.project-card p {
+  font-size: 16px;
+  color: #fff;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.project-links {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.project-links .btn {
+  padding: 10px 18px
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+/* about */
+
+
+.about-container {
+  max-width: 900px;
+  margin: auto;
+}
+
+.about h2 {
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+
+.about-tagline {
+  font-size: 25px;
+  margin-bottom: 30px;
+}
+
+.about p {
+  font-size: 17px;
+  line-height: 1.8;
+  margin-bottom: 18px;
 }
