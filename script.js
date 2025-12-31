@@ -119,3 +119,13 @@ faders.forEach(fader => {
   appearOnScroll.observe(fader);
 });
 
+
+document.querySelectorAll(".read-more").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const card = btn.closest(".certificate-card");
+    card.classList.toggle("active");
+    btn.textContent = card.classList.contains("active")
+      ? "Read Less"
+      : "Read More";
+  });
+});

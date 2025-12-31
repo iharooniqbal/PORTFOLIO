@@ -337,6 +337,7 @@ h2 {
 }
 
 /* Grid Layout */
+/* ================= CERTIFICATES CLEAN DESIGN ================= */
 .certificate-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -372,6 +373,78 @@ h2 {
   font-size: 0.9rem;
   color: #ccc;
 }
+.certificate-card {
+  background: #151a30;
+  border-radius: 16px;
+  padding: 18px;
+  text-align: left;
+  max-width: 100%;
+  position: relative;
+  transition: 0.4s ease;
+}
+
+.certificate-card h4 {
+  font-size: 1.05rem;
+  margin-top: 12px;
+  line-height: 1.4;
+  color: #fff;
+}
+
+.certificate-meta {
+  font-size: 0.85rem;
+  color: #9aa3ff;
+  margin: 6px 0 10px;
+}
+
+/* Image polish */
+.certificate-card img {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  border-radius: 10px;
+  transition: 0.4s ease;
+}
+
+.certificate-card:hover img {
+  transform: scale(1.03);
+}
+
+/* Long text control */
+.certificate-desc {
+  font-size: 0.9rem;
+  color: #cfcfcf;
+  line-height: 1.6;
+  max-height: 90px;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+
+/* Expanded text */
+.certificate-card.active .certificate-desc {
+  max-height: 500px;
+}
+
+/* Read more button */
+.read-more {
+  margin-top: 10px;
+  background: none;
+  border: none;
+  color: #3cf;
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0;
+}
+
+.read-more:hover {
+  text-decoration: underline;
+}
+
+/* Hover glow */
+.certificate-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 0 25px rgba(60, 207, 255, 0.25);
+}
+
 
 
 
@@ -691,6 +764,65 @@ section, .certificate-card, .project-card {
     font-size: 18px;
   }
 }
+
+
+/* ================= SKILLS SECTION ================= */
+#skills {
+  padding: 100px 10% 80px;
+  text-align: center;
+}
+
+.skills-grid {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 25px;
+}
+
+.skill-card {
+  background: #151a30;
+  padding: 25px 20px;
+  border-radius: 15px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Icon styling */
+.skill-card i {
+  font-size: 26px;
+  color: #3cf;
+}
+
+/* Gradient glow on hover */
+.skill-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(45deg, #f06, #3cf, #f06);
+  opacity: 0;
+  transition: 0.4s ease;
+  z-index: -1;
+}
+
+.skill-card:hover::before {
+  opacity: 1;
+}
+
+.skill-card:hover {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.25);
+}
+
 
 /* Contact Section */
 #contact {
