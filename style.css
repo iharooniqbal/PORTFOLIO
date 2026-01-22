@@ -825,45 +825,70 @@ section, .certificate-card, .project-card {
 
 
 /* Contact Section */
+/* ================= CONTACT CLEAN DESIGN ================= */
+
 #contact {
-  background: #0c1022;      /* dark background */
-  color: #fff;
-  padding: 60px 20px;
+  padding: 120px 10% 80px;   /* fixes header overlap */
   text-align: center;
 }
 
 #contact h2 {
-  font-size: 2rem;
+  font-size: 36px;
   margin-bottom: 30px;
-  color: #00d9ff;
-  letter-spacing: 1px;
 }
 
 .contact-card {
   background: #151a30;
-  display: inline-block;
-  padding: 25px 40px;
-  border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+  max-width: 480px;
+  margin: auto;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 0 25px rgba(60, 207, 255, 0.15);
 }
 
-.contact-card p {
-  margin: 15px 0;
-  font-size: 1.2rem;
-}
-
-.contact-card a {
-  color: #00d9ff;
-  text-decoration: none;
-  font-weight: 600;
-  border-bottom: 2px solid transparent;
-  transition: 0.3s;
-}
-
-.contact-card a:hover {
-  border-bottom: 2px solid #00d9ff;
+.contact-card input,
+.contact-card textarea {
+  width: 100%;
+  padding: 14px;
+  margin-bottom: 15px;
+  background: #0c1022;
+  border: 1px solid #3cf;
+  border-radius: 8px;
   color: #fff;
+  font-size: 15px;
 }
+
+.contact-card textarea {
+  resize: none;
+  height: 120px;
+}
+
+.contact-card input::placeholder,
+.contact-card textarea::placeholder {
+  color: #aaa;
+}
+
+.contact-card .btn {
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* WhatsApp */
+.whatsapp-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 18px;
+  color: #25D366;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.whatsapp-link:hover {
+  text-decoration: underline;
+}
+
 
 .project-card .btn {
     padding: 8px 12px;      /* smaller size */
@@ -964,3 +989,5 @@ section, .certificate-card, .project-card {
   line-height: 1.8;
   margin-bottom: 18px;
 }
+
+
