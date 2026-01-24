@@ -656,7 +656,7 @@ section, .certificate-card, .project-card {
     order: -1; /* moves profile pic above text */
     width: 280px;
     height: 280px;
-    margin-bottom: 20px;
+    margin-bottom: 13px;
   }
 
   .home-image .glowing-circle::before {
@@ -990,4 +990,82 @@ section, .certificate-card, .project-card {
   margin-bottom: 18px;
 }
 
+/* =========================
+   Wrapper: handles floating
+   ========================= */
+.cv-btn-wrapper {
+  display: inline-block;
+  animation: floatWrapper 3s ease-in-out 0.8s infinite;
+}
 
+/* Floating animation for wrapper only */
+@keyframes floatWrapper {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}
+
+/* =========================
+   Button: entry, hover, shine
+   ========================= */
+.cv-btn {
+  display: inline-block;
+  padding: 12px 28px;
+  background: linear-gradient(45deg, #0c1022, #1e2a78);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  position: relative;
+  overflow: hidden;
+  margin-top: 20px;
+
+  /* Entry animation */
+  opacity: 0;
+  transform: translateY(20px);
+  animation: btnEnter 0.8s ease-out forwards;
+  animation-delay: 1s;
+}
+
+/* Entry animation: fade + slide up */
+@keyframes btnEnter {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hover: scale + glow */
+.cv-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3), 0 0 10px #1e2a78;
+}
+
+/* Click: press effect */
+.cv-btn:active {
+  transform: scale(0.95);
+}
+
+/* Shine effect */
+.cv-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255,255,255,0.2);
+  transform: skewX(-25deg);
+  transition: 0.5s;
+}
+
+.cv-btn:hover::before {
+  left: 120%;
+}
+
+/* Optional: smooth text inside */
+.cv-btn * {
+  pointer-events: none; /* prevents text jitter on hover */
+}
