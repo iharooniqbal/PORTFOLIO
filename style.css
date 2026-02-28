@@ -394,3 +394,29 @@ section,.certificate-card,.project-card{opacity:1;transform:translateY(0);}
     font-size:1rem;
   }
 }
+
+
+/* Mobile-specific WhatsApp button */
+@media (max-width: 600px) {
+  .whatsapp-link {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    padding: 10px 12px !important;       /* smaller padding */
+    font-size: 0.85rem !important;       /* smaller text */
+    border-radius: 40px !important;      /* pill shape */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25) !important; /* lighter shadow */
+    background: linear-gradient(135deg,#25D366,#1ebe57) !important;
+    overflow: hidden !important;
+  }
+  
+  .whatsapp-link i {
+    font-size: 0.95rem !important;       /* smaller icon */
+    transition: transform 0.2s ease !important;
+  }
+  
+  .whatsapp-link::before {
+    border-radius: 40px !important;
+  }
+}
