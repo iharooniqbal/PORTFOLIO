@@ -385,3 +385,12 @@ section,.certificate-card,.project-card{opacity:1;transform:translateY(0);}
 .whatsapp-link:hover{transform:scale(1.05);box-shadow:0 10px 30px rgba(0,0,0,.35)}
 .whatsapp-link:hover i{transform:rotate(20deg) scale(1.2)}
 .whatsapp-link:hover::before{opacity:1}@media(max-width:600px){.whatsapp-link{font-size:.9rem;padding:12px 18px}.whatsapp-link i{font-size:1.1rem}}
+@media(max-width:600px){
+  .whatsapp-link{
+    font-size:.85rem;
+    padding:10px 14px;
+  }
+  .whatsapp-link i{
+    font-size:1rem;
+  }
+}
