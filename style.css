@@ -439,9 +439,3 @@ pointer-events:none
 canvas{
 display:block;
 }
-header,
-section,
-footer{
-position:relative;
-z-index:1;
-}
