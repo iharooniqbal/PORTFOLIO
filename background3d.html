@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>3D Background</title>
+
+<style>
+
+/* FULLSCREEN BACKGROUND */
+body{
+margin:0;
+background:transparent;
+}
+
+#three-container{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:-1;
+pointer-events:none
+}
+
+canvas{
+display:block;
+}
+header,
+section,
+footer{
+position:relative;
+z-index:1;
+}
+</style>
+</head>
+
+<body>
+
+<div id="three-container"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+
+<script>
+
+// SCENE
+const container = document.getElementById("three-container");
+
+const scene = new THREE.Scene();
+
+const camera = new THREE.PerspectiveCamera(
+75,
+window.innerWidth/window.innerHeight,
+0.1,
+1000
+);
+
+camera.position.z = 50;
+
+// RENDERER
+const renderer = new THREE.WebGLRenderer({alpha:true,antialias:true});
+renderer.setSize(window.innerWidth,window.innerHeight);
+container.appendChild(renderer.domElement);
+
+// PARTICLES
+const particles = new THREE.BufferGeometry();
+const positions = [];
+
+for(let i=0;i<200;i++){
+positions.push(
+(Math.random()-0.5)*200,
+(Math.random()-0.5)*200,
+(Math.random()-0.5)*200
+);
+}
+
+particles.setAttribute(
+"position",
+new THREE.Float32BufferAttribute(positions,3)
+);
+
+const particleMaterial = new THREE.PointsMaterial({
+color:0x00f5ff,
+size:1.5,
+transparent:true,
+opacity:0.8
+});
+
+const particleSystem = new THREE.Points(particles,particleMaterial);
+scene.add(particleSystem);
+
+// CUBES
+const geometry = new THREE.BoxGeometry(4,4,4);
+const material = new THREE.MeshStandardMaterial({
+color:0xff00c8,
+transparent:true,
+opacity:0.4
+});
+
+const cubes=[];
+
+for(let i=0;i<10;i++){
+
+const cube=new THREE.Mesh(geometry,material);
+
+cube.position.set(
+(Math.random()-0.5)*100,
+(Math.random()-0.5)*100,
+(Math.random()-0.5)*100
+);
+
+cubes.push(cube);
+scene.add(cube);
+}
+
+// LIGHTS
+const ambientLight = new THREE.AmbientLight(0xffffff,0.5);
+scene.add(ambientLight);
+
+const pointLight = new THREE.PointLight(0x00f5ff,1,500);
+pointLight.position.set(50,50,50);
+scene.add(pointLight);
+
+// ANIMATION
+function animate(){
+
+requestAnimationFrame(animate);
+
+particleSystem.rotation.x+=0.0005;
+particleSystem.rotation.y+=0.0005;
+
+cubes.forEach(c=>{
+c.rotation.x+=0.001;
+c.rotation.y+=0.002;
+});
+
+renderer.render(scene,camera);
+}
+
+animate();
+
+// RESPONSIVE
+window.addEventListener("resize",()=>{
+
+camera.aspect=window.innerWidth/window.innerHeight;
+camera.updateProjectionMatrix();
+renderer.setSize(window.innerWidth,window.innerHeight);
+
+});
+
+</script>
+
+</body>
+</html>

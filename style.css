@@ -420,3 +420,28 @@ section,.certificate-card,.project-card{opacity:1;transform:translateY(0);}
     border-radius: 40px !important;
   }
 }
+
+/* FULLSCREEN BACKGROUND */
+body{
+margin:0;
+}
+
+#three-container{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:-1;
+pointer-events:none
+}
+
+canvas{
+display:block;
+}
+header,
+section,
+footer{
+position:relative;
+z-index:1;
+}
