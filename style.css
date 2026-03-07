@@ -229,7 +229,7 @@ section,.certificate-card,.project-card{opacity:1;transform:translateY(0);}
   .navbar{
     position:fixed;top:0;right:-250px;height:100%;width:220px;
     background:#11152c;flex-direction:column;padding-top:80px;
-    transition:right .4s ease;box-shadow:-2px 0 10px rgba(0,0,0,.4);z-index:1200;
+    transition:right .4s ease;box-shadow:-2px 0 10px rgba(0,0,0,.4);
   }
   .navbar a{margin:15px 0;font-size:18px;display:block;padding:10px 20px;}
   .navbar.active{right:0;}
