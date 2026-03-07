@@ -9,7 +9,7 @@ document.querySelectorAll('.navbar a').forEach(link => {
   });
 });
 
-
+document.addEventListener("DOMContentLoaded", () => {
 const menuBtn = document.getElementById("menu-btn");
 const navbar = document.getElementById("navbar");
 
@@ -25,7 +25,7 @@ document.querySelectorAll('.navbar a').forEach(link => {
     menuBtn.classList.remove("active");
   });
 });
-
+});
 
 
 // Close menu after clicking a link
