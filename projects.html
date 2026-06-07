@@ -3,82 +3,321 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Projects | Portfolio</title>
+  <meta name="description" content="Projects by Abdullah Iqbal – HARNECT, Infinity-X AI, Social Links Hub, MySQL Payroll System.">
+  <title>Projects | Abdullah Iqbal</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+  <style>
+    /* ================= PROJECTS ================= */
+    /* ================= PROJECTS ================= */
+
+.projects{
+    padding:100px 10%;
+    text-align:center;
+}
+
+.projects > h2{
+    font-size:42px;
+    margin-bottom:14px;
+}
+
+.projects > p{
+    color:var(--text-dim);
+    max-width:700px;
+    margin:auto;
+    line-height:1.7;
+    font-size:16px;
+}
+
+/* GRID */
+
+.projects-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:30px;
+    margin-top:65px;
+}
+
+/* CARD */
+
+.project-card{
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:24px;
+    overflow:hidden;
+    text-align:left;
+    transition:.35s ease;
+    display:flex;
+    flex-direction:column;
+    backdrop-filter:blur(10px);
+}
+
+.project-card:hover{
+    transform:translateY(-8px);
+    border-color:rgba(255,255,255,0.16);
+    box-shadow:0 15px 35px rgba(0,0,0,.25);
+}
+
+/* IMAGE */
+
+.project-card img{
+    width:100%;
+    aspect-ratio:16/9;
+    object-fit:cover;
+    display:block;
+    transition:transform .5s ease;
+}
+
+.project-card:hover img{
+    transform:scale(1.05);
+}
+
+/* BODY */
+
+.project-body{
+    padding:24px;
+    display:flex;
+    flex-direction:column;
+    flex:1;
+}
+
+/* TAGS */
+
+.project-tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-bottom:18px;
+}
+
+.tag{
+    padding:5px 12px;
+    border-radius:50px;
+    font-size:12px;
+    font-weight:500;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.08);
+    color:var(--text-dim);
+}
+
+/* TITLE */
+
+.project-card h3{
+    font-size:22px;
+    line-height:1.4;
+    margin-bottom:14px;
+    color:#fff;
+}
+
+/* TEXT */
+
+.project-card p{
+    font-size:15px;
+    line-height:1.8;
+    color:var(--text-dim);
+    flex:1;
+}
+
+/* LINKS */
+
+.project-links{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:24px;
+}
+
+.project-links a{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:11px 18px;
+    border-radius:12px;
+    text-decoration:none;
+    font-size:14px;
+    font-weight:600;
+    transition:.3s ease;
+}
+
+/* DEMO */
+
+.project-links .demo{
+    background:var(--grad);
+    color:#fff;
+}
+
+/* SOURCE */
+
+.project-links .source{
+    border:1px solid rgba(255,255,255,0.12);
+    color:#fff;
+    background:rgba(255,255,255,0.04);
+}
+
+/* HOVER */
+
+.project-links a:hover{
+    transform:translateY(-3px);
+}
+
+/* BADGE */
+
+.in-progress{
+    display:inline-block;
+    margin-left:10px;
+    padding:4px 10px;
+    border-radius:50px;
+    font-size:11px;
+    font-weight:600;
+    background:rgba(255,165,0,.12);
+    border:1px solid rgba(255,165,0,.18);
+    color:orange;
+    vertical-align:middle;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+    .projects{
+        padding:80px 6%;
+    }
+
+    .projects > h2{
+        font-size:34px;
+    }
+
+    .projects-container{
+        grid-template-columns:1fr;
+    }
+
+}
+  </style>
 </head>
 <body>
   <div id="three-container"></div>
-<header class="header">
-  <a href="index.html" class="logo">PORTFOLIO.</a>
-  <div class="menu-btn" id="menu-btn"><span></span><span></span><span></span></div>
-  <nav class="navbar" id="navbar">
-    <a href="index.html"><i class='bx bx-home'></i> Home</a>
-<a href="about.html"><i class='bx bx-user'></i> About</a>
-<a href="projects.html" class="active"><i class='bx bx-briefcase'></i> Projects</a>
-<a href="skills.html"><i class='bx bx-bar-chart-alt-2'></i> My Skills</a>
-<a href="certificates.html"><i class='bx bx-award'></i> My Certificates</a>
-<a href="contact.html"><i class='bx bx-envelope'></i> Contact</a>
-  </nav>
-</header>
 
-<section id="projects" class="projects">
-  <h2>My Projects</h2>
-  <div class="projects-container">
+  <header class="header">
+    <a href="index.html" class="logo">PORTFOLIO.</a>
+    <div class="menu-btn" id="menu-btn"><span></span><span></span><span></span></div>
+    <nav class="navbar" id="navbar">
+      <a href="index.html"><i class='bx bx-home'></i> Home</a>
+      <a href="about.html"><i class='bx bx-user'></i> About</a>
+      <a href="projects.html" class="active"><i class='bx bx-briefcase'></i> Projects</a>
+      <a href="skills.html"><i class='bx bx-bar-chart-alt-2'></i> My Skills</a>
+      <a href="certificates.html"><i class='bx bx-award'></i> My Certificates</a>
+      <a href="contact.html"><i class='bx bx-envelope'></i> Contact</a>
+    </nav>
+  </header>
 
-    <!-- Project 1 -->
-    <div class="project-card">
-      <img src="images/harnect.jpeg" alt="HARNECT Website Preview">
-      <h3>HARNECT – Instagram-Like Social Media Website</h3>
-      <p>
-        HARNECT is a Instagram-Like social media web application built with Flask, HTML, python, mysql, CSS, and JavaScript.
-        Users can upload posts, like, comment, and interact with a responsive UI.
-      </p>
-      <div class="project-links">
-        <a href="https://share.google/maUSLXsQJKdQiclAA" class="btn">Live Demo</a>
-        <a href="https://github.com/iharooniqbal/HARNECT2.git" class="btn">Source Code</a>
+  <section id="projects" class="projects">
+    <h2>My Projects</h2>
+    <p>Things I've built — from social platforms to AI chatbots.</p>
+
+    <div class="projects-container">
+
+      <!-- Project 1 — HARNECT -->
+      <div class="project-card">
+        <img src="images/harnect.jpeg" alt="HARNECT Social Media Platform">
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="tag">Flask</span>
+            <span class="tag">Python</span>
+            <span class="tag">MySQL</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">PWA</span>
+          </div>
+          <h3>HARNECT – Instagram-Like Social Media</h3>
+          <p>A full-featured social media web app with user auth, posts, stories, likes, comments, and a follow system. Built with Flask and a clean responsive UI — includes PWA support for mobile install.</p>
+          <div class="project-links">
+            <a href="https://share.google/maUSLXsQJKdQiclAA" class="demo" target="_blank" rel="noopener">
+              <i class='bx bx-link-external'></i> Live Demo
+            </a>
+            <a href="https://github.com/iharooniqbal/HARNECT2.git" class="source" target="_blank" rel="noopener">
+              <i class='bx bxl-github'></i> Source
+            </a>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <!-- Project 2 -->
-    <div class="project-card">
-      <img src="images/infinty X.jpeg" alt="Project 2">
-      <h3>Infinity-X (In progress) </h3>
-      <p>Infinity-X AI is a next-generation conversational platform featuring advanced self-learning capabilities.Engineered to seamlessly adapt to user preferences, optimizing workflows and information retrieval over time.</p>
-      <div class="project-links">
-        <a href="https://iharooniqbal56.pythonanywhere.com/" class="btn">Live Demo</a>
-        <a href="https://github.com/iharooniqbal/self-learning-chatbot.git" class="btn">Source Code</a>
+      <!-- Project 2 — Infinity-X -->
+      <div class="project-card">
+        <img src="images/infinty X.jpeg" alt="Infinity-X AI Chatbot">
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="tag">Flask</span>
+            <span class="tag">Python</span>
+            <span class="tag">SQLite</span>
+            <span class="tag">rapidfuzz</span>
+            <span class="tag orange">In Progress</span>
+          </div>
+          <h3>Infinity-X AI <span class="in-progress">In Progress</span></h3>
+          <p>A self-learning AI chatbot that builds its own knowledge base from conversations, PDFs, images, and websites — no external API required. Adapts and improves with every interaction.</p>
+          <div class="project-links">
+            <a href="https://iharooniqbal56.pythonanywhere.com/" class="demo" target="_blank" rel="noopener">
+              <i class='bx bx-link-external'></i> Live Demo
+            </a>
+            <a href="https://github.com/iharooniqbal/self-learning-chatbot.git" class="source" target="_blank" rel="noopener">
+              <i class='bx bxl-github'></i> Source
+            </a>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <!-- Project 3 -->
-    <div class="project-card">
-      <img src="images/image3.jpeg" alt="Project 3">
-      <h3>Portfolio, Projects & Social Media Links</h3>
-      <p>Welcome to the official hub for Mabdullah Haroon. Connect across all social media platforms, explore his professional portfolio, view GitHub projects, and visit his personal and HARNECT websites.</p>
-      <div class="project-links">
-        <a href="https://iharooniqbal.github.io/social-links/" class="btn">Live Demo</a>
-        <a href="https://github.com/iharooniqbal/social-links.git" class="btn">Source Code</a>
+      <!-- Project 3 — Social Links -->
+      <div class="project-card">
+        <img src="images/image3.jpeg" alt="Social Links Hub">
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="tag">HTML</span>
+            <span class="tag">CSS</span>
+            <span class="tag">GitHub Pages</span>
+          </div>
+          <h3>Portfolio &amp; Social Links Hub</h3>
+          <p>A centralised hub connecting all social media profiles, GitHub projects, and personal sites. One link to share everywhere — clean, fast, and mobile-friendly.</p>
+          <div class="project-links">
+            <a href="https://iharooniqbal.github.io/social-links/" class="demo" target="_blank" rel="noopener">
+              <i class='bx bx-link-external'></i> Live Demo
+            </a>
+            <a href="https://github.com/iharooniqbal/social-links.git" class="source" target="_blank" rel="noopener">
+              <i class='bx bxl-github'></i> Source
+            </a>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <!-- Project 4 -->
-    <div class="project-card">
-      <img src="images/database.jpg" alt="Project 4">
-      <h3>MySQL Database Project</h3>
-      <p>A robust Employee Payroll Management System built as a MySQL database project to streamline payroll processing and manage employee records. The system showcases efficient data modeling and secure transaction handling. 🚀💼👨‍💻
-</p>
-      <div class="project-links">
-        <a href="https://iharooniqbal56.pythonanywhere.com/" class="btn">Live Demo</a>
-        <a href="https://github.com/iharooniqbal/database.git" class="btn">Source Code</a>
+      <!-- Project 4 — MySQL -->
+      <div class="project-card">
+        <img src="images/database.jpg" alt="MySQL Employee Payroll System">
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="tag">MySQL</span>
+            <span class="tag">SQL</span>
+            <span class="tag">Database Design</span>
+          </div>
+          <h3>Employee Payroll System</h3>
+          <p>A robust MySQL database project for payroll processing and employee record management. Demonstrates efficient data modelling, relational schema design, and secure transaction handling.</p>
+          <div class="project-links">
+            <a href="https://iharooniqbal.github.io/database/" class="demo" target="_blank" rel="noopener">
+              <i class='bx bx-link-external'></i> Live Demo
+            </a>
+            <a href="https://github.com/iharooniqbal/database.git" class="source" target="_blank" rel="noopener">
+              <i class='bx bxl-github'></i> Source
+            </a>
+          </div>
+        </div>
       </div>
+
     </div>
+  </section>
 
-  </div>
-</section>
+  <footer>
+    <p>© 2025 Abdullah Iqbal. All rights reserved.</p>
+  </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-<script src="three-animation.js"></script>
-<script src="script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  <script src="three-animation.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

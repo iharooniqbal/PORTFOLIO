@@ -3,62 +3,84 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio - Home</title>
+  <meta name="description" content="Abdullah Iqbal – Data Analyst & Web Developer based in Multan, Pakistan. View my projects, skills and hire me.">
+  <meta name="author" content="Abdullah Iqbal">
+  <title>Abdullah Iqbal | Data Analyst & Web Developer</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 </head>
 <body>
   <div id="three-container"></div>
-<header class="header">
-  <a href="index.html" class="logo">PORTFOLIO.</a>
-  <div class="menu-btn" id="menu-btn"><span></span><span></span><span></span></div>
-  <nav class="navbar" id="navbar">
-    <a href="index.html" class="active"><i class='bx bx-home'></i> Home</a>
-<a href="about.html"><i class='bx bx-user'></i> About</a>
-<a href="projects.html"><i class='bx bx-briefcase'></i> Projects</a>
-<a href="skills.html"><i class='bx bx-bar-chart-alt-2'></i> My Skills</a>
-<a href="certificates.html"><i class='bx bx-award'></i> My Certificates</a>
-<a href="contact.html"><i class='bx bx-envelope'></i> Contact</a>
-  </nav>
-</header>
 
-<section class="home">
-  <div class="home-sci">
-    <a href="https://www.instagram.com/iharoon_iqbal?igsh=MWlzY215N2V3OHR0dw==" target="_blank"><i class='bx bxl-instagram'></i> 
-    <a href="https://github.com/iharooniqbal" target="_blank"><i class='bx  bxl-github'></i> 
-    <a href="https://linkedin.com/in/harooniqbal-b4414334a" target="_blank"><i class="bx bxl-linkedin"></i></a>
-  </div>
+  <header class="header">
+    <a href="index.html" class="logo">PORTFOLIO.</a>
+    <div class="menu-btn" id="menu-btn"><span></span><span></span><span></span></div>
+    <nav class="navbar" id="navbar">
+      <a href="index.html" class="active" style="--i:1"><i class='bx bx-home'></i> Home</a>
+      <a href="about.html" style="--i:2"><i class='bx bx-user'></i> About</a>
+      <a href="projects.html" style="--i:3"><i class='bx bx-briefcase'></i> Projects</a>
+      <a href="skills.html" style="--i:4"><i class='bx bx-bar-chart-alt-2'></i> Skills</a>
+      <a href="certificates.html" style="--i:5"><i class='bx bx-award'></i> Certificates</a>
+      <a href="contact.html" style="--i:6"><i class='bx bx-envelope'></i> Contact</a>
+    </nav>
+  </header>
 
-  <div class="home-content">
-    <h1>Hi, I'm Abdullah Iqbal</h1>
-    <h3>Data Analyst & Web Developer </h3>
-    <!-- Wrapper for floating -->
-<div class="cv-btn-wrapper">
-  <a href="cv.pdf" download class="cv-btn">Download My CV</a>
-</div>
+  <section class="home">
+    <div class="home-sci">
+      <a href="https://www.instagram.com/iharoon_iqbal" target="_blank" rel="noopener" aria-label="Instagram"><i class='bx bxl-instagram'></i></a>
+      <a href="https://github.com/iharooniqbal" target="_blank" rel="noopener" aria-label="GitHub"><i class='bx bxl-github'></i></a>
+      <a href="https://linkedin.com/in/harooniqbal-b4414334a" target="_blank" rel="noopener" aria-label="LinkedIn"><i class='bx bxl-linkedin'></i></a>
+    </div>
 
-    <p></p><p>
-    </p>
-    <a href="contact.html" class="btn">Hire Me</a>
-    <a href="projects.html" class="btn">My Projects</a>
+    <div class="home-content">
+      <span class="hero-subtitle">WELCOME TO MY PORTFOLIO</span>
 
-  </div>
+<h1>
+  Abdullah Iqbal
+</h1>
 
-  <div class="home-image">
-    <div class="glowing-circle">
-      <div class="image">
-        <img src="images/profilepic.jpg" alt="Abdullah Iqbal">
+<h3 class="typing-text">
+  I'm a <span></span>
+</h3>
+<p class="tagline">
+  I build modern web applications, intelligent systems,
+  and data-driven solutions focused on performance,
+  usability, and real-world impact.
+</p>
+      <div class="cv-btn-wrapper">
+        <a href="cv.pdf" download class="cv-btn">⬇ Download CV</a>
+      </div>
+
+      <div class="home-btns">
+        <a href="contact.html" class="btn">Hire Me</a>
+        <a href="projects.html" class="btn">My Projects</a>
       </div>
     </div>
+<div class="home-image">
+  <div class="scene" id="scene">
+    
+    <!-- particles background -->
+    <canvas id="particles"></canvas>
+
+    <!-- glowing light -->
+    <div class="cursor-light"></div>
+
+    <!-- main card -->
+    <div class="hero-card" id="heroCard">
+      <div class="scan-line"></div>
+      <img src="images/profilepic.jpg" alt="Profile Image">
+    </div>
+
   </div>
-</section>
+</div>
+  </section>
 
-<footer>
-  <p>© Copyright 2025 iharooniqbal. All rights reserved</p>
-</footer>
+  <footer>
+    <p>© 2025 Abdullah Iqbal. All rights reserved.</p>
+  </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-<script src="three-animation.js"></script>
-<script src="script.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  <script src="three-animation.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

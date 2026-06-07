@@ -3,164 +3,355 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio - Certificates</title>
+  <meta name="description" content="Certificates earned by Abdullah Iqbal – Data Analytics, Web Development, Freelancing and more.">
+  <title>Certificates | Abdullah Iqbal</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+  <style>
+/* ================= CERTIFICATES ================= */
+
+#certificates{
+    padding:100px 10%;
+}
+
+/* PAGE TITLE */
+
+#certificates > h2{
+    text-align:center;
+    font-size:42px;
+    margin-bottom:70px;
+}
+
+/* SECTION */
+
+.certificate-section{
+    margin-bottom:70px;
+}
+
+.certificate-section h3{
+    font-size:24px;
+    margin-bottom:28px;
+    color:var(--accent2);
+    font-weight:600;
+}
+
+/* GRID */
+
+.certificate-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:28px;
+}
+
+/* CARD */
+
+.certificate-card{
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:22px;
+    overflow:hidden;
+    transition:.35s ease;
+    backdrop-filter:blur(10px);
+    display:flex;
+    flex-direction:column;
+}
+
+.certificate-card:hover{
+    transform:translateY(-8px);
+    border-color:rgba(255,255,255,0.16);
+    box-shadow:0 15px 35px rgba(0,0,0,.25);
+}
+
+/* IMAGE */
+
+.cert-img-wrap{
+    display:block;
+    overflow:hidden;
+}
+
+.certificate-card img{
+    width:100%;
+    aspect-ratio:4/3;
+    object-fit:cover;
+    transition:transform .5s ease;
+    display:block;
+}
+
+.certificate-card:hover img{
+    transform:scale(1.05);
+}
+
+/* BODY */
+
+.cert-body{
+    padding:22px;
+    display:flex;
+    flex-direction:column;
+    flex:1;
+}
+
+/* TITLE */
+
+.certificate-card h4{
+    font-size:18px;
+    line-height:1.5;
+    margin-bottom:10px;
+    color:#fff;
+}
+
+/* META */
+
+.certificate-meta{
+    font-size:13px;
+    color:var(--accent2);
+    margin-bottom:14px;
+    line-height:1.6;
+}
+
+/* DESCRIPTION */
+
+.certificate-desc{
+    color:var(--text-dim);
+    line-height:1.8;
+    font-size:14px;
+
+    max-height:0;
+    overflow:hidden;
+    opacity:0;
+
+    transition:
+        max-height .45s ease,
+        opacity .3s ease;
+}
+
+.certificate-card.active .certificate-desc{
+    max-height:500px;
+    opacity:1;
+}
+
+/* BUTTON */
+
+.read-more{
+    margin-top:16px;
+    background:none;
+    border:none;
+    color:var(--accent2);
+    font-size:14px;
+    cursor:pointer;
+    padding:0;
+    font-weight:600;
+    text-align:left;
+    transition:.3s ease;
+}
+
+.read-more:hover{
+    opacity:.8;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+    #certificates{
+        padding:80px 6%;
+    }
+
+    #certificates > h2{
+        font-size:34px;
+        margin-bottom:50px;
+    }
+
+    .certificate-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+  </style>
 </head>
 <body>
   <div id="three-container"></div>
-<header class="header">
-  <a href="index.html" class="logo">PORTFOLIO.</a>
-  <div class="menu-btn" id="menu-btn"><span></span><span></span><span></span></div>
-  <nav class="navbar" id="navbar">
-    <a href="index.html"><i class='bx bx-home'></i> Home</a>
-<a href="about.html"><i class='bx bx-user'></i> About</a>
-<a href="projects.html"><i class='bx bx-briefcase'></i> Projects</a>
-<a href="skills.html"><i class='bx bx-bar-chart-alt-2'></i> My Skills</a>
-<a href="certificates.html" class="active"><i class='bx bx-award'></i> My Certificates</a>
-<a href="contact.html"><i class='bx bx-envelope'></i> Contact</a>
-  </nav>
-</header>
 
+  <header class="header">
+    <a href="index.html" class="logo">PORTFOLIO.</a>
+    <div class="menu-btn" id="menu-btn"><span></span><span></span><span></span></div>
+    <nav class="navbar" id="navbar">
+      <a href="index.html"><i class='bx bx-home'></i> Home</a>
+      <a href="about.html"><i class='bx bx-user'></i> About</a>
+      <a href="projects.html"><i class='bx bx-briefcase'></i> Projects</a>
+      <a href="skills.html"><i class='bx bx-bar-chart-alt-2'></i> My Skills</a>
+      <a href="certificates.html" class="active"><i class='bx bx-award'></i> My Certificates</a>
+      <a href="contact.html"><i class='bx bx-envelope'></i> Contact</a>
+    </nav>
+  </header>
 
-<!-- Certificates -->
- <section id="certificates">
-  <h2></h2>
-  <h2>My Certificates</h2>
-  <!-- Academic / Learning -->
-   <section class="certificate-section">
-    <h3>🎓 Academic / Learning</h3>
-    <div class="certificate-grid">
-      <div class="certificate-card">
-        <a href="images/DataAnalysis.jpeg" target="_blank">
-          <img src="images/DataAnalysis.jpeg" alt="DataAnalysis">
-        </a>
-        <h4>📊 Data Analyst & Business Intelligence Certification</h4>
-        <p class="certificate-meta">Issued by DigiSkills Training Program — December 17, 2025</p>
-        <p class="certificate-desc">
-          I have successfully completed the Data Analytics and Business Intelligence training 
-          under the DigiSkills Training Program, conducted in collaboration with Virtual 
-          University and Ignite.
-        </p>
-        <button class="read-more">Read More</button>
-      </div>
-      <div class="certificate-card">
-          <a href="images/AffiliateMarketing.jpg" target="_blank">
-            <img src="images/AffiliateMarketing.jpg" alt="AffiliateMarketing">
+  <section id="certificates">
+    <h2>My Certificates</h2>
+
+    <!-- ── Academic / Learning ── -->
+    <section class="certificate-section">
+      <h3>🎓 Academic / Learning</h3>
+      <div class="certificate-grid">
+
+        <div class="certificate-card">
+          <a href="images/DataAnalysis.jpeg" target="_blank" class="cert-img-wrap">
+            <img src="images/DataAnalysis.jpeg" alt="Data Analysis Certificate">
           </a>
-          <h4>📘 Introduction to Affiliate Marketing</h4>
-          <p class="certificate-meta">Issued by Simplilearn SkillUp — June 24, 2025</p>
-          <p class="certificate-desc">
-            Completed a beginner-level Affiliate Marketing course focused on understanding affiliate systems, 
-            program types, and tracking methods. Gained practical knowledge of niche selection, 
-            SEO basics, and performance optimization using analytics tools.
-          </p>
-          <button class="read-more">Read More</button>
-
-          </div>
-      <div class="certificate-card">
-        <a href="images/WEBDEVELOPMENT.jpg" target="_blank">
-          <img src="images/WEBDEVELOPMENT.jpg" alt="WEBDEVELOPMENT">
-        </a>
-        <h4>💻 WEB DEVELOPMENT</h4>
-        <p class="certificate-meta">Issued by Simplilearn SkillUp — June 17, 2025</p>
-        <p class="certificate-desc">
-          Completed a structured Front-End Web Development course covering HTML, CSS, and basic JavaScript.
-          Developed responsive layouts, built simple web pages from scratch, and gained hands-on experience
-          with developer tools and code editors such as VS Code.
-        </p>
-        <button class="read-more">Read More</button>
-
-      </div>
-      <div class="certificate-card">
-        <a href="images/SEO.jpg" target="_blank">
-          <img src="images/SEO.jpg" alt="SEO">
-        </a>
-        <p class="certificate-meta">Issued by Simplilearn SkillUp — June 17, 2025</p>
-        <p class="certificate-desc">
-          Completed a foundational Front-End Web Development course covering HTML for structure, CSS for styling,
-          and basic JavaScript for interactivity. Gained hands-on experience building responsive web pages,
-          using developer tools such as VS Code.
-        </p>
-        <button class="read-more">Read More</button>
-
-        </div>
-          <div class="certificate-card">
-            <a href="images/Freelancing.jpeg" target="_blank">
-              <img src="images/Freelancing.jpeg" alt="Freelancing">
-            </a>
-            <h4>💻 Freelancing</h4>
-            <p class="certificate-meta">Issued by DigiSkills Training Program — December 17, 2025</p>
+          <div class="cert-body">
+            <h4>📊 Data Analyst & Business Intelligence Certification</h4>
+            <p class="certificate-meta">DigiSkills Training Program — December 17, 2025</p>
             <p class="certificate-desc">
-              Completed a Freelancing certification focused on digital marketplace skills including profile creation,
-              client communication, and online business strategies. Gained practical experience
-              offering services on platforms such as Upwork while maintaining professionalism
-              and client satisfaction.
+              Successfully completed the Data Analytics and Business Intelligence training
+              under the DigiSkills Training Program, conducted in collaboration with Virtual
+              University and Ignite.
             </p>
             <button class="read-more">Read More</button>
           </div>
-          <div class="certificate-card">
-            <a href="images/excecutivemember.jpg" target="_blank">
-              <img src="images/excecutivemember.jpg" alt="excecutivemember">
-            </a>
-            <h4>🎓 Executive Member – CASPAM Outrage & Leadership Team (2024–25)</h4>
-            <p class="certificate-meta">Active role in organizing academic, leadership, and outreach initiatives within the university community.</p>
-            <p class="certificate-desc">
-              Collaborated with team members to coordinate events and foster student engagement. Strengthened teamwork,
-              communication, and leadership skills while promoting academic excellence and student development.
-            </p>
+        </div>
 
+        <div class="certificate-card">
+          <a href="images/AffiliateMarketing.jpg" target="_blank" class="cert-img-wrap">
+            <img src="images/AffiliateMarketing.jpg" alt="Affiliate Marketing Certificate">
+          </a>
+          <div class="cert-body">
+            <h4>📘 Introduction to Affiliate Marketing</h4>
+            <p class="certificate-meta">Simplilearn SkillUp — June 24, 2025</p>
+            <p class="certificate-desc">
+              Completed a beginner-level Affiliate Marketing course focused on understanding affiliate systems,
+              program types, and tracking methods. Gained practical knowledge of niche selection,
+              SEO basics, and performance optimization using analytics tools.
+            </p>
+            <button class="read-more">Read More</button>
           </div>
         </div>
-      </section>
-      <!-- Events & Participation -->
-       <section class="certificate-section">
-  <h3>🎤 Events & Participation</h3>
-  <div class="certificate-grid">
-    <div class="certificate-card">
-      <a href="images/PAYAMIQBAL.jpg" target="_blank">
-        <img src="images/PAYAMIQBAL.jpg" alt="PAYAMIQBAL">
-      </a>
-      <h4>🗣 Certificate of Appreciation – Speech Competition</h4>
-      <p class="certificate-meta">Issued by Zakariyan Debating Society — December 5, 2024</p>
-      <p class="certificate-desc">
-        Recognized for active participation in the 'Payam-e-Iqbal' Speech Competition, enhancing communication, critical thinking, and stage presence.
-      </p>
-      <button class="read-more">Read More</button>
-    </div>
 
-    <div class="certificate-card">
-      <a href="images/PARTICIPATION.jpg" target="_blank">
-        <img src="images/PARTICIPATION.jpg" alt="PARTICIPATION">
-      </a>
-      <h4>Certificate of Participation in Seminar</h4>
-      <p class="certificate-meta">Issued by Zakariyan Google Developer Club — April 22, 2025</p>
-      <p class="certificate-desc">
-        Participated in an investment and trading seminar, demonstrating commitment to financial skills and portfolio management.
-      </p>
-      <button class="read-more">Read More</button>
-    </div>
+        <div class="certificate-card">
+          <a href="images/WEBDEVELOPMENT.jpg" target="_blank" class="cert-img-wrap">
+            <img src="images/WEBDEVELOPMENT.jpg" alt="Web Development Certificate">
+          </a>
+          <div class="cert-body">
+            <h4>💻 Web Development</h4>
+            <p class="certificate-meta">Simplilearn SkillUp — June 17, 2025</p>
+            <p class="certificate-desc">
+              Completed a structured Front-End Web Development course covering HTML, CSS, and basic JavaScript.
+              Developed responsive layouts, built simple web pages from scratch, and gained hands-on experience
+              with developer tools and VS Code.
+            </p>
+            <button class="read-more">Read More</button>
+          </div>
+        </div>
 
-    <div class="certificate-card">
-      <a href="images/CodeMeet.jpeg" target="_blank">
-        <img src="images/CodeMeet.jpeg" alt="CodeMeet">
-      </a>
-      <h4>Certificate of Participation – Code Meet (2025)</h4>
-      <p class="certificate-meta">Bahauddin Zakariya University — December 11, 2025</p>
-      <p class="certificate-desc">
-        Awarded for participation in the Code Meet 2025, demonstrating skills in AI, coding, and collaborative problem-solving.
-      </p>
-      <button class="read-more">Read More</button>
-    </div>
-  </div>
-</section>
+        <div class="certificate-card">
+          <a href="images/SEO.jpg" target="_blank" class="cert-img-wrap">
+            <img src="images/SEO.jpg" alt="SEO Certificate">
+          </a>
+          <div class="cert-body">
+            <h4>🔍 SEO & Digital Marketing</h4>
+            <p class="certificate-meta">Simplilearn SkillUp — June 17, 2025</p>
+            <p class="certificate-desc">
+              Completed a foundational course covering HTML structure, CSS styling, and basic JavaScript
+              for interactivity. Gained hands-on experience building responsive web pages using VS Code
+              and browser developer tools.
+            </p>
+            <button class="read-more">Read More</button>
+          </div>
+        </div>
 
-<footer>
-  <p>© Copyright 2025 iharooniqbal. All rights reserved</p>
-</footer>
+        <div class="certificate-card">
+          <a href="images/Freelancing.jpeg" target="_blank" class="cert-img-wrap">
+            <img src="images/Freelancing.jpeg" alt="Freelancing Certificate">
+          </a>
+          <div class="cert-body">
+            <h4>💼 Freelancing</h4>
+            <p class="certificate-meta">DigiSkills Training Program — December 17, 2025</p>
+            <p class="certificate-desc">
+              Completed a Freelancing certification focused on digital marketplace skills including profile creation,
+              client communication, and online business strategies. Gained practical experience offering services
+              on platforms such as Upwork while maintaining professionalism and client satisfaction.
+            </p>
+            <button class="read-more">Read More</button>
+          </div>
+        </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-<script src="three-animation.js"></script>
-<script src="script.js"></script>
+        <div class="certificate-card">
+          <a href="images/excecutivemember.jpg" target="_blank" class="cert-img-wrap">
+            <img src="images/excecutivemember.jpg" alt="Executive Member Certificate">
+          </a>
+          <div class="cert-body">
+            <h4>🎓 Executive Member – CASPAM Outrage & Leadership Team (2024–25)</h4>
+            <p class="certificate-meta">Active role in academic, leadership, and outreach initiatives.</p>
+            <p class="certificate-desc">
+              Collaborated with team members to coordinate events and foster student engagement.
+              Strengthened teamwork, communication, and leadership skills while promoting academic
+              excellence and student development.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ── Events & Participation ── -->
+    <section class="certificate-section">
+      <h3>🎤 Events & Participation</h3>
+      <div class="certificate-grid">
+
+        <div class="certificate-card">
+          <a href="images/PAYAMIQBAL.jpg" target="_blank" class="cert-img-wrap">
+            <img src="images/PAYAMIQBAL.jpg" alt="Speech Competition Certificate">
+          </a>
+          <div class="cert-body">
+            <h4>🗣 Certificate of Appreciation – Speech Competition</h4>
+            <p class="certificate-meta">Zakariyan Debating Society — December 5, 2024</p>
+            <p class="certificate-desc">
+              Recognized for active participation in the 'Payam-e-Iqbal' Speech Competition,
+              enhancing communication, critical thinking, and stage presence.
+            </p>
+            <button class="read-more">Read More</button>
+          </div>
+        </div>
+
+        <div class="certificate-card">
+          <a href="images/PARTICIPATION.jpg" target="_blank" class="cert-img-wrap">
+            <img src="images/PARTICIPATION.jpg" alt="Seminar Participation Certificate">
+          </a>
+          <div class="cert-body">
+            <h4>📜 Certificate of Participation in Seminar</h4>
+            <p class="certificate-meta">Zakariyan Google Developer Club — April 22, 2025</p>
+            <p class="certificate-desc">
+              Participated in an investment and trading seminar, demonstrating commitment to
+              financial skills and portfolio management.
+            </p>
+            <button class="read-more">Read More</button>
+          </div>
+        </div>
+
+        <div class="certificate-card">
+          <a href="images/CodeMeet.jpeg" target="_blank" class="cert-img-wrap">
+            <img src="images/CodeMeet.jpeg" alt="Code Meet Certificate">
+          </a>
+          <div class="cert-body">
+            <h4>💻 Certificate of Participation – Code Meet 2025</h4>
+            <p class="certificate-meta">Bahauddin Zakariya University — December 11, 2025</p>
+            <p class="certificate-desc">
+              Awarded for participation in Code Meet 2025, demonstrating skills in AI, coding,
+              and collaborative problem-solving.
+            </p>
+            <button class="read-more">Read More</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </section>
+
+  <footer>
+    <p>© 2025 Abdullah Iqbal. All rights reserved.</p>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  <script src="three-animation.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

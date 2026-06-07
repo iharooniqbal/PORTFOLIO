@@ -3,42 +3,114 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Skills | Portfolio</title>
+  <meta name="description" content="Skills of Abdullah Iqbal – Data Analysis, Python, Web Development, Excel and more.">
+  <title>Skills | Abdullah Iqbal</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 </head>
 <body>
   <div id="three-container"></div>
-<header class="header">
-  <a href="index.html" class="logo">PORTFOLIO.</a>
-  <div class="menu-btn" id="menu-btn"><span></span><span></span><span></span></div>
-  <nav class="navbar" id="navbar">
-    <a href="index.html"><i class='bx bx-home'></i> Home</a>
-<a href="about.html"><i class='bx bx-user'></i> About</a>
-<a href="projects.html"><i class='bx bx-briefcase'></i> Projects</a>
-<a href="skills.html" class="active"><i class='bx bx-bar-chart-alt-2'></i> My Skills</a>
-<a href="certificates.html"><i class='bx bx-award'></i> My Certificates</a>
-<a href="contact.html"><i class='bx bx-envelope'></i> Contact</a>
-  </nav>
-</header>
 
-<section id="skills">
-  <h2>My Skills</h2>
+  <header class="header">
+    <a href="index.html" class="logo">PORTFOLIO.</a>
+    <div class="menu-btn" id="menu-btn"><span></span><span></span><span></span></div>
+    <nav class="navbar" id="navbar">
+      <a href="index.html" style="--i:1"><i class='bx bx-home'></i> Home</a>
+      <a href="about.html" style="--i:2"><i class='bx bx-user'></i> About</a>
+      <a href="projects.html" style="--i:3"><i class='bx bx-briefcase'></i> Projects</a>
+      <a href="skills.html" class="active" style="--i:4"><i class='bx bx-bar-chart-alt-2'></i> Skills</a>
+      <a href="certificates.html" style="--i:5"><i class='bx bx-award'></i> Certificates</a>
+      <a href="contact.html" style="--i:6"><i class='bx bx-envelope'></i> Contact</a>
+    </nav>
+  </header>
 
-  <div class="skills-grid">
-    <div class="skill-card"><i class='bx bx-bar-chart'></i> Data Analysis</div>
-    <div class="skill-card"><i class='bx bxl-html5'></i> HTML</div>
-    <div class="skill-card"><i class='bx bxl-css3'></i> CSS</div>
-    <div class="skill-card"><i class='bx bxl-python'></i> Python</div>
-    <div class="skill-card"><i class='bx bx-code-alt'></i> Web Development</div>
-    <div class="skill-card"><i class='bx bx-math'></i> MATLAB</div>
-    <div class="skill-card"><i class='bx bxs-paint'></i> Canva</div>
-    <div class="skill-card"><i class='bx bx-briefcase'></i> Freelancing</div>
-  </div>
-</section>
+  <section id="skills">
+    <h2>My Skills</h2>
+    <p>Technologies and tools I work with regularly.</p>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-<script src="three-animation.js"></script>
-<script src="script.js"></script>
+    <div class="skills-grid">
+
+      <div class="skill-card" style="--pct:88%">
+        <div class="skill-header">
+          <i class='bx bx-bar-chart'></i>
+          <span class="skill-name">Data Analysis</span>
+        </div>
+        <div class="skill-bar-wrap"><div class="skill-bar"></div></div>
+        <div class="skill-pct">88%</div>
+      </div>
+
+      <div class="skill-card" style="--pct:85%">
+        <div class="skill-header">
+          <i class='bx bxl-python'></i>
+          <span class="skill-name">Python</span>
+        </div>
+        <div class="skill-bar-wrap"><div class="skill-bar"></div></div>
+        <div class="skill-pct">85%</div>
+      </div>
+
+      <div class="skill-card" style="--pct:82%">
+        <div class="skill-header">
+          <i class='bx bxl-html5'></i>
+          <span class="skill-name">HTML &amp; CSS</span>
+        </div>
+        <div class="skill-bar-wrap"><div class="skill-bar"></div></div>
+        <div class="skill-pct">82%</div>
+      </div>
+
+      <div class="skill-card" style="--pct:78%">
+        <div class="skill-header">
+          <i class='bx bx-code-alt'></i>
+          <span class="skill-name">Web Development</span>
+        </div>
+        <div class="skill-bar-wrap"><div class="skill-bar"></div></div>
+        <div class="skill-pct">78%</div>
+      </div>
+
+      <div class="skill-card" style="--pct:90%">
+        <div class="skill-header">
+          <i class='bx bx-table'></i>
+          <span class="skill-name">Microsoft Excel</span>
+        </div>
+        <div class="skill-bar-wrap"><div class="skill-bar"></div></div>
+        <div class="skill-pct">90%</div>
+      </div>
+
+      <div class="skill-card" style="--pct:70%">
+        <div class="skill-header">
+          <i class='bx bx-math'></i>
+          <span class="skill-name">MATLAB</span>
+        </div>
+        <div class="skill-bar-wrap"><div class="skill-bar"></div></div>
+        <div class="skill-pct">70%</div>
+      </div>
+
+      <div class="skill-card" style="--pct:75%">
+        <div class="skill-header">
+          <i class='bx bxs-paint'></i>
+          <span class="skill-name">Canva Design</span>
+        </div>
+        <div class="skill-bar-wrap"><div class="skill-bar"></div></div>
+        <div class="skill-pct">75%</div>
+      </div>
+
+      <div class="skill-card" style="--pct:72%">
+        <div class="skill-header">
+          <i class='bx bx-briefcase'></i>
+          <span class="skill-name">Freelancing</span>
+        </div>
+        <div class="skill-bar-wrap"><div class="skill-bar"></div></div>
+        <div class="skill-pct">72%</div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Abdullah Iqbal. All rights reserved.</p>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  <script src="three-animation.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

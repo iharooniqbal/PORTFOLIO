@@ -1,131 +1,132 @@
-// Smooth Scrolling for Navbar
-document.querySelectorAll('.navbar a').forEach(link => {
-  link.addEventListener('click', e => {
-    if (link.hash !== "") {
-      e.preventDefault();
-      const target = document.querySelector(link.hash);
-      target.scrollIntoView({ behavior: "smooth" });
-    }
-  });
-});
-
 document.addEventListener("DOMContentLoaded", () => {
-const menuBtn = document.getElementById("menu-btn");
-const navbar = document.getElementById("navbar");
 
-menuBtn.addEventListener("click", () => {
-  menuBtn.classList.toggle("active"); // animate hamburger
-  navbar.classList.toggle("active");  // slide menu
-});
-
-// Close menu when clicking a link
-document.querySelectorAll('.navbar a').forEach(link => {
-  link.addEventListener('click', () => {
-    navbar.classList.remove("active");
-    menuBtn.classList.remove("active");
-  });
-});
-});
-
-
-// Close menu after clicking a link
-document.querySelectorAll('.navbar a').forEach(link => {
-  link.addEventListener('click', () => {
-    navbar.classList.remove("active");
-  });
-});
-
-// Active Navbar Highlight on Scroll 
-const sections = document.querySelectorAll("section");
-const navLinks = document.querySelectorAll(".navbar a");
-
-window.addEventListener("scroll", () => {
-  let current = "";
-
-  sections.forEach(section => {
-    const sectionTop = section.offsetTop - 100;
-    if (scrollY >= sectionTop) {
-      current = section.getAttribute("id");
-    }
-  });
-
-  navLinks.forEach(link => {
-    link.classList.remove("active");
-    if (link.getAttribute("href").includes(current)) {
-      link.classList.add("active");
-    }
-  });
-});
-
-// Certificates Popup Viewer 
-const popup = document.createElement("div");
-popup.id = "popup";
-popup.className = "popup";
-popup.innerHTML = `
-  <span class="close">&times;</span>
-  <img class="popup-content" id="popup-img">
-`;
-document.body.appendChild(popup);
-
-const popupImg = document.getElementById("popup-img");
-const closeBtn = popup.querySelector(".close");
-
-// Handle view buttons
-document.querySelectorAll(".view-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const imgSrc = btn.getAttribute("data-img");
-    popup.style.display = "block";
-    popupImg.src = imgSrc;
-  });
-});
-
-// Close popup
-closeBtn.addEventListener("click", () => {
-  popup.style.display = "none";
-});
-
-// Close when clicking outside image
-popup.addEventListener("click", (e) => {
-  if (e.target === popup) {
-    popup.style.display = "none";
+  /* ── Mobile menu ── */
+  const menuBtn = document.getElementById("menu-btn");
+  const navbar  = document.getElementById("navbar");
+  if (menuBtn && navbar) {
+    menuBtn.addEventListener("click", () => {
+      menuBtn.classList.toggle("active");
+      navbar.classList.toggle("active");
+    });
+    navbar.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        navbar.classList.remove("active");
+        menuBtn.classList.remove("active");
+      });
+    });
   }
+
+  /* ── Read-more toggle on certificates ── */
+  document.querySelectorAll(".read-more").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const card = btn.closest(".certificate-card");
+      card.classList.toggle("active");
+      btn.textContent = card.classList.contains("active") ? "Read Less" : "Read More";
+    });
+  });
+
+  /* ── Skill bar animation (IntersectionObserver) ── */
+  const skillObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add("visible");
+        skillObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll(".skill-card").forEach(c => skillObserver.observe(c));
+
+  /* ── Fade-in on scroll ── */
+  const fadeObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = "1";
+        e.target.style.transform = "translateY(0)";
+        fadeObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
+
+  document.querySelectorAll(".project-card, .certificate-card, .skill-card").forEach(el => {
+    el.style.opacity = "0";
+    el.style.transform = "translateY(24px)";
+    el.style.transition = "opacity .6s ease, transform .6s ease";
+    fadeObserver.observe(el);
+  });
+
+  /* ── Contact form ── */
+  const form = document.getElementById("contact-form");
+  if (form) {
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+      const btn = form.querySelector("button[type=submit]");
+      btn.textContent = "✓ Message Sent!";
+      btn.style.background = "linear-gradient(45deg,#0c9e3e,#0f7a30)";
+      btn.disabled = true;
+      setTimeout(() => {
+        btn.textContent = "Send Message";
+        btn.style.background = "";
+        btn.disabled = false;
+        form.reset();
+      }, 3000);
+    });
+  }
+
 });
 
-// Hero Button (Hire Me) Action
-const hireBtn = document.querySelector(".btn");
-if (hireBtn) {
-  hireBtn.addEventListener("click", () => {
-    window.location.href = "#contact"; // Scroll to contact
-  });
-}
+/* ===== 3D TILT ===== */
+const card = document.getElementById("heroCard");
 
-// Optional Animation on Scroll (fade-in)
-const faders = document.querySelectorAll("section, .certificate-card, .project-card");
+document.addEventListener("mousemove", (e) => {
+  if (!card) return;
 
-const appearOptions = {
-  threshold: 0.2,
-  rootMargin: "0px 0px -50px 0px"
-};
+  const x = (window.innerWidth / 2 - e.clientX) / 25;
+  const y = (window.innerHeight / 2 - e.clientY) / 25;
 
-const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
-  entries.forEach(entry => {
-    if (!entry.isIntersecting) return;
-    entry.target.classList.add("fade-in");
-    appearOnScroll.unobserve(entry.target);
-  });
-}, appearOptions);
+  card.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+});
 
-faders.forEach(fader => {
-  appearOnScroll.observe(fader);
+/* RESET ON LEAVE */
+document.addEventListener("mouseleave", () => {
+  if (card) card.style.transform = "rotateY(0deg) rotateX(0deg)";
 });
 
 
-document.querySelectorAll(".read-more").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const card = btn.closest(".certificate-card");
-    card.classList.toggle("active");
-    btn.textContent = card.classList.contains("active")
-      ? "Read Less"
-      : "Read More";
-  });
+/* ===== CURSOR LIGHT ===== */
+const light = document.querySelector(".cursor-light");
+
+document.addEventListener("mousemove", (e) => {
+  if (!light) return;
+  light.style.left = e.pageX + "px";
+  light.style.top = e.pageY + "px";
 });
+
+
+/* ===== CLICK ENERGY BURST ===== */
+document.addEventListener("click", (e) => {
+  const burst = document.createElement("div");
+
+  burst.style.position = "absolute";
+  burst.style.left = e.pageX + "px";
+  burst.style.top = e.pageY + "px";
+  burst.style.width = "10px";
+  burst.style.height = "10px";
+  burst.style.borderRadius = "50%";
+  burst.style.background = "rgba(0,255,255,0.8)";
+  burst.style.transform = "translate(-50%, -50%) scale(1)";
+  burst.style.animation = "burst 0.6s ease-out forwards";
+  burst.style.zIndex = "9999";
+
+  document.body.appendChild(burst);
+
+  setTimeout(() => burst.remove(), 600);
+});
+
+/* BURST ANIMATION */
+const style = document.createElement("style");
+style.innerHTML = `
+@keyframes burst {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(12); opacity: 0; }
+}`;
+document.head.appendChild(style);
