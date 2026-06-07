@@ -1290,3 +1290,18 @@ h2 {
     }
 
 }
+
+#particles,
+.cursor-light {
+    pointer-events: none;
+}
+@media (max-width: 768px) {
+  .cursor-light {
+    display: none;
+  }
+}
+#navbar {
+    position: fixed;
+    top: 0;
+    z-index: 99999;
+}
