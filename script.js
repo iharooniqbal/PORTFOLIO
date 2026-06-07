@@ -1,132 +1,182 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* ── Mobile menu ── */
-  const menuBtn = document.getElementById("menu-btn");
-  const navbar  = document.getElementById("navbar");
-  if (menuBtn && navbar) {
-    menuBtn.addEventListener("click", () => {
-      menuBtn.classList.toggle("active");
-      navbar.classList.toggle("active");
-    });
-    navbar.querySelectorAll("a").forEach(link => {
-      link.addEventListener("click", () => {
-        navbar.classList.remove("active");
-        menuBtn.classList.remove("active");
-      });
-    });
-  }
+    // Mobile Menu
+    const menuBtn = document.getElementById("menu-btn");
+    const navbar = document.getElementById("navbar");
 
-  /* ── Read-more toggle on certificates ── */
-  document.querySelectorAll(".read-more").forEach(btn => {
-    btn.addEventListener("click", () => {
-      const card = btn.closest(".certificate-card");
-      card.classList.toggle("active");
-      btn.textContent = card.classList.contains("active") ? "Read Less" : "Read More";
+    if (menuBtn && navbar) {
+        menuBtn.addEventListener("click", () => {
+            menuBtn.classList.toggle("active");
+            navbar.classList.toggle("active");
+        });
+
+        navbar.querySelectorAll("a").forEach(link =>
+            link.addEventListener("click", () => {
+                menuBtn.classList.remove("active");
+                navbar.classList.remove("active");
+            })
+        );
+    }
+
+    // Read More
+    document.querySelectorAll(".read-more").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const card = btn.closest(".certificate-card");
+            if (!card) return;
+
+            card.classList.toggle("active");
+            btn.textContent = card.classList.contains("active")
+                ? "Read Less"
+                : "Read More";
+        });
     });
-  });
 
-  /* ── Skill bar animation (IntersectionObserver) ── */
-  const skillObserver = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add("visible");
-        skillObserver.unobserve(e.target);
-      }
+    // Skill Animation
+    const skillObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+                skillObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.3 });
+
+    document.querySelectorAll(".skill-card")
+        .forEach(card => skillObserver.observe(card));
+
+    // Fade In
+    const fadeObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = "1";
+                entry.target.style.transform = "translateY(0)";
+                fadeObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll(
+        ".project-card, .certificate-card, .skill-card"
+    ).forEach(el => {
+        el.style.opacity = "0";
+        el.style.transform = "translateY(24px)";
+        el.style.transition = "opacity .6s ease, transform .6s ease";
+        fadeObserver.observe(el);
     });
-  }, { threshold: 0.3 });
-  document.querySelectorAll(".skill-card").forEach(c => skillObserver.observe(c));
 
-  /* ── Fade-in on scroll ── */
-  const fadeObserver = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.style.opacity = "1";
-        e.target.style.transform = "translateY(0)";
-        fadeObserver.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
+    // Contact Form
+    const form = document.getElementById("contact-form");
 
-  document.querySelectorAll(".project-card, .certificate-card, .skill-card").forEach(el => {
-    el.style.opacity = "0";
-    el.style.transform = "translateY(24px)";
-    el.style.transition = "opacity .6s ease, transform .6s ease";
-    fadeObserver.observe(el);
-  });
+    if (form) {
+        form.addEventListener("submit", e => {
+            e.preventDefault();
 
-  /* ── Contact form ── */
-  const form = document.getElementById("contact-form");
-  if (form) {
-    form.addEventListener("submit", e => {
-      e.preventDefault();
-      const btn = form.querySelector("button[type=submit]");
-      btn.textContent = "✓ Message Sent!";
-      btn.style.background = "linear-gradient(45deg,#0c9e3e,#0f7a30)";
-      btn.disabled = true;
-      setTimeout(() => {
-        btn.textContent = "Send Message";
-        btn.style.background = "";
-        btn.disabled = false;
-        form.reset();
-      }, 3000);
-    });
-  }
+            const btn = form.querySelector("button[type='submit']");
+            if (!btn) return;
 
+            btn.textContent = "✓ Message Sent!";
+            btn.disabled = true;
+
+            setTimeout(() => {
+                btn.textContent = "Send Message";
+                btn.disabled = false;
+                form.reset();
+            }, 3000);
+        });
+    }
+
+    // Typing Animation
+    const typing = document.getElementById("typing-text");
+
+    if (typing) {
+        const roles = [
+            "Data Analyst",
+            "Web Developer",
+            "Python Developer"
+        ];
+
+        let role = 0,
+            char = 0,
+            deleting = false;
+
+        function type() {
+            const text = roles[role];
+
+            typing.textContent = deleting
+                ? text.substring(0, char--)
+                : text.substring(0, char++);
+
+            if (!deleting && char > text.length) {
+                deleting = true;
+                return setTimeout(type, 1500);
+            }
+
+            if (deleting && char < 0) {
+                deleting = false;
+                role = (role + 1) % roles.length;
+            }
+
+            setTimeout(type, deleting ? 50 : 100);
+        }
+
+        type();
+    }
 });
 
-/* ===== 3D TILT ===== */
-const card = document.getElementById("heroCard");
+// 3D Tilt (Desktop Only)
+const heroCard = document.getElementById("heroCard");
 
-document.addEventListener("mousemove", (e) => {
-  if (!card) return;
+if (heroCard && window.matchMedia("(hover: hover)").matches) {
 
-  const x = (window.innerWidth / 2 - e.clientX) / 25;
-  const y = (window.innerHeight / 2 - e.clientY) / 25;
+    document.addEventListener("mousemove", e => {
+        const x = (window.innerWidth / 2 - e.clientX) / 25;
+        const y = (window.innerHeight / 2 - e.clientY) / 25;
 
-  card.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
-});
+        heroCard.style.transform =
+            `rotateY(${x}deg) rotateX(${y}deg)`;
+    });
 
-/* RESET ON LEAVE */
-document.addEventListener("mouseleave", () => {
-  if (card) card.style.transform = "rotateY(0deg) rotateX(0deg)";
-});
+    document.addEventListener("mouseleave", () => {
+        heroCard.style.transform =
+            "rotateY(0deg) rotateX(0deg)";
+    });
+}
 
-
-/* ===== CURSOR LIGHT ===== */
+// Cursor Light
 const light = document.querySelector(".cursor-light");
 
-document.addEventListener("mousemove", (e) => {
-  if (!light) return;
-  light.style.left = e.pageX + "px";
-  light.style.top = e.pageY + "px";
+if (light) {
+    document.addEventListener("mousemove", e => {
+        light.style.left = `${e.pageX}px`;
+        light.style.top = `${e.pageY}px`;
+    });
+}
+
+// Click Burst
+document.addEventListener("click", e => {
+    const burst = document.createElement("div");
+
+    Object.assign(burst.style, {
+        position: "absolute",
+        left: `${e.pageX}px`,
+        top: `${e.pageY}px`,
+        width: "10px",
+        height: "10px",
+        borderRadius: "50%",
+        background: "rgba(0,255,255,.8)",
+        transform: "translate(-50%,-50%)",
+        animation: "burst .6s ease-out forwards",
+        zIndex: "9999"
+    });
+
+    document.body.appendChild(burst);
+    setTimeout(() => burst.remove(), 600);
 });
 
-
-/* ===== CLICK ENERGY BURST ===== */
-document.addEventListener("click", (e) => {
-  const burst = document.createElement("div");
-
-  burst.style.position = "absolute";
-  burst.style.left = e.pageX + "px";
-  burst.style.top = e.pageY + "px";
-  burst.style.width = "10px";
-  burst.style.height = "10px";
-  burst.style.borderRadius = "50%";
-  burst.style.background = "rgba(0,255,255,0.8)";
-  burst.style.transform = "translate(-50%, -50%) scale(1)";
-  burst.style.animation = "burst 0.6s ease-out forwards";
-  burst.style.zIndex = "9999";
-
-  document.body.appendChild(burst);
-
-  setTimeout(() => burst.remove(), 600);
-});
-
-/* BURST ANIMATION */
 const style = document.createElement("style");
-style.innerHTML = `
-@keyframes burst {
-  0% { transform: scale(1); opacity: 1; }
-  100% { transform: scale(12); opacity: 0; }
+style.textContent = `
+@keyframes burst{
+    from{transform:translate(-50%,-50%) scale(1);opacity:1;}
+    to{transform:translate(-50%,-50%) scale(12);opacity:0;}
 }`;
 document.head.appendChild(style);
