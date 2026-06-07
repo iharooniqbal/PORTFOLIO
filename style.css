@@ -1305,3 +1305,64 @@ h2 {
     top: 0;
     z-index: 99999;
 }
+
+#menu-btn {
+    display: none;
+    cursor: pointer;
+    z-index: 99999;
+}
+
+/* MOBILE ONLY */
+@media (max-width: 768px) {
+
+    #menu-btn {
+        display: block;
+    }
+
+    #menu-btn span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        background: white;
+        margin: 5px 0;
+        transition: 0.3s;
+    }
+
+    #navbar {
+        position: absolute;
+        top: 60px;
+        right: 0;
+        width: 200px;
+        flex-direction: column;
+        display: none;
+    }
+
+    #navbar.active {
+        display: flex;
+    }
+
+    /* X animation */
+    #menu-btn.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    #menu-btn.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    #menu-btn.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+    }
+}
+
+/* DESKTOP FIX (IMPORTANT) */
+@media (min-width: 769px) {
+    #navbar {
+        display: flex !important;
+        position: static;
+    }
+
+    #menu-btn {
+        display: none !important;
+    }
+}
