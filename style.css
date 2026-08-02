@@ -1486,7 +1486,3 @@ img, video, canvas, svg { max-width: 100%; }
   .about-avatar { width: 190px !important; }
   .stat-card { min-width: 100%; flex: 1 1 100%; }
 }
-
-@media (max-width: 768px) {
-  #three-container { display: none !important; }
-}
