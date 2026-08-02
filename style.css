@@ -1366,3 +1366,127 @@ h2 {
         display: none !important;
     }
 }
+
+/* ======================================================================
+   MOBILE HARDENING — final overrides, loaded last on purpose.
+   This fixes conflicts caused by the many older/duplicate mobile rules
+   above (two nav systems, hero-card sized in 3 places, etc.) without
+   deleting anything, so nothing else breaks.
+   ====================================================================== */
+
+/* Never allow horizontal scroll/clipping, no matter what fixed widths exist above */
+html, body { max-width: 100%; overflow-x: hidden; }
+img, video, canvas, svg { max-width: 100%; }
+
+@media (max-width: 768px) {
+
+  /* ---- SINGLE SOURCE OF TRUTH FOR THE NAV ---- */
+  header { padding: 14px 18px; }
+  /* Hamburger icon: 3 stacked bars, no side conflicts */
+  .menu-btn, #menu-btn {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center;
+    gap: 5px;
+    width: 25px;
+  }
+  .menu-btn span, #menu-btn span {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 0;
+    background: white;
+    border-radius: 2px;
+    transition: transform .3s ease, opacity .3s ease;
+  }
+  .menu-btn.active span:nth-child(1), #menu-btn.active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+  .menu-btn.active span:nth-child(2), #menu-btn.active span:nth-child(2) {
+    opacity: 0;
+  }
+  .menu-btn.active span:nth-child(3), #menu-btn.active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  /* Slide-in nav panel */
+  .navbar, #navbar {
+    position: fixed !important;
+    top: 0 !important; right: -280px;
+    width: min(75vw, 280px);
+    height: 100vh;
+    flex-direction: column;
+    background: var(--bg2);
+    padding: 90px 0 30px;
+    gap: 0;
+    box-shadow: -4px 0 24px rgba(0,0,0,.5);
+    transition: right .35s ease;
+    z-index: 1100;
+    display: none;
+  }
+  .navbar.active, #navbar.active {
+    display: flex !important;
+    right: 0 !important;
+  }
+  .navbar a, #navbar a {
+    width: 100%;
+    padding: 16px 28px;
+    border-radius: 0;
+    font-size: 16px;
+    justify-content: flex-start;
+    background: none !important;
+    -webkit-text-fill-color: white !important;
+  }
+  .navbar a:hover, #navbar a:hover,
+  .navbar a.active, #navbar a.active {
+    background: rgba(51,204,255,.12) !important;
+    border-left: 3px solid var(--accent2);
+  }
+
+  /* ---- GENERAL SPACING/SCALE ---- */
+  section, .home, .about, #contact { padding-left: 6%; padding-right: 6%; }
+  h2 { font-size: 28px; }
+  .about-content h2 { font-size: 30px; }
+  .section-title h2 { font-size: 28px; }
+  .tagline, .about-intro, .about-content p { font-size: 15px; }
+
+  /* ---- HERO ---- */
+  .home {
+    padding-top: 140px;
+    gap: 40px;
+  }
+  .home-sci { order: 3; margin-top: 20px; }
+  .home-content h1 { font-size: 36px; }
+  .home-image { order: -1; margin-top: 0; }
+  .home-content { order: 2; }
+  .hero-card { width: 220px !important; height: 290px !important; margin-top: 0; }
+
+  /* ---- ABOUT ---- */
+  .about-avatar { width: 220px !important; height: auto !important; }
+  .about-stats { justify-content: center; gap: 14px; }
+  .stat-card { min-width: 45%; flex: 1 1 45%; padding: 16px; }
+
+  /* ---- GRIDS: force single column on small phones ---- */
+  .skills-grid, .contact-grid, .contact-container,
+  .about-container, .about-inner { grid-template-columns: 1fr !important; }
+
+  /* ---- BUTTONS: don't let two side-by-side buttons overflow ---- */
+  .home-btns { justify-content: center; width: 100%; }
+  .btn { width: 100%; max-width: 260px; }
+  .cv-btn-wrapper { display: flex; justify-content: center; }
+
+  /* ---- FORMS ---- */
+  .contact-card { padding: 22px; }
+}
+
+@media (max-width: 420px) {
+  .home-content h1 { font-size: 30px; }
+  .typing-text { font-size: 18px; }
+  .hero-card { width: 190px !important; height: 250px !important; }
+  .about-avatar { width: 190px !important; }
+  .stat-card { min-width: 100%; flex: 1 1 100%; }
+}
+
+@media (max-width: 768px) {
+  #three-container { display: none !important; }
+}
