@@ -3,8 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Skills of Abdullah Iqbal – Data Analysis, Python, Web Development, Excel and more.">
+  <meta name="description" content="Skills of Abdullah Iqbal – Data Analysis, Python, Flask, Web Development, Excel, MATLAB and more.">
   <title>Skills | Abdullah Iqbal</title>
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Skills | Abdullah Iqbal">
+  <meta property="og:description" content="Data Analysis, Python, Flask, Web Development, Excel, MATLAB and more — the tools Abdullah Iqbal works with.">
+  <meta property="og:image" content="https://iharooniqbal.github.io/portfolio/images/profilepic.jpg">
+  <meta property="og:url" content="https://iharooniqbal.github.io/portfolio/skills.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Skills | Abdullah Iqbal">
+  <meta name="twitter:description" content="Data Analysis, Python, Flask, Web Development, Excel, MATLAB and more.">
+  <meta name="twitter:image" content="https://iharooniqbal.github.io/portfolio/images/profilepic.jpg">
+
   <link rel="stylesheet" href="style.css">
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 </head>
@@ -29,78 +40,129 @@
     <h2>My Skills</h2>
     <p>Technologies and tools I work with regularly.</p>
 
-    <div class="skills-grid">
+    <svg width="0" height="0" style="position:absolute">
+      <defs>
+        <linearGradient id="ringGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="var(--accent1)"/>
+          <stop offset="100%" stop-color="var(--accent2)"/>
+        </linearGradient>
+      </defs>
+    </svg>
 
-      <div class="skill-card" style="--pct:88%">
-        <div class="skill-header">
-          <i class='bx bx-bar-chart'></i>
-          <span class="skill-name">Data Analysis</span>
+    <div class="top-skills-grid">
+
+      <div class="ring-card" style="--offset:36.2">
+        <div class="ring-wrap">
+          <svg viewBox="0 0 120 120">
+            <circle class="ring-bg" cx="60" cy="60" r="48"></circle>
+            <circle class="ring-fg" cx="60" cy="60" r="48"></circle>
+          </svg>
+          <i class='bx bx-bar-chart ring-icon'></i>
+          <span class="ring-pct">88%</span>
         </div>
-        <div class="skill-bar-wrap"><div class="skill-bar"></div></div>
-        <div class="skill-pct">88%</div>
+        <div class="ring-name">Data Analysis</div>
       </div>
 
-      <div class="skill-card" style="--pct:85%">
-        <div class="skill-header">
-          <i class='bx bxl-python'></i>
-          <span class="skill-name">Python</span>
+      <div class="ring-card" style="--offset:45.2">
+        <div class="ring-wrap">
+          <svg viewBox="0 0 120 120">
+            <circle class="ring-bg" cx="60" cy="60" r="48"></circle>
+            <circle class="ring-fg" cx="60" cy="60" r="48"></circle>
+          </svg>
+          <i class='bx bxl-python ring-icon'></i>
+          <span class="ring-pct">85%</span>
         </div>
-        <div class="skill-bar-wrap"><div class="skill-bar"></div></div>
-        <div class="skill-pct">85%</div>
+        <div class="ring-name">Python</div>
       </div>
 
-      <div class="skill-card" style="--pct:82%">
-        <div class="skill-header">
-          <i class='bx bxl-html5'></i>
-          <span class="skill-name">HTML &amp; CSS</span>
+      <div class="ring-card" style="--offset:30.2">
+        <div class="ring-wrap">
+          <svg viewBox="0 0 120 120">
+            <circle class="ring-bg" cx="60" cy="60" r="48"></circle>
+            <circle class="ring-fg" cx="60" cy="60" r="48"></circle>
+          </svg>
+          <i class='bx bx-table ring-icon'></i>
+          <span class="ring-pct">90%</span>
         </div>
-        <div class="skill-bar-wrap"><div class="skill-bar"></div></div>
-        <div class="skill-pct">82%</div>
+        <div class="ring-name">Excel</div>
       </div>
 
-      <div class="skill-card" style="--pct:78%">
-        <div class="skill-header">
-          <i class='bx bx-code-alt'></i>
-          <span class="skill-name">Web Development</span>
+      <div class="ring-card" style="--offset:54.3">
+        <div class="ring-wrap">
+          <svg viewBox="0 0 120 120">
+            <circle class="ring-bg" cx="60" cy="60" r="48"></circle>
+            <circle class="ring-fg" cx="60" cy="60" r="48"></circle>
+          </svg>
+          <i class='bx bxl-html5 ring-icon'></i>
+          <span class="ring-pct">82%</span>
         </div>
-        <div class="skill-bar-wrap"><div class="skill-bar"></div></div>
-        <div class="skill-pct">78%</div>
+        <div class="ring-name">HTML &amp; CSS</div>
       </div>
 
-      <div class="skill-card" style="--pct:90%">
-        <div class="skill-header">
-          <i class='bx bx-table'></i>
-          <span class="skill-name">Microsoft Excel</span>
+      <div class="ring-card" style="--offset:66.4">
+        <div class="ring-wrap">
+          <svg viewBox="0 0 120 120">
+            <circle class="ring-bg" cx="60" cy="60" r="48"></circle>
+            <circle class="ring-fg" cx="60" cy="60" r="48"></circle>
+          </svg>
+          <i class='bx bx-code-alt ring-icon'></i>
+          <span class="ring-pct">78%</span>
         </div>
-        <div class="skill-bar-wrap"><div class="skill-bar"></div></div>
-        <div class="skill-pct">90%</div>
+        <div class="ring-name">Web Dev</div>
       </div>
 
-      <div class="skill-card" style="--pct:70%">
-        <div class="skill-header">
-          <i class='bx bx-math'></i>
-          <span class="skill-name">MATLAB</span>
+      <div class="ring-card" style="--offset:90.5">
+        <div class="ring-wrap">
+          <svg viewBox="0 0 120 120">
+            <circle class="ring-bg" cx="60" cy="60" r="48"></circle>
+            <circle class="ring-fg" cx="60" cy="60" r="48"></circle>
+          </svg>
+          <i class='bx bx-math ring-icon'></i>
+          <span class="ring-pct">70%</span>
         </div>
-        <div class="skill-bar-wrap"><div class="skill-bar"></div></div>
-        <div class="skill-pct">70%</div>
+        <div class="ring-name">MATLAB</div>
       </div>
 
-      <div class="skill-card" style="--pct:75%">
-        <div class="skill-header">
-          <i class='bx bxs-paint'></i>
-          <span class="skill-name">Canva Design</span>
+    </div>
+
+    <div class="skills-categories">
+
+      <div class="skill-group">
+        <div class="skill-group-title"><i class='bx bx-code-alt'></i> Languages &amp; Frameworks</div>
+        <div class="skill-tags">
+          <span class="skill-tag"><i class='bx bxl-python'></i> Python</span>
+          <span class="skill-tag"><i class='bx bx-server'></i> Flask</span>
+          <span class="skill-tag"><i class='bx bxl-html5'></i> HTML &amp; CSS</span>
+          <span class="skill-tag"><i class='bx bxl-javascript'></i> JavaScript</span>
+          <span class="skill-tag"><i class='bx bx-data'></i> SQL</span>
         </div>
-        <div class="skill-bar-wrap"><div class="skill-bar"></div></div>
-        <div class="skill-pct">75%</div>
       </div>
 
-      <div class="skill-card" style="--pct:72%">
-        <div class="skill-header">
-          <i class='bx bx-briefcase'></i>
-          <span class="skill-name">Freelancing</span>
+      <div class="skill-group">
+        <div class="skill-group-title"><i class='bx bx-bar-chart'></i> Data &amp; Analysis</div>
+        <div class="skill-tags">
+          <span class="skill-tag"><i class='bx bx-bar-chart'></i> Data Analysis</span>
+          <span class="skill-tag"><i class='bx bx-table'></i> Microsoft Excel</span>
+          <span class="skill-tag"><i class='bx bx-math'></i> MATLAB</span>
+          <span class="skill-tag"><i class='bx bx-data'></i> MySQL / SQLite</span>
         </div>
-        <div class="skill-bar-wrap"><div class="skill-bar"></div></div>
-        <div class="skill-pct">72%</div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title"><i class='bx bx-globe'></i> Web Development</div>
+        <div class="skill-tags">
+          <span class="skill-tag"><i class='bx bx-code-alt'></i> Full-Stack Web Apps</span>
+          <span class="skill-tag"><i class='bx bx-mobile-alt'></i> Responsive / PWA</span>
+          <span class="skill-tag"><i class='bx bx-git-branch'></i> Git &amp; GitHub</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-group-title"><i class='bx bx-briefcase'></i> Tools &amp; Other</div>
+        <div class="skill-tags">
+          <span class="skill-tag"><i class='bx bxs-paint'></i> Canva Design</span>
+          <span class="skill-tag"><i class='bx bx-briefcase'></i> Freelancing</span>
+        </div>
       </div>
 
     </div>
@@ -113,5 +175,19 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
   <script src="three-animation.js"></script>
   <script src="script.js"></script>
+  <script>
+    (function(){
+      var rings = document.querySelectorAll('.ring-card');
+      var observer = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.4 });
+      rings.forEach(function(r){ observer.observe(r); });
+    })();
+  </script>
 </body>
 </html>

@@ -5,6 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Projects by Abdullah Iqbal – HARNECT, Infinity-X AI, Social Links Hub, MySQL Payroll System.">
   <title>Projects | Abdullah Iqbal</title>
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Projects | Abdullah Iqbal">
+  <meta property="og:description" content="Projects by Abdullah Iqbal – HARNECT, Infinity-X AI, Social Links Hub, MySQL Payroll System.">
+  <meta property="og:image" content="https://iharooniqbal.github.io/portfolio/images/profilepic.jpg">
+  <meta property="og:url" content="https://iharooniqbal.github.io/portfolio/projects.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Projects | Abdullah Iqbal">
+  <meta name="twitter:description" content="Projects by Abdullah Iqbal – HARNECT, Infinity-X AI, Social Links Hub, MySQL Payroll System.">
+  <meta name="twitter:image" content="https://iharooniqbal.github.io/portfolio/images/profilepic.jpg">
   <link rel="stylesheet" href="style.css">
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 
@@ -231,6 +241,9 @@
           </div>
           <h3>HARNECT – Instagram-Like Social Media</h3>
           <p>A full-featured social media web app with user auth, posts, stories, likes, comments, and a follow system. Built with Flask and a clean responsive UI — includes PWA support for mobile install.</p>
+          <button class="gallery-btn" data-gallery="harnect-gallery">
+            <i class='bx bx-images'></i> View Screenshots
+          </button>
           <div class="project-links">
             <a href="https://share.google/maUSLXsQJKdQiclAA" class="demo" target="_blank" rel="noopener">
               <i class='bx bx-link-external'></i> Live Demo
@@ -251,15 +264,18 @@
             <span class="tag">Python</span>
             <span class="tag">SQLite</span>
             <span class="tag">rapidfuzz</span>
-            <span class="tag orange">In Progress</span>
+            <span class="tag">LLM Failover</span>
           </div>
-          <h3>Infinity-X AI <span class="in-progress">In Progress</span></h3>
-          <p>A self-learning AI chatbot that builds its own knowledge base from conversations, PDFs, images, and websites — no external API required. Adapts and improves with every interaction.</p>
+          <h3>Infinity-X AI</h3>
+          <p>A self-learning AI chatbot that builds its own knowledge base from conversations, PDFs, images, and websites, with automatic failover across multiple LLM providers for reliable uptime. Adapts and improves with every interaction.</p>
+          <button class="gallery-btn" data-gallery="infinity-gallery">
+            <i class='bx bx-images'></i> View Screenshots
+          </button>
           <div class="project-links">
-            <a href="https://iharooniqbal56.pythonanywhere.com/" class="demo" target="_blank" rel="noopener">
+            <a href="https://iharooniqbal-infinity-x.hf.space/welcome" class="demo" target="_blank" rel="noopener">
               <i class='bx bx-link-external'></i> Live Demo
             </a>
-            <a href="https://github.com/iharooniqbal/self-learning-chatbot.git" class="source" target="_blank" rel="noopener">
+            <a href="https://github.com/iharooniqbal/Infinity-X.git" class="source" target="_blank" rel="noopener">
               <i class='bx bxl-github'></i> Source
             </a>
           </div>
@@ -269,6 +285,7 @@
       <!-- Project 3 — Social Links -->
       <div class="project-card">
         <img src="images/image3.jpeg" alt="Social Links Hub">
+
         <div class="project-body">
           <div class="project-tags">
             <span class="tag">HTML</span>
@@ -277,6 +294,9 @@
           </div>
           <h3>Portfolio &amp; Social Links Hub</h3>
           <p>A centralised hub connecting all social media profiles, GitHub projects, and personal sites. One link to share everywhere — clean, fast, and mobile-friendly.</p>
+          <button class="gallery-btn" data-gallery="links-gallery">
+            <i class='bx bx-images'></i> View Screenshots
+          </button>
           <div class="project-links">
             <a href="https://iharooniqbal.github.io/social-links/" class="demo" target="_blank" rel="noopener">
               <i class='bx bx-link-external'></i> Live Demo
@@ -299,6 +319,9 @@
           </div>
           <h3>Employee Payroll System</h3>
           <p>A robust MySQL database project for payroll processing and employee record management. Demonstrates efficient data modelling, relational schema design, and secure transaction handling.</p>
+          <button class="gallery-btn" data-gallery="payroll-gallery">
+            <i class='bx bx-images'></i> View Screenshots
+          </button>
           <div class="project-links">
             <a href="https://iharooniqbal.github.io/database/" class="demo" target="_blank" rel="noopener">
               <i class='bx bx-link-external'></i> Live Demo
@@ -317,8 +340,136 @@
     <p>© 2025 Abdullah Iqbal. All rights reserved.</p>
   </footer>
 
+  <div class="lightbox-overlay" id="lightboxOverlay">
+    <span class="lightbox-close" id="lightboxClose">&times;</span>
+    <img src="" alt="Enlarged screenshot" id="lightboxImg">
+  </div>
+
+  <div class="gallery-modal-overlay" id="galleryModalOverlay">
+    <div class="gallery-modal">
+      <span class="lightbox-close gallery-modal-close" id="galleryModalClose">&times;</span>
+      <span class="gallery-nav gallery-prev" id="galleryPrev"><i class='bx bx-chevron-left'></i></span>
+      <img src="" alt="" id="galleryModalImg">
+      <span class="gallery-nav gallery-next" id="galleryNext"><i class='bx bx-chevron-right'></i></span>
+      <div class="gallery-modal-counter" id="galleryCounter"></div>
+    </div>
+  </div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
   <script src="three-animation.js"></script>
   <script src="script.js"></script>
+  <script>
+    (function(){
+      var overlay = document.getElementById('lightboxOverlay');
+      var overlayImg = document.getElementById('lightboxImg');
+      var closeBtn = document.getElementById('lightboxClose');
+
+      document.querySelectorAll('.project-gallery img').forEach(function(img){
+        img.addEventListener('click', function(){
+          overlayImg.src = img.src;
+          overlayImg.alt = img.alt;
+          overlay.classList.add('active');
+        });
+      });
+
+      function closeLightbox(){
+        overlay.classList.remove('active');
+        overlayImg.src = '';
+      }
+
+      closeBtn.addEventListener('click', closeLightbox);
+      overlay.addEventListener('click', function(e){
+        if(e.target === overlay) closeLightbox();
+      });
+      document.addEventListener('keydown', function(e){
+        if(e.key === 'Escape') closeLightbox();
+      });
+    })();
+
+    (function(){
+      var galleries = {
+        "infinity-gallery": [
+          { src: "images/gallery/infinity-welcome.jpg", alt: "Infinity-X AI welcome screen" },
+          { src: "images/gallery/infinity-chat.jpg", alt: "Infinity-X AI chat interface" },
+          { src: "images/gallery/infinity-stats.jpg", alt: "Infinity-X AI statistics dashboard" },
+          { src: "images/gallery/infinity-upload.jpg", alt: "Infinity-X AI knowledge upload sources" },
+          { src: "images/gallery/infinity-search.jpg", alt: "Infinity-X AI search knowledge base" }
+        ],
+        "harnect-gallery": [
+          { src: "images/gallery/harnect-login.jpg", alt: "HARNECT login screen" },
+          { src: "images/gallery/harnect-explore.jpg", alt: "HARNECT explore feed" },
+          { src: "images/gallery/harnect-upload.jpg", alt: "HARNECT upload post and story" },
+          { src: "images/gallery/harnect-profile.jpg", alt: "HARNECT user profile" }
+        ],
+        "links-gallery": [
+          { src: "images/gallery/links-hub.jpg", alt: "Social links hub page" }
+        ],
+        "payroll-gallery": [
+          { src: "images/gallery/payroll-code.jpg", alt: "Employee Payroll System MySQL code" },
+          { src: "images/gallery/payroll-er.jpg", alt: "Employee Payroll System E-R diagram" },
+          { src: "images/gallery/payroll-db.jpg", alt: "Employee Payroll System database output" }
+        ]
+      };
+
+      var modalOverlay = document.getElementById('galleryModalOverlay');
+      var modalImg = document.getElementById('galleryModalImg');
+      var counter = document.getElementById('galleryCounter');
+      var closeBtn = document.getElementById('galleryModalClose');
+      var prevBtn = document.getElementById('galleryPrev');
+      var nextBtn = document.getElementById('galleryNext');
+
+      var currentSet = [];
+      var currentIndex = 0;
+
+      function showImage(){
+        var item = currentSet[currentIndex];
+        modalImg.src = item.src;
+        modalImg.alt = item.alt;
+        counter.textContent = (currentIndex + 1) + " / " + currentSet.length;
+      }
+
+      function openGallery(key, startIndex){
+        currentSet = galleries[key];
+        currentIndex = startIndex || 0;
+        showImage();
+        modalOverlay.classList.add('active');
+      }
+
+      function closeGallery(){
+        modalOverlay.classList.remove('active');
+        modalImg.src = '';
+      }
+
+      function nextImage(){
+        currentIndex = (currentIndex + 1) % currentSet.length;
+        showImage();
+      }
+
+      function prevImage(){
+        currentIndex = (currentIndex - 1 + currentSet.length) % currentSet.length;
+        showImage();
+      }
+
+      document.querySelectorAll('.gallery-btn').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          var key = btn.getAttribute('data-gallery');
+          openGallery(key, 0);
+        });
+      });
+
+      closeBtn.addEventListener('click', closeGallery);
+      nextBtn.addEventListener('click', nextImage);
+      prevBtn.addEventListener('click', prevImage);
+      modalOverlay.addEventListener('click', function(e){
+        if(e.target === modalOverlay) closeGallery();
+      });
+      document.addEventListener('keydown', function(e){
+        if(!modalOverlay.classList.contains('active')) return;
+        if(e.key === 'Escape') closeGallery();
+        if(e.key === 'ArrowRight') nextImage();
+        if(e.key === 'ArrowLeft') prevImage();
+      });
+    })();
+  </script>
 </body>
 </html>
