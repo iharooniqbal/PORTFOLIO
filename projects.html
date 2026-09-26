@@ -49,6 +49,23 @@
     margin-top:65px;
 }
 
+.project-card.featured-project{
+    grid-column:1 / -1;
+    display:grid;
+    grid-template-columns:1.1fr 1fr;
+    align-items:stretch;
+}
+
+.project-card.featured-project img{
+    height:100%;
+}
+
+@media(max-width:900px){
+    .project-card.featured-project{
+        grid-template-columns:1fr;
+    }
+}
+
 /* CARD */
 
 .project-card{
@@ -229,7 +246,7 @@
     <div class="projects-container">
 
       <!-- Project 1 — HARNECT -->
-      <div class="project-card">
+      <div class="project-card featured-project">
         <img src="images/harnect.jpeg" alt="HARNECT Social Media Platform">
         <div class="project-body">
           <div class="project-tags">

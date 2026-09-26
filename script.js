@@ -1,3 +1,28 @@
+/* ================= PAGE TRANSITION ================= */
+(() => {
+    document.documentElement.style.transition = "opacity .35s ease";
+    document.documentElement.style.opacity = "0";
+
+    window.addEventListener("DOMContentLoaded", () => {
+        requestAnimationFrame(() => {
+            document.documentElement.style.opacity = "1";
+        });
+    });
+
+    document.addEventListener("click", e => {
+        const link = e.target.closest("a");
+        if (!link) return;
+
+        const href = link.getAttribute("href");
+        if (!href || href.startsWith("#") || href.startsWith("http") ||
+            href.startsWith("mailto:") || link.target === "_blank") return;
+
+        e.preventDefault();
+        document.documentElement.style.opacity = "0";
+        setTimeout(() => { window.location.href = href; }, 320);
+    });
+})();
+
 document.addEventListener("DOMContentLoaded", () => {
 
     // Mobile Menu
@@ -21,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Read More
     document.querySelectorAll(".read-more").forEach(btn => {
         btn.addEventListener("click", () => {
-            const card = btn.closest(".certificate-card");
+            const card = btn.closest(".cert-card");
             if (!card) return;
 
             card.classList.toggle("active");
@@ -56,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }, { threshold: 0.1 });
 
     document.querySelectorAll(
-        ".project-card, .certificate-card, .skill-card"
+        ".project-card, .cert-card, .skill-card"
     ).forEach(el => {
         el.style.opacity = "0";
         el.style.transform = "translateY(24px)";
@@ -163,7 +188,7 @@ document.addEventListener("click", e => {
         width: "10px",
         height: "10px",
         borderRadius: "50%",
-        background: "rgba(0,255,255,.8)",
+        background: "rgba(212,175,55,.8)",
         transform: "translate(-50%,-50%)",
         animation: "burst .6s ease-out forwards",
         zIndex: "9999"

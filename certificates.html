@@ -19,7 +19,7 @@
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 
   <style>
-/* ================= CERTIFICATES ================= */
+/* ================= CERTIFICATES — PREMIUM GOLD THEME ================= */
 
 #certificates{
     padding:100px 10%;
@@ -30,7 +30,21 @@
 #certificates > h2{
     text-align:center;
     font-size:42px;
-    margin-bottom:70px;
+    margin-bottom:14px;
+    font-family:"Space Grotesk", sans-serif;
+    background:var(--grad);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+}
+
+#certificates > p.page-sub{
+    text-align:center;
+    color:var(--text-dim);
+    max-width:560px;
+    margin:0 auto 64px;
+    font-size:15px;
+    letter-spacing:.3px;
 }
 
 /* SECTION */
@@ -40,13 +54,66 @@
 }
 
 .certificate-section h3{
-    font-size:24px;
+    font-size:22px;
     margin-bottom:28px;
-    color:var(--accent2);
+    color:var(--accent1);
     font-weight:600;
+    letter-spacing:.3px;
+    display:flex;
+    align-items:center;
+    gap:10px;
 }
 
-/* GRID */
+.certificate-section h3::after{
+    content:"";
+    flex:1;
+    height:1px;
+    background:linear-gradient(90deg, rgba(212,175,55,.5), transparent);
+}
+
+/* ================= FEATURED ROW ================= */
+
+.featured-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:32px;
+}
+
+.cert-card.featured{
+    position:relative;
+    background:linear-gradient(160deg, rgba(212,175,55,.10), rgba(255,255,255,.02));
+    border:1px solid rgba(212,175,55,.35);
+    border-radius:20px;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    transition:.4s ease;
+    box-shadow:0 0 0 rgba(212,175,55,0);
+}
+
+.cert-card.featured:hover{
+    transform:translateY(-10px);
+    border-color:var(--accent1);
+    box-shadow:0 20px 45px rgba(0,0,0,.35), 0 0 30px rgba(212,175,55,.15);
+}
+
+.featured-ribbon{
+    position:absolute;
+    top:16px;
+    left:16px;
+    z-index:2;
+    background:var(--grad);
+    color:#1a1200;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.6px;
+    text-transform:uppercase;
+    padding:6px 14px;
+    border-radius:999px;
+    box-shadow:0 4px 14px rgba(212,175,55,.4);
+}
+
+/* ================= REGULAR GRID ================= */
 
 .certificate-grid{
     display:grid;
@@ -54,23 +121,55 @@
     gap:28px;
 }
 
-/* CARD */
+/* CARD — diploma style */
 
-.certificate-card{
-    background:rgba(255,255,255,0.04);
-    border:1px solid rgba(255,255,255,0.08);
-    border-radius:22px;
+.cert-card{
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(212,175,55,.18);
+    border-radius:18px;
     overflow:hidden;
     transition:.35s ease;
     backdrop-filter:blur(10px);
     display:flex;
     flex-direction:column;
+    position:relative;
 }
 
-.certificate-card:hover{
+.cert-card::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:18px;
+    padding:1px;
+    background:linear-gradient(140deg, rgba(212,175,55,.4), transparent 40%);
+    -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;
+    mask-composite:exclude;
+    pointer-events:none;
+}
+
+.cert-card:hover{
     transform:translateY(-8px);
-    border-color:rgba(255,255,255,0.16);
-    box-shadow:0 15px 35px rgba(0,0,0,.25);
+    border-color:rgba(212,175,55,.45);
+    box-shadow:0 15px 35px rgba(0,0,0,.3);
+}
+
+/* SEAL BADGE */
+
+.cert-seal{
+    position:absolute;
+    top:14px;
+    right:14px;
+    z-index:2;
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    background:var(--grad);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:18px;
+    box-shadow:0 4px 12px rgba(0,0,0,.4);
 }
 
 /* IMAGE */
@@ -78,17 +177,19 @@
 .cert-img-wrap{
     display:block;
     overflow:hidden;
+    position:relative;
 }
 
-.certificate-card img{
+.cert-card img{
     width:100%;
     aspect-ratio:4/3;
     object-fit:cover;
     transition:transform .5s ease;
     display:block;
+    filter:saturate(1.05);
 }
 
-.certificate-card:hover img{
+.cert-card:hover img{
     transform:scale(1.05);
 }
 
@@ -103,20 +204,24 @@
 
 /* TITLE */
 
-.certificate-card h4{
+.cert-card h4{
     font-size:18px;
     line-height:1.5;
     margin-bottom:10px;
-    color:#fff;
+    color:var(--text);
+    font-family:"Space Grotesk", sans-serif;
 }
 
 /* META */
 
 .certificate-meta{
-    font-size:13px;
-    color:var(--accent2);
+    font-size:12.5px;
+    color:var(--accent1);
     margin-bottom:14px;
     line-height:1.6;
+    text-transform:uppercase;
+    letter-spacing:.4px;
+    font-weight:600;
 }
 
 /* DESCRIPTION */
@@ -135,7 +240,7 @@
         opacity .3s ease;
 }
 
-.certificate-card.active .certificate-desc{
+.cert-card.active .certificate-desc{
     max-height:500px;
     opacity:1;
 }
@@ -146,7 +251,7 @@
     margin-top:16px;
     background:none;
     border:none;
-    color:var(--accent2);
+    color:var(--accent1);
     font-size:14px;
     cursor:pointer;
     padding:0;
@@ -169,10 +274,10 @@
 
     #certificates > h2{
         font-size:34px;
-        margin-bottom:50px;
     }
 
-    .certificate-grid{
+    .certificate-grid,
+    .featured-grid{
         grid-template-columns:1fr;
     }
 
@@ -198,13 +303,15 @@
 
   <section id="certificates">
     <h2>My Certificates</h2>
+    <p class="page-sub">A curated record of certifications, leadership roles, and event participation.</p>
 
-    <!-- ── Academic / Learning ── -->
+    <!-- ── Featured ── -->
     <section class="certificate-section">
-      <h3>🎓 Academic / Learning</h3>
-      <div class="certificate-grid">
+      <h3>⭐ Featured</h3>
+      <div class="featured-grid">
 
-        <div class="certificate-card">
+        <div class="cert-card featured">
+          <span class="featured-ribbon">Top Certification</span>
           <a href="images/DataAnalysis.jpeg" target="_blank" class="cert-img-wrap">
             <img src="images/DataAnalysis.jpeg" alt="Data Analysis Certificate">
           </a>
@@ -220,55 +327,65 @@
           </div>
         </div>
 
-        <div class="certificate-card">
-          <a href="images/AffiliateMarketing.jpg" target="_blank" class="cert-img-wrap">
-            <img src="images/AffiliateMarketing.jpg" alt="Affiliate Marketing Certificate">
+        <div class="cert-card featured">
+          <span class="featured-ribbon">Leadership</span>
+          <a href="images/excecutivemember.jpg" target="_blank" class="cert-img-wrap">
+            <img src="images/excecutivemember.jpg" alt="Executive Member Certificate">
           </a>
           <div class="cert-body">
-            <h4>📘 Introduction to Affiliate Marketing</h4>
-            <p class="certificate-meta">Simplilearn SkillUp — June 24, 2025</p>
+            <h4>🎓 Executive Member – CASPAM Outrage & Leadership Team (2024–25)</h4>
+            <p class="certificate-meta">Active role in academic, leadership, and outreach initiatives.</p>
             <p class="certificate-desc">
-              Completed a beginner-level Affiliate Marketing course focused on understanding affiliate systems,
-              program types, and tracking methods. Gained practical knowledge of niche selection,
-              SEO basics, and performance optimization using analytics tools.
+              Collaborated with team members to coordinate events and foster student engagement.
+              Strengthened teamwork, communication, and leadership skills while promoting academic
+              excellence and student development.
+            </p>
+          </div>
+        </div>
+
+        <div class="cert-card featured">
+          <span class="featured-ribbon">Internship</span>
+          <a href="images/MeezanBankInternship.jpeg" target="_blank" class="cert-img-wrap">
+            <img src="images/MeezanBankInternship.jpeg" alt="Meezan Bank Internship Certificate">
+          </a>
+          <div class="cert-body">
+            <h4>🏦 Internship Certificate – Meezan Bank Limited</h4>
+            <p class="certificate-meta">MBL – Jahanian Branch — July 4 to August 15, 2026</p>
+            <p class="certificate-desc">
+              Successfully completed a 6-week internship at Meezan Bank Limited, Pakistan's
+              premier Islamic bank, under the Services Confirmation & Project Trainee Program.
+              Gained hands-on exposure to banking operations and professional work environment.
             </p>
             <button class="read-more">Read More</button>
           </div>
         </div>
 
-        <div class="certificate-card">
-          <a href="images/WEBDEVELOPMENT.jpg" target="_blank" class="cert-img-wrap">
-            <img src="images/WEBDEVELOPMENT.jpg" alt="Web Development Certificate">
+        <div class="cert-card featured">
+          <span class="featured-ribbon">Recent</span>
+          <a href="images/CodeMeet.jpeg" target="_blank" class="cert-img-wrap">
+            <img src="images/CodeMeet.jpeg" alt="Code Meet Certificate">
           </a>
           <div class="cert-body">
-            <h4>💻 Web Development</h4>
-            <p class="certificate-meta">Simplilearn SkillUp — June 17, 2025</p>
+            <h4>💻 Certificate of Participation – Code Meet 2025</h4>
+            <p class="certificate-meta">Bahauddin Zakariya University — December 11, 2025</p>
             <p class="certificate-desc">
-              Completed a structured Front-End Web Development course covering HTML, CSS, and basic JavaScript.
-              Developed responsive layouts, built simple web pages from scratch, and gained hands-on experience
-              with developer tools and VS Code.
+              Awarded for participation in Code Meet 2025, demonstrating skills in AI, coding,
+              and collaborative problem-solving.
             </p>
             <button class="read-more">Read More</button>
           </div>
         </div>
 
-        <div class="certificate-card">
-          <a href="images/SEO.jpg" target="_blank" class="cert-img-wrap">
-            <img src="images/SEO.jpg" alt="SEO Certificate">
-          </a>
-          <div class="cert-body">
-            <h4>🔍 SEO & Digital Marketing</h4>
-            <p class="certificate-meta">Simplilearn SkillUp — June 17, 2025</p>
-            <p class="certificate-desc">
-              Completed a foundational course covering HTML structure, CSS styling, and basic JavaScript
-              for interactivity. Gained hands-on experience building responsive web pages using VS Code
-              and browser developer tools.
-            </p>
-            <button class="read-more">Read More</button>
-          </div>
-        </div>
+      </div>
+    </section>
 
-        <div class="certificate-card">
+    <!-- ── Academic / Learning ── -->
+    <section class="certificate-section">
+      <h3>🎓 Academic / Learning</h3>
+      <div class="certificate-grid">
+
+        <div class="cert-card">
+          <span class="cert-seal">🏅</span>
           <a href="images/Freelancing.jpeg" target="_blank" class="cert-img-wrap">
             <img src="images/Freelancing.jpeg" alt="Freelancing Certificate">
           </a>
@@ -284,18 +401,71 @@
           </div>
         </div>
 
-        <div class="certificate-card">
-          <a href="images/excecutivemember.jpg" target="_blank" class="cert-img-wrap">
-            <img src="images/excecutivemember.jpg" alt="Executive Member Certificate">
+        <div class="cert-card">
+          <span class="cert-seal">🏅</span>
+          <a href="images/WEBDEVELOPMENT.jpg" target="_blank" class="cert-img-wrap">
+            <img src="images/WEBDEVELOPMENT.jpg" alt="Web Development Certificate">
           </a>
           <div class="cert-body">
-            <h4>🎓 Executive Member – CASPAM Outrage & Leadership Team (2024–25)</h4>
-            <p class="certificate-meta">Active role in academic, leadership, and outreach initiatives.</p>
+            <h4>💻 Web Development</h4>
+            <p class="certificate-meta">Simplilearn SkillUp — June 17, 2025</p>
             <p class="certificate-desc">
-              Collaborated with team members to coordinate events and foster student engagement.
-              Strengthened teamwork, communication, and leadership skills while promoting academic
-              excellence and student development.
+              Completed a structured Front-End Web Development course covering HTML, CSS, and basic JavaScript.
+              Developed responsive layouts, built simple web pages from scratch, and gained hands-on experience
+              with developer tools and VS Code.
             </p>
+            <button class="read-more">Read More</button>
+          </div>
+        </div>
+
+        <div class="cert-card">
+          <span class="cert-seal">🏅</span>
+          <a href="images/SEO.jpg" target="_blank" class="cert-img-wrap">
+            <img src="images/SEO.jpg" alt="SEO Certificate">
+          </a>
+          <div class="cert-body">
+            <h4>🔍 SEO & Digital Marketing</h4>
+            <p class="certificate-meta">Simplilearn SkillUp — June 17, 2025</p>
+            <p class="certificate-desc">
+              Completed a foundational course covering HTML structure, CSS styling, and basic JavaScript
+              for interactivity. Gained hands-on experience building responsive web pages using VS Code
+              and browser developer tools.
+            </p>
+            <button class="read-more">Read More</button>
+          </div>
+        </div>
+
+        <div class="cert-card">
+          <span class="cert-seal">🏅</span>
+          <a href="images/EnglishModernWorld.jpeg" target="_blank" class="cert-img-wrap">
+            <img src="images/EnglishModernWorld.jpeg" alt="English in the Modern World Certificate">
+          </a>
+          <div class="cert-body">
+            <h4>🌍 English in the Modern World — More Than Just a Language</h4>
+            <p class="certificate-meta">The Skillset Foundation — Certificate of Participation</p>
+            <p class="certificate-desc">
+              Participated in a session on the role of English in the modern world, exploring its
+              impact beyond communication. Organized by The Skillset Foundation, committed to
+              learning, growth, and skill development.
+            </p>
+            <button class="read-more">Read More</button>
+          </div>
+        </div>
+
+        <div class="cert-card">
+          <span class="cert-seal">🏅</span>
+          <a href="images/AffiliateMarketing.jpg" target="_blank" class="cert-img-wrap">
+            <img src="images/AffiliateMarketing.jpg" alt="Affiliate Marketing Certificate">
+          </a>
+          <div class="cert-body">
+            <h4>📘 Introduction to Affiliate Marketing</h4>
+            <p class="certificate-meta">Simplilearn SkillUp — June 24, 2025</p>
+            <p class="certificate-desc">
+              Completed a beginner-level Affiliate Marketing course focused on understanding affiliate systems,
+              program types, and tracking methods. Gained practical knowledge of niche selection,
+              SEO basics, and performance optimization using analytics tools.
+            </p>
+            <button class="read-more">Read More</button>
           </div>
         </div>
 
@@ -307,7 +477,8 @@
       <h3>🎤 Events & Participation</h3>
       <div class="certificate-grid">
 
-        <div class="certificate-card">
+        <div class="cert-card">
+          <span class="cert-seal">🎖️</span>
           <a href="images/PAYAMIQBAL.jpg" target="_blank" class="cert-img-wrap">
             <img src="images/PAYAMIQBAL.jpg" alt="Speech Competition Certificate">
           </a>
@@ -322,7 +493,8 @@
           </div>
         </div>
 
-        <div class="certificate-card">
+        <div class="cert-card">
+          <span class="cert-seal">🎖️</span>
           <a href="images/PARTICIPATION.jpg" target="_blank" class="cert-img-wrap">
             <img src="images/PARTICIPATION.jpg" alt="Seminar Participation Certificate">
           </a>
@@ -332,21 +504,6 @@
             <p class="certificate-desc">
               Participated in an investment and trading seminar, demonstrating commitment to
               financial skills and portfolio management.
-            </p>
-            <button class="read-more">Read More</button>
-          </div>
-        </div>
-
-        <div class="certificate-card">
-          <a href="images/CodeMeet.jpeg" target="_blank" class="cert-img-wrap">
-            <img src="images/CodeMeet.jpeg" alt="Code Meet Certificate">
-          </a>
-          <div class="cert-body">
-            <h4>💻 Certificate of Participation – Code Meet 2025</h4>
-            <p class="certificate-meta">Bahauddin Zakariya University — December 11, 2025</p>
-            <p class="certificate-desc">
-              Awarded for participation in Code Meet 2025, demonstrating skills in AI, coding,
-              and collaborative problem-solving.
             </p>
             <button class="read-more">Read More</button>
           </div>
