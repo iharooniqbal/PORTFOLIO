@@ -16,6 +16,7 @@
   <meta name="twitter:description" content="Projects by Abdullah Iqbal – HARNECT, Infinity-X AI, Social Links Hub, MySQL Payroll System.">
   <meta name="twitter:image" content="https://iharooniqbal.github.io/portfolio/images/profilepic.jpg">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="enhance.css">
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 
   <style>
@@ -241,7 +242,7 @@
 
   <section id="projects" class="projects">
     <h2>My Projects</h2>
-    <p>Things I've built — from social platforms to AI chatbots.</p>
+    <p>Things I've built — from social platforms and AI chatbots to inventory systems and optimisation tools.</p>
 
     <div class="projects-container">
 
@@ -299,7 +300,54 @@
         </div>
       </div>
 
-      <!-- Project 3 — Social Links -->
+            <!-- Project 3 — StockWise -->
+      <div class="project-card">
+        <img src="images/stockwise.jpg" alt="StockWise inventory alert platform">
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="tag">FastAPI</span>
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">scikit-learn</span>
+            <span class="tag">Alembic</span>
+            <span class="tag">Docker</span>
+          </div>
+          <h3>StockWise – Inventory &amp; Expiry Alerts</h3>
+          <p>Inventory platform for small retailers that says what to reorder and what to discount before it expires. Includes authenticated multi-tenant API, ML risk forecasts (Decision Tree, 81.5% accuracy), FEFO expiry tracking, POS checkout, purchase orders, audit log and 93 automated tests.</p>
+          <button class="gallery-btn" data-gallery="stockwise-gallery">
+            <i class='bx bx-images'></i> View Screenshots
+          </button>
+          <div class="project-links">
+            <a href="demos/stockwise-pitch-deck.html" class="demo" target="_blank" rel="noopener">
+              <i class='bx bx-slideshow'></i> Pitch Deck
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 4 — Simplex Solver -->
+      <div class="project-card">
+        <img src="images/simplex.jpg" alt="Simplex Algorithm Solver">
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="tag">JavaScript</span>
+            <span class="tag">Linear Programming</span>
+            <span class="tag">Two-Phase / Big-M</span>
+            <span class="tag">Canvas</span>
+          </div>
+          <h3>Simplex Algorithm Solver</h3>
+          <p>An interactive linear-programming solver that teaches as it solves: step-by-step tableaus with the reason for every pivot, Two-Phase and Big-M methods, detection of unbounded, infeasible, degenerate and alternate-optima cases, sensitivity analysis, a graphical 2-variable view and CSV / PDF export.</p>
+          <button class="gallery-btn" data-gallery="simplex-gallery">
+            <i class='bx bx-images'></i> View Screenshots
+          </button>
+          <div class="project-links">
+            <a href="demos/simplex-solver.html" class="demo" target="_blank" rel="noopener">
+              <i class='bx bx-link-external'></i> Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 5 — Social Links -->
       <div class="project-card">
         <img src="images/image3.jpeg" alt="Social Links Hub">
 
@@ -325,7 +373,7 @@
         </div>
       </div>
 
-      <!-- Project 4 — MySQL -->
+      <!-- Project 6 — MySQL -->
       <div class="project-card">
         <img src="images/database.jpg" alt="MySQL Employee Payroll System">
         <div class="project-body">
@@ -354,7 +402,7 @@
   </section>
 
   <footer>
-    <p>© 2025 Abdullah Iqbal. All rights reserved.</p>
+    <p>© 2026 Abdullah Iqbal. All rights reserved.</p>
   </footer>
 
   <div class="lightbox-overlay" id="lightboxOverlay">
@@ -375,6 +423,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
   <script src="three-animation.js"></script>
   <script src="script.js"></script>
+  <script src="enhance.js"></script>
   <script>
     (function(){
       var overlay = document.getElementById('lightboxOverlay');
@@ -425,6 +474,21 @@
           { src: "images/gallery/infinity-dark-mode-panel.jpg", alt: "Infinity-X AI dark mode settings panel" },
           { src: "images/gallery/infinity-mobile-dark.jpg", alt: "Infinity-X AI mobile view dark mode" },
           { src: "images/gallery/infinity-mobile-light.jpg", alt: "Infinity-X AI mobile view light mode" }
+        ],
+        "stockwise-gallery": [
+          { src: "images/gallery/stockwise-deck-1.jpg", alt: "StockWise pitch deck: the problem" },
+          { src: "images/gallery/stockwise-deck-2.jpg", alt: "StockWise pitch deck: what it does" },
+          { src: "images/gallery/stockwise-deck-3.jpg", alt: "StockWise pitch deck: how it works" },
+          { src: "images/gallery/stockwise-deck-4.jpg", alt: "StockWise pitch deck: next slide" },
+          { src: "images/gallery/stockwise-confusion-matrix.jpg", alt: "StockWise ML model confusion matrix" },
+          { src: "images/gallery/stockwise-feature-importance.jpg", alt: "StockWise ML model feature importance" },
+          { src: "images/gallery/stockwise-decision-tree.jpg", alt: "StockWise Decision Tree visualisation" }
+        ],
+        "simplex-gallery": [
+          { src: "images/gallery/simplex-home.jpg", alt: "Simplex Solver problem setup" },
+          { src: "images/gallery/simplex-steps.jpg", alt: "Simplex Solver step-by-step tableau" },
+          { src: "images/gallery/simplex-result.jpg", alt: "Simplex Solver optimal solution" },
+          { src: "images/gallery/simplex-graph.jpg", alt: "Simplex Solver graphical method" }
         ],
         "harnect-gallery": [
           { src: "images/gallery/harnect-welcome.jpg", alt: "HARNECT welcome screen" },

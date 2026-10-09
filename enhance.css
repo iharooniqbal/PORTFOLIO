@@ -1,0 +1,234 @@
+/* =====================================================================
+   ENHANCEMENTS — extra animation + polish layered on top of style.css
+   Loaded after style.css on every page. Remove the <link> to undo.
+   ===================================================================== */
+
+/* ---------- scroll progress bar ---------- */
+#scroll-progress {
+  position: fixed; top: 0; left: 0; height: 3px; width: 100%;
+  transform-origin: 0 50%; transform: scaleX(0);
+  background: linear-gradient(90deg, var(--accent1), var(--accent2), var(--accent1));
+  background-size: 200% 100%;
+  animation: progressShift 4s linear infinite;
+  box-shadow: 0 0 12px rgba(16, 217, 160, .6);
+  z-index: 1300; pointer-events: none;
+}
+@keyframes progressShift { to { background-position: 200% 0; } }
+
+/* ---------- aurora background orbs (sit behind the Three.js canvas) ---------- */
+.aurora {
+  position: fixed; inset: 0; z-index: -2; overflow: hidden; pointer-events: none;
+}
+.aurora span {
+  position: absolute; border-radius: 50%; filter: blur(90px); opacity: .28;
+  will-change: transform;
+}
+.aurora span:nth-child(1) {
+  width: 520px; height: 520px; left: -140px; top: -120px;
+  background: radial-gradient(circle, var(--accent2), transparent 65%);
+  animation: auroraA 22s ease-in-out infinite alternate;
+}
+.aurora span:nth-child(2) {
+  width: 460px; height: 460px; right: -120px; top: 25%;
+  background: radial-gradient(circle, var(--accent1), transparent 65%);
+  animation: auroraB 26s ease-in-out infinite alternate;
+}
+.aurora span:nth-child(3) {
+  width: 560px; height: 560px; left: 25%; bottom: -220px;
+  background: radial-gradient(circle, #1fa37a, transparent 65%);
+  animation: auroraC 30s ease-in-out infinite alternate;
+}
+@keyframes auroraA { to { transform: translate(180px, 140px) scale(1.2); } }
+@keyframes auroraB { to { transform: translate(-200px, -120px) scale(1.15); } }
+@keyframes auroraC { to { transform: translate(160px, -140px) scale(1.25); } }
+
+/* ---------- header polish ---------- */
+header { transition: padding .35s ease, background .35s ease, box-shadow .35s ease; }
+header.scrolled {
+  padding-top: 12px; padding-bottom: 12px;
+  background: rgba(7, 20, 15, .82);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .35);
+}
+.navbar a { position: relative; }
+.navbar a::after {
+  content: ""; position: absolute; left: 14px; right: 14px; bottom: 3px; height: 2px;
+  border-radius: 2px; background: var(--grad);
+  transform: scaleX(0); transform-origin: 50% 50%; transition: transform .35s ease;
+}
+.navbar a:hover::after, .navbar a.active::after { transform: scaleX(1); }
+
+/* ---------- scroll reveal ---------- */
+.rv {
+  opacity: 0; transform: translateY(34px) scale(.98);
+  transition: opacity .8s cubic-bezier(.2, .7, .2, 1), transform .8s cubic-bezier(.2, .7, .2, 1);
+  transition-delay: var(--d, 0s);
+  will-change: opacity, transform;
+}
+.rv.rv-left  { transform: translateX(-46px); }
+.rv.rv-right { transform: translateX(46px); }
+.rv.rv-zoom  { transform: scale(.88); }
+.rv.in { opacity: 1; transform: none; }
+
+/* ---------- section heading underline that draws itself ---------- */
+.h-line::after {
+  content: ""; display: block; height: 3px; width: 0; margin: 10px auto 0;
+  border-radius: 3px; background: var(--grad);
+  transition: width 1s cubic-bezier(.2, .7, .2, 1) .2s;
+}
+.h-line.in::after { width: 64%; }
+
+/* ---------- cards: cursor-following glow ---------- */
+.project-card, .cert-card, .exp-card, .skill-group, .stat-card, .info-card, .ring-card, .contact-card {
+  position: relative;
+}
+.project-card::after, .cert-card::after, .exp-card::after, .skill-group::after,
+.stat-card::after, .info-card::after, .ring-card::after, .contact-card::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%),
+              rgba(16, 217, 160, .16), rgba(245, 185, 66, .07) 40%, transparent 65%);
+  opacity: 0; transition: opacity .35s ease; z-index: 1;
+}
+.project-card:hover::after, .cert-card:hover::after, .exp-card:hover::after,
+.skill-group:hover::after, .stat-card:hover::after, .info-card:hover::after,
+.ring-card:hover::after, .contact-card:hover::after { opacity: 1; }
+
+.project-card, .cert-card { transform-style: preserve-3d; }
+.project-card.tilting, .cert-card.tilting { transition: transform .08s linear, border-color .35s, box-shadow .35s; }
+
+/* ---------- buttons: shine sweep + soft glow ---------- */
+.btn, .cv-btn, .project-links a, .gallery-btn, .read-more, .whatsapp-link { position: relative; overflow: hidden; }
+.btn::after, .cv-btn::after, .project-links a::after, .gallery-btn::after, .read-more::after, .whatsapp-link::after {
+  content: ""; position: absolute; top: 0; left: -80%; width: 55%; height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .38), transparent);
+  transform: skewX(-22deg); pointer-events: none; transition: none;
+}
+.btn:hover::after, .cv-btn:hover::after, .project-links a:hover::after,
+.gallery-btn:hover::after, .read-more:hover::after, .whatsapp-link:hover::after {
+  left: 140%; transition: left .75s ease;
+}
+.btn, .cv-btn { will-change: transform; }
+
+/* ---------- hero ---------- */
+.home-image .scene::before {
+  content: ""; position: absolute; z-index: 0; width: 440px; height: 440px; max-width: 95%;
+  border-radius: 50%; filter: blur(46px); opacity: .42;
+  background: conic-gradient(from 0deg, var(--accent1), var(--accent2), #1fa37a, var(--accent1));
+  animation: spinSlow 14s linear infinite;
+}
+@keyframes spinSlow { to { transform: rotate(360deg); } }
+
+/* orbiting dots around the hero card */
+.orbit {
+  position: absolute; inset: 0; margin: auto; width: 430px; height: 430px; max-width: 98%; max-height: 98%;
+  border-radius: 50%; pointer-events: none; z-index: 0;
+  border: 1px dashed rgba(16, 217, 160, .22);
+  animation: spinSlow 26s linear infinite;
+}
+.orbit i {
+  position: absolute; width: 12px; height: 12px; border-radius: 50%;
+  background: var(--accent1); box-shadow: 0 0 16px var(--accent1);
+}
+.orbit i:nth-child(1) { top: -6px; left: calc(50% - 6px); }
+.orbit i:nth-child(2) { bottom: 10%; right: 4%; background: var(--accent2); box-shadow: 0 0 16px var(--accent2); }
+.orbit i:nth-child(3) { bottom: 10%; left: 4%; width: 8px; height: 8px; }
+
+.home-content h1 { text-shadow: 0 0 40px rgba(16, 217, 160, .18); }
+
+/* real typewriter: JS fills the span, so the CSS word-cycle is switched off */
+.typing-text.js-typed span::before { content: none; animation: none; }
+
+/* hero scroll hint */
+.scroll-hint {
+  position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%);
+  width: 26px; height: 42px; border: 2px solid rgba(255, 255, 255, .35); border-radius: 16px;
+  opacity: 0; animation: slideTop .8s ease 2.6s forwards; z-index: 2;
+}
+.scroll-hint::after {
+  content: ""; position: absolute; left: 50%; top: 8px; width: 4px; height: 8px; margin-left: -2px;
+  border-radius: 3px; background: var(--accent2); animation: wheel 1.6s ease-in-out infinite;
+}
+@keyframes wheel { 0% { opacity: 1; transform: translateY(0); } 70% { opacity: 0; transform: translateY(14px); } 100% { opacity: 0; } }
+@media (max-width: 768px) { .scroll-hint { display: none; } }
+
+/* ---------- tags & chips ---------- */
+.tag { transition: transform .25s ease, background .25s ease, border-color .25s ease, color .25s ease; }
+.tag:hover {
+  transform: translateY(-2px); color: #fff;
+  background: linear-gradient(135deg, rgba(245, 185, 66, .22), rgba(16, 217, 160, .22));
+  border-color: rgba(16, 217, 160, .5);
+}
+.skill-tag.pop { animation: tagPop .55s cubic-bezier(.2, .9, .3, 1.4) both; }
+@keyframes tagPop { from { opacity: 0; transform: translateY(14px) scale(.7); } to { opacity: 1; transform: none; } }
+
+/* ---------- experience timeline ---------- */
+.timeline-icon { animation: iconPulse 2.8s ease-in-out infinite; }
+@keyframes iconPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16, 217, 160, .45); }
+  50%      { box-shadow: 0 0 0 14px rgba(16, 217, 160, 0); }
+}
+
+/* ---------- certificate "NEW" highlight ---------- */
+.new-ribbon {
+  position: absolute; top: 14px; left: 14px; z-index: 3;
+  padding: 4px 12px; border-radius: 30px; font-size: 11px; font-weight: 700; letter-spacing: 1.4px;
+  color: #07140f; background: var(--grad); background-size: 200% 100%;
+  animation: progressShift 3s linear infinite, newPulse 2.2s ease-in-out infinite;
+}
+@keyframes newPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(245, 185, 66, .55); }
+  50%      { box-shadow: 0 0 0 10px rgba(245, 185, 66, 0); }
+}
+.cert-card.is-new { border-color: rgba(245, 185, 66, .5); box-shadow: 0 0 30px rgba(245, 185, 66, .12); }
+.cert-img-wrap img, .project-card img { will-change: transform; }
+
+/* ---------- gallery modal motion ---------- */
+.gallery-modal img.swap { animation: modalSwap .45s cubic-bezier(.2, .8, .2, 1); }
+@keyframes modalSwap { from { opacity: 0; transform: scale(.94) translateY(10px); } to { opacity: 1; transform: none; } }
+.gallery-modal-overlay.active .gallery-modal { animation: modalIn .45s cubic-bezier(.2, .8, .2, 1); }
+@keyframes modalIn { from { opacity: 0; transform: scale(.9) translateY(24px); } to { opacity: 1; transform: none; } }
+
+/* ---------- footer ---------- */
+footer { position: relative; overflow: hidden; }
+footer::before {
+  content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent1), var(--accent2), transparent);
+  background-size: 200% 100%; animation: progressShift 5s linear infinite;
+}
+
+/* ---------- back-to-top ---------- */
+#to-top {
+  position: fixed; right: 22px; bottom: 22px; width: 46px; height: 46px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; font-size: 22px; color: #07140f;
+  background: var(--grad); border: 0; cursor: pointer; z-index: 1200;
+  box-shadow: 0 8px 24px rgba(16, 217, 160, .35);
+  opacity: 0; transform: translateY(20px) scale(.8); pointer-events: none;
+  transition: opacity .35s ease, transform .35s ease;
+}
+#to-top.show { opacity: 1; transform: none; pointer-events: auto; }
+#to-top:hover { transform: translateY(-4px) scale(1.06); }
+
+/* ---------- click ripple on buttons ---------- */
+.ripple {
+  position: absolute; border-radius: 50%; background: rgba(255, 255, 255, .45);
+  transform: scale(0); animation: rippleOut .65s ease-out forwards; pointer-events: none;
+}
+@keyframes rippleOut { to { transform: scale(4); opacity: 0; } }
+
+/* ---------- ring cards (skills) ---------- */
+.ring-card:hover .ring-icon { animation: iconWiggle .6s ease; }
+@keyframes iconWiggle { 0%, 100% { transform: translate(-50%, -65%) rotate(0); } 30% { transform: translate(-50%, -65%) rotate(-12deg) scale(1.1); } 60% { transform: translate(-50%, -65%) rotate(10deg) scale(1.1); } }
+
+/* ---------- small screens: calmer effects ---------- */
+@media (max-width: 768px) {
+  .aurora span { filter: blur(70px); opacity: .22; }
+  .orbit { display: none; }
+  #to-top { right: 14px; bottom: 14px; }
+}
+
+/* ---------- respect reduced-motion preferences ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .rv { opacity: 1 !important; transform: none !important; transition: none !important; }
+  .aurora span, .orbit, .home-image .scene::before, .timeline-icon, .new-ribbon,
+  #scroll-progress, footer::before { animation: none !important; }
+  .h-line::after { width: 64%; transition: none; }
+}

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>StockWise — Pitch Deck</title>
+<style>
+:root{
+  --bg:#f7f8fa; --card:#ffffff; --text:#1a1d23; --muted:#6b7280; --accent:#0e7c4a; --border:#e5e7eb;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --bg:#14161a; --card:#1e2126; --text:#f0f1f3; --muted:#9aa0a8; --accent:#3ddc84; --border:#33373e; }
+}
+:root[data-theme="dark"]{ --bg:#14161a; --card:#1e2126; --text:#f0f1f3; --muted:#9aa0a8; --accent:#3ddc84; --border:#33373e; }
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,Segoe UI,Roboto,sans-serif;height:100%;display:flex;flex-direction:column;}
+.deck{flex:1;display:flex;align-items:center;justify-content:center;padding:20px;}
+.slide{display:none;background:var(--card);border:1px solid var(--border);border-radius:16px;max-width:680px;width:100%;padding:40px 36px;min-height:360px;}
+.slide.active{display:block;}
+.slide h1{font-size:1.7rem;margin:0 0 6px;}
+.slide h2{font-size:1.2rem;color:var(--accent);margin:0 0 18px;font-weight:600;}
+.slide p, .slide li{font-size:1rem;line-height:1.6;color:var(--text);}
+.slide ul{padding-left:20px;}
+.tag{display:inline-block;background:var(--accent);color:#fff;padding:4px 12px;border-radius:20px;font-size:0.75rem;font-weight:700;margin-bottom:14px;}
+.stats{display:flex;gap:16px;margin-top:16px;}
+.stat{flex:1;text-align:center;background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:14px;}
+.stat .n{font-size:1.5rem;font-weight:800;color:var(--accent);}
+.stat .l{font-size:0.75rem;color:var(--muted);}
+.nav{display:flex;justify-content:center;align-items:center;gap:14px;padding:16px;}
+.nav button{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-weight:600;cursor:pointer;}
+.nav button:disabled{opacity:0.35;cursor:default;}
+.dots{display:flex;gap:6px;}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--border);}
+.dot.active{background:var(--accent);}
+</style>
+</head>
+<body>
+<div class="deck">
+
+<div class="slide active">
+  <span class="tag">STOCKWISE</span>
+  <h1>Never lose money to empty shelves or expired stock</h1>
+  <h2>An inventory alert tool built for small Pakistani retailers</h2>
+  <p>Small shops track stock on paper or memory. StockWise tells them, in plain language, what to reorder and what to discount — before either becomes a loss.</p>
+</div>
+
+<div class="slide">
+  <h1>The Problem</h1>
+  <p>Every product a shop sells can fail two ways:</p>
+  <ul>
+    <li><b>Stockout</b> — it runs out, the customer buys elsewhere</li>
+    <li><b>Expiry</b> — it sits too long, gets thrown away or discounted</li>
+  </ul>
+  <p>Neither is visible until it's too late — no simple tool tells a small shop owner which items are at risk, this week, for either reason.</p>
+</div>
+
+<div class="slide">
+  <h1>The Solution</h1>
+  <p>StockWise takes a shop's stock numbers — uploaded as a spreadsheet or typed like a text message — and instantly flags every product as:</p>
+  <ul>
+    <li>🔴 <b>Reorder now</b></li>
+    <li>🟡 <b>Discount now</b></li>
+    <li>🟢 <b>Fine, no action</b></li>
+  </ul>
+</div>
+
+<div class="slide">
+  <h1>Why WhatsApp</h1>
+  <p>Small retailers in Pakistan already run their business over WhatsApp — ordering from suppliers, talking to customers.</p>
+  <p>Instead of asking them to learn new software, StockWise meets them where they already are: they text their stock, they get an answer back.</p>
+</div>
+
+<div class="slide">
+  <h1>How It's Built</h1>
+  <p>A Decision Tree model trained on stock level, sales speed, supplier lead time, and days-to-expiry decides the risk for every product.</p>
+  <div class="stats">
+    <div class="stat"><div class="n">81.5%</div><div class="l">Accuracy</div></div>
+    <div class="stat"><div class="n">96%</div><div class="l">Recall on costly expiry cases</div></div>
+  </div>
+</div>
+
+<div class="slide">
+  <h1>Who Pays</h1>
+  <div class="stats">
+    <div class="stat"><div class="n">Free</div><div class="l">Up to 20 items, text-only</div></div>
+    <div class="stat"><div class="n">Rs 1,500/mo</div><div class="l">Unlimited items + upload</div></div>
+    <div class="stat"><div class="n">Rs 5,000/mo</div><div class="l">Multi-store distributors</div></div>
+  </div>
+</div>
+
+<div class="slide">
+  <h1>What's Working Today</h1>
+  <ul>
+    <li>Full working web app — spreadsheet upload with instant results</li>
+    <li>Step-by-step chat demo — simulates the real WhatsApp experience</li>
+    <li>Downloadable reports (CSV)</li>
+    <li>Trained and evaluated Decision Tree model</li>
+  </ul>
+</div>
+
+<div class="slide">
+  <h1>Next Steps</h1>
+  <ul>
+    <li>Pilot with 3-5 real shops for feedback and real data</li>
+    <li>Connect to a live WhatsApp Business number (via Twilio)</li>
+    <li>Convert pilot shops to paying customers</li>
+  </ul>
+</div>
+
+</div>
+<div class="nav">
+  <button id="prevBtn">← Prev</button>
+  <div class="dots" id="dots"></div>
+  <button id="nextBtn">Next →</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const dotsEl = document.getElementById('dots');
+let cur = 0;
+slides.forEach((_,i)=>{ const d=document.createElement('div'); d.className='dot'+(i===0?' active':''); dotsEl.appendChild(d); });
+const dots = document.querySelectorAll('.dot');
+function show(i){
+  slides.forEach((s,idx)=>s.classList.toggle('active', idx===i));
+  dots.forEach((d,idx)=>d.classList.toggle('active', idx===i));
+  document.getElementById('prevBtn').disabled = i===0;
+  document.getElementById('nextBtn').disabled = i===slides.length-1;
+  cur = i;
+}
+document.getElementById('prevBtn').onclick = ()=>show(Math.max(cur-1,0));
+document.getElementById('nextBtn').onclick = ()=>show(Math.min(cur+1,slides.length-1));
+document.addEventListener('keydown', e=>{ if(e.key==='ArrowRight') show(Math.min(cur+1,slides.length-1)); if(e.key==='ArrowLeft') show(Math.max(cur-1,0)); });
+show(0);
+</script>
+</body>
+</html>

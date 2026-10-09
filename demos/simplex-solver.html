@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Simplex Algorithm Solver</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c16;
+    --bg2: #0d1024;
+    --panel: #131729;
+    --panel2: #1a1f38;
+    --panel3: #212748;
+    --text: #eef0fb;
+    --muted: #8d93bd;
+    --accent: #7c9eff;
+    --accent-soft: #4a5fd9;
+    --accent2: #5eead4;
+    --accent2-soft: #14b892;
+    --warn: #ffb84d;
+    --danger: #ff6b81;
+    --border: #262c4d;
+    --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 8px 24px -12px rgba(0,0,0,0.5);
+    --mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg: #f3f4fb;
+      --bg2: #eef0fc;
+      --panel: #ffffff;
+      --panel2: #f4f5fd;
+      --panel3: #eaecfa;
+      --text: #171a2e;
+      --muted: #666d94;
+      --accent: #4b63e8;
+      --accent-soft: #eef0ff;
+      --accent2: #0d9d7f;
+      --accent2-soft: #e3fbf4;
+      --warn: #b8720a;
+      --danger: #d33c56;
+      --border: #e2e4f5;
+      --shadow: 0 1px 2px rgba(30,35,90,0.06), 0 8px 24px -14px rgba(30,35,90,0.18);
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #f3f4fb;
+    --bg2: #eef0fc;
+    --panel: #ffffff;
+    --panel2: #f4f5fd;
+    --panel3: #eaecfa;
+    --text: #171a2e;
+    --muted: #666d94;
+    --accent: #4b63e8;
+    --accent-soft: #eef0ff;
+    --accent2: #0d9d7f;
+    --accent2-soft: #e3fbf4;
+    --warn: #b8720a;
+    --danger: #d33c56;
+    --border: #e2e4f5;
+    --shadow: 0 1px 2px rgba(30,35,90,0.06), 0 8px 24px -14px rgba(30,35,90,0.18);
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    background:
+      radial-gradient(1200px 600px at 15% -10%, rgba(124,158,255,0.10), transparent 60%),
+      radial-gradient(900px 500px at 100% 0%, rgba(94,234,212,0.07), transparent 55%),
+      var(--bg);
+    color: var(--text);
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 36px 18px 70px;
+  }
+  .hero {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 6px;
+  }
+  .hero-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    box-shadow: 0 6px 20px -6px rgba(124,158,255,0.5);
+    flex-shrink: 0;
+  }
+  h1 {
+    font-size: 1.65rem;
+    font-weight: 800;
+    margin: 0;
+    letter-spacing: -0.02em;
+    background: linear-gradient(90deg, var(--text), var(--text) 60%, var(--accent));
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+  .sub {
+    color: var(--muted);
+    font-size: 0.92rem;
+    margin: 8px 0 26px;
+    max-width: 640px;
+    line-height: 1.55;
+  }
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 20px 22px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+    animation: fadeUp 0.35s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .panel h2 {
+    font-size: 0.98rem;
+    font-weight: 700;
+    margin: 0 0 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text);
+  }
+  .panel h2 .step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 7px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: 0.72rem;
+    font-weight: 800;
+  }
+  :root[data-theme="light"] .panel h2 .step-num,
+  @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .panel h2 .step-num { color: var(--accent); } }
+  label {
+    display: block;
+    font-size: 0.76rem;
+    color: var(--muted);
+    margin-bottom: 5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  input[type=text], input[type=number], select {
+    width: 100%;
+    background: var(--panel2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    border-radius: 9px;
+    padding: 9px 11px;
+    font-size: 0.95rem;
+    font-family: var(--mono);
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+  select { font-family: 'Inter', sans-serif; font-weight: 600; }
+  input:focus, select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(124,158,255,0.18);
+  }
+  .row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .obj-row { margin-bottom: 6px; }
+  .term {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--panel2);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 4px 8px;
+    transition: border-color 0.15s ease;
+  }
+  .term:focus-within { border-color: var(--accent); }
+  .term input[type=number], .term input[type=text] {
+    width: 60px;
+    border: none;
+    background: transparent;
+    padding: 4px 2px;
+  }
+  .term input[type=number]:focus, .term input[type=text]:focus { box-shadow: none; }
+  .term span { color: var(--muted); font-size: 0.85rem; font-weight: 600; font-family: var(--mono); }
+  .constraint {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 9px;
+    flex-wrap: wrap;
+    padding: 8px 10px;
+    border-radius: 10px;
+    background: var(--panel2);
+    border: 1px solid var(--border);
+  }
+  .constraint select { width: 60px; flex-shrink: 0; padding: 8px 4px; text-align: center; font-family: var(--mono); }
+  .constraint input[type=number].rhs, .constraint input[type=text].rhs { width: 88px; flex-shrink: 0; background: var(--panel); }
+  .constraint .term { background: var(--panel); }
+  button {
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 18px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    font-family: inherit;
+    transition: transform 0.08s ease, opacity 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+  }
+  button:active { transform: scale(0.96); }
+  button:disabled { cursor: not-allowed; }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent), #5b7cf5);
+    color: #08091a;
+    box-shadow: 0 6px 16px -6px rgba(124,158,255,0.55);
+  }
+  .btn-primary:hover:not(:disabled) { filter: brightness(1.08); }
+  .btn-secondary {
+    background: var(--panel2);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-secondary:hover:not(:disabled) { background: var(--panel3); }
+  .btn-danger { background: transparent; color: var(--danger); border: 1px solid var(--danger); }
+  .btn-small { padding: 7px 13px; font-size: 0.8rem; border-radius: 8px; }
+  .toolbar { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; align-items: center; }
+  .var-count-row { margin-bottom: 4px; }
+  .example-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--border);
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 0.82rem;
+    font-family: var(--mono);
+  }
+  table.tab-table { display: table; }
+  .table-scroll {
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+  }
+  th, td {
+    border: 1px solid var(--border);
+    padding: 8px 12px;
+    text-align: center;
+    white-space: nowrap;
+  }
+  th { background: var(--panel2); color: var(--muted); font-weight: 700; font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.03em; }
+  td.basis-col, th.basis-col { background: var(--panel2); font-weight: 700; color: var(--accent); }
+  td.pivot-cell {
+    background: rgba(124,158,255,0.32);
+    font-weight: 800;
+    color: var(--text);
+    box-shadow: inset 0 0 0 2px var(--accent);
+    border-radius: 4px;
+    position: relative;
+  }
+  td.pivot-col { background: rgba(124,158,255,0.10); }
+  tr.pivot-row td { background: rgba(94,234,212,0.12); }
+  tr:last-child td { font-weight: 700; }
+  tr:last-child td.basis-col { color: var(--accent2); }
+  .iteration-block {
+    margin-bottom: 22px;
+    padding-bottom: 20px;
+    border-bottom: 1px dashed var(--border);
+  }
+  .iteration-block:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .iter-title {
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--accent2);
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .explain {
+    font-size: 0.87rem;
+    color: var(--muted);
+    margin-top: 12px;
+    line-height: 1.6;
+    background: var(--panel2);
+    border-radius: 10px;
+    padding: 12px 14px;
+    border-left: 3px solid var(--accent);
+  }
+  .explain b { color: var(--text); }
+  .result-box {
+    background: linear-gradient(135deg, rgba(124,158,255,0.14), rgba(94,234,212,0.10));
+    border: 1px solid var(--accent);
+    border-radius: 14px;
+    padding: 20px;
+    margin-top: 14px;
+    box-shadow: var(--shadow);
+  }
+  .result-box h3 { margin: 0 0 12px; font-size: 1.15rem; display: flex; align-items: center; gap: 4px; }
+  .result-box .sol-line { font-family: var(--mono); font-size: 1rem; }
+  .result-box .sol-line b { color: var(--text); }
+  .badge {
+    display: inline-block;
+    background: var(--accent2);
+    color: #06231b;
+    font-size: 0.68rem;
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: 999px;
+    margin-left: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    vertical-align: middle;
+  }
+  .badge.warn { background: var(--warn); color: #3a1f00; }
+  .error-box {
+    background: rgba(255,107,129,0.10);
+    border: 1px solid var(--danger);
+    border-radius: 14px;
+    padding: 16px 18px;
+    color: var(--danger);
+    font-size: 0.9rem;
+    margin-top: 14px;
+    line-height: 1.55;
+    box-shadow: var(--shadow);
+  }
+  .error-box b { color: var(--text); }
+  .hint {
+    font-size: 0.78rem;
+    color: var(--muted);
+    margin-top: 10px;
+  }
+  .example-link {
+    background: var(--panel2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    cursor: pointer;
+    padding: 6px 12px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    border-radius: 999px;
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+  .example-link:hover { border-color: var(--accent); color: var(--accent); }
+  .example-label { font-size: 0.76rem; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; width: 100%; margin-bottom: 2px; }
+  .progress-track {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 16px;
+  }
+  .progress-seg {
+    flex: 1;
+    height: 5px;
+    border-radius: 3px;
+    background: var(--panel2);
+    overflow: hidden;
+  }
+  .progress-seg.done { background: var(--accent2); }
+  .progress-seg.active { background: var(--accent); }
+  .step-pill {
+    font-weight: 700;
+    color: var(--muted);
+    font-size: 0.82rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .phase-tag {
+    display: inline-block;
+    background: var(--panel3);
+    color: var(--accent);
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 2px 9px;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+  .sens-table { margin-top: 4px; }
+  .sens-table th, .sens-table td { padding: 6px 10px; font-size: 0.8rem; }
+  .why { background: rgba(124,158,255,0.07); border-left: 3px solid var(--accent); border-radius: 8px; padding: 10px 14px; margin: 10px 0; font-size: 0.86rem; line-height: 1.65; color: var(--muted); }
+  .why b { color: var(--text); }
+  .why .tag { display:inline-block; font-size:0.68rem; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; color: var(--accent); margin-right:6px; }
+  .frac { font-family: var(--mono); white-space: nowrap; }
+  .setup-table td, .setup-table th { padding: 6px 10px; font-size: 0.8rem; text-align:left; white-space: normal; }
+  @media print {
+    #inputSection, .toolbar, .progress-track, #prevStepBtn, #nextStepBtn,
+    #exportCsvBtn, #exportPdfBtn, .hero, .sub { display: none !important; }
+    body { background: #fff !important; color: #000 !important; }
+    .panel { box-shadow: none !important; border: 1px solid #ccc !important; break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div class="hero-icon">📐</div>
+    <h1>Simplex Algorithm Solver</h1>
+  </div>
+  <div class="sub">Solve linear programs step-by-step using the tableau method — every step explained (what we do and why), with exact fractions and a symbolic M — — supports ≤, ≥ and = constraints via Two-Phase or Big-M, maximize or minimize, with automatic detection of degenerate, unbounded, infeasible, and alternate-optimal cases, plus sensitivity analysis, a graphical view for 2-variable problems, and CSV/PDF export.</div>
+
+  <div id="inputSection">
+  <div class="panel">
+    <h2><span class="step-num">1</span>Problem size</h2>
+    <div class="row var-count-row">
+      <div>
+        <label>Variables</label>
+        <input type="number" id="numVars" min="1" max="6" value="2">
+      </div>
+      <div>
+        <label>Constraints</label>
+        <input type="number" id="numCons" min="1" max="8" value="3">
+      </div>
+      <div>
+        <label>Method</label>
+        <select id="methodSel">
+          <option value="twophase" selected>Two-Phase</option>
+          <option value="bigm">Big-M</option>
+        </select>
+      </div>
+      <div style="align-self:flex-end;">
+        <button class="btn-secondary" id="rebuildBtn">Rebuild form</button>
+      </div>
+    </div>
+    <div class="example-row">
+      <div class="example-label">Try an example</div>
+      <button class="example-link" id="exampleBtn">🎯 Standard LP</button>
+      <button class="example-link" id="exAltBtn">🔀 Alternate optima</button>
+      <button class="example-link" id="exUnbBtn">🚀 Unbounded</button>
+      <button class="example-link" id="exInfBtn">🚫 Infeasible</button>
+      <button class="example-link" id="exDegBtn">🔁 Degenerate</button>
+      <button class="example-link" id="exBigMBtn">📓 Big-M (minimise)</button>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2><span class="step-num">2</span>Objective function
+      <select id="objSense" style="width:auto; padding:4px 8px; font-size:0.78rem; margin-left:4px;">
+        <option value="max" selected>Maximize</option>
+        <option value="min">Minimize</option>
+      </select>
+    </h2>
+    <div id="objRow" class="row obj-row"></div>
+  </div>
+
+  <div class="panel">
+    <h2><span class="step-num">3</span>Constraints</h2>
+    <div id="consList"></div>
+  </div>
+
+  <div class="toolbar">
+    <button class="btn-primary" id="solveBtn">Solve ▶</button>
+    <button class="btn-secondary" id="resetBtn">Reset</button>
+  </div>
+  </div>
+
+  <div id="output"></div>
+</div>
+
+<script>
+const state = { numVars: 2, numCons: 3 };
+let stepState = null; // { iterations, finalBasis, varNames, n, m, totalCols, unbounded, currentStep }
+
+function buildObjectiveRow() {
+  const objRow = document.getElementById('objRow');
+  objRow.innerHTML = '';
+  const lead = document.createElement('span');
+  lead.textContent = 'Z =';
+  lead.style.fontWeight = '600';
+  objRow.appendChild(lead);
+  for (let j = 0; j < state.numVars; j++) {
+    const term = document.createElement('div');
+    term.className = 'term';
+    term.innerHTML = `<input type="text" inputmode="text" id="obj_${j}" value="${j===0?3:5}"><span>x${j+1}</span>`;
+    objRow.appendChild(term);
+    if (j < state.numVars - 1) {
+      const plus = document.createElement('span');
+      plus.textContent = '+';
+      plus.style.color = 'var(--muted)';
+      objRow.appendChild(plus);
+    }
+  }
+}
+
+function buildConstraints() {
+  const consList = document.getElementById('consList');
+  consList.innerHTML = '';
+  for (let i = 0; i < state.numCons; i++) {
+    const row = document.createElement('div');
+    row.className = 'constraint';
+    let inner = '';
+    for (let j = 0; j < state.numVars; j++) {
+      inner += `<div class="term"><input type="text" inputmode="text" id="a_${i}_${j}" value="1"><span>x${j+1}</span></div>`;
+      if (j < state.numVars - 1) inner += `<span style="color:var(--muted)">+</span>`;
+    }
+    inner += `<select id="op_${i}"><option value="le" selected>≤</option><option value="ge">≥</option><option value="eq">=</option></select>`;
+    inner += `<input type="text" inputmode="text" class="rhs" id="b_${i}" value="10">`;
+    row.innerHTML = inner;
+    consList.appendChild(row);
+  }
+}
+
+function rebuild() {
+  state.numVars = Math.max(1, Math.min(6, parseInt(document.getElementById('numVars').value) || 2));
+  state.numCons = Math.max(1, Math.min(8, parseInt(document.getElementById('numCons').value) || 1));
+  document.getElementById('numVars').value = state.numVars;
+  document.getElementById('numCons').value = state.numCons;
+  buildObjectiveRow();
+  buildConstraints();
+  document.getElementById('output').innerHTML = '';
+}
+
+document.getElementById('rebuildBtn').addEventListener('click', rebuild);
+document.getElementById('resetBtn').addEventListener('click', () => {
+  document.getElementById('numVars').value = 2;
+  document.getElementById('numCons').value = 3;
+  document.getElementById('objSense').value = 'max';
+  document.getElementById('methodSel').value = 'twophase';
+  rebuild();
+});
+
+document.getElementById('exampleBtn').addEventListener('click', () => {
+  document.getElementById('numVars').value = 2;
+  document.getElementById('numCons').value = 3;
+  rebuild();
+  document.getElementById('obj_0').value = 3;
+  document.getElementById('obj_1').value = 5;
+  const cons = [
+    [1,0,'le',4],
+    [0,2,'le',12],
+    [3,2,'le',18]
+  ];
+  cons.forEach((c, i) => {
+    document.getElementById(`a_${i}_0`).value = c[0];
+    document.getElementById(`a_${i}_1`).value = c[1];
+    document.getElementById(`op_${i}`).value = c[2];
+    document.getElementById(`b_${i}`).value = c[3];
+  });
+});
+
+function loadCase(vars, cons, obj) {
+  document.getElementById('numVars').value = vars;
+  document.getElementById('numCons').value = cons.length;
+  rebuild();
+  obj.forEach((v, j) => document.getElementById(`obj_${j}`).value = v);
+  cons.forEach((c, i) => {
+    for (let j = 0; j < vars; j++) document.getElementById(`a_${i}_${j}`).value = c[0][j];
+    document.getElementById(`op_${i}`).value = c[1];
+    document.getElementById(`b_${i}`).value = c[2];
+  });
+}
+
+// Classic alternate-optima example: objective parallel to a constraint edge
+document.getElementById('exAltBtn').addEventListener('click', () => {
+  loadCase(2, [
+    [[1,1],'le',4],
+    [[2,1],'le',6]
+  ], [4,4]);
+});
+
+// Unbounded: feasible region open, objective can grow forever
+document.getElementById('exUnbBtn').addEventListener('click', () => {
+  loadCase(2, [
+    [[1,-1],'le',4],
+    [[1,0],'ge',1]
+  ], [2,3]);
+});
+
+// Infeasible: constraints contradict each other
+document.getElementById('exInfBtn').addEventListener('click', () => {
+  loadCase(2, [
+    [[1,1],'le',4],
+    [[1,1],'ge',10]
+  ], [2,3]);
+});
+
+// Degenerate: ties in the ratio test during solving
+document.getElementById('exDegBtn').addEventListener('click', () => {
+  loadCase(2, [
+    [[1,0],'le',4],
+    [[0,1],'le',4],
+    [[1,1],'le',8]
+  ], [2,3]);
+});
+
+
+// Big-M minimisation example (the one from the class notes)
+document.getElementById('exBigMBtn').addEventListener('click', () => {
+  loadCase(2, [
+    [[3,1],'ge',3],
+    [[4,3],'ge',6],
+    [[1,2],'le',4]
+  ], [4,1]);
+  document.getElementById('objSense').value = 'min';
+  document.getElementById('methodSel').value = 'bigm';
+});
+
+// =====================================================================
+//  EXACT ARITHMETIC  (fractions + symbolic M)
+// =====================================================================
+function babs(a) { return a < 0n ? -a : a; }
+function bgcd(a, b) { a = babs(a); b = babs(b); while (b) { const t = a % b; a = b; b = t; } return a; }
+
+class Fr {
+  constructor(n, d = 1n) {
+    n = BigInt(n); d = BigInt(d);
+    if (d === 0n) throw new Error('Division by zero');
+    if (d < 0n) { n = -n; d = -d; }
+    const g = bgcd(n, d);
+    if (g > 1n) { n /= g; d /= g; }
+    this.n = n; this.d = d;
+  }
+  add(o) { return new Fr(this.n * o.d + o.n * this.d, this.d * o.d); }
+  sub(o) { return new Fr(this.n * o.d - o.n * this.d, this.d * o.d); }
+  mul(o) { return new Fr(this.n * o.n, this.d * o.d); }
+  div(o) { return new Fr(this.n * o.d, this.d * o.n); }
+  neg() { return new Fr(-this.n, this.d); }
+  isZero() { return this.n === 0n; }
+  isOne() { return this.n === 1n && this.d === 1n; }
+  sign() { return this.n > 0n ? 1 : (this.n < 0n ? -1 : 0); }
+  cmp(o) { const l = this.n * o.d, r = o.n * this.d; return l < r ? -1 : (l > r ? 1 : 0); }
+  num() { return Number(this.n) / Number(this.d); }
+  str() { return this.d === 1n ? this.n.toString() : `${this.n}/${this.d}`; }
+}
+const F0 = new Fr(0), F1 = new Fr(1);
+
+function parseDec(t) {
+  const m = t.match(/^([+-]?)(\d+)?(?:\.(\d+))?$/);
+  if (!m || (!m[2] && !m[3])) return null;
+  const ip = m[2] || '0', fp = m[3] || '';
+  let n = BigInt(ip + fp);
+  if (m[1] === '-') n = -n;
+  return new Fr(n, 10n ** BigInt(fp.length));
+}
+// accepts: 3   -2   0.6   1/2   -2/3   1.5/3
+function parseFr(s) {
+  const t = String(s).trim().replace(/\s+/g, '').replace(/−/g, '-');
+  if (t === '') return F0;
+  const parts = t.split('/');
+  if (parts.length > 2) return null;
+  const a = parseDec(parts[0]);
+  if (!a) return null;
+  if (parts.length === 1) return a;
+  const b = parseDec(parts[1]);
+  if (!b || b.isZero()) return null;
+  return a.div(b);
+}
+
+// number of the form  a + b·M   (M = a symbol standing for a huge positive number)
+class MN {
+  constructor(a, b) { this.a = a || F0; this.b = b || F0; }
+  static fr(f) { return new MN(f, F0); }
+  add(o) { return new MN(this.a.add(o.a), this.b.add(o.b)); }
+  sub(o) { return new MN(this.a.sub(o.a), this.b.sub(o.b)); }
+  neg() { return new MN(this.a.neg(), this.b.neg()); }
+  mul(o) {
+    if (!this.b.isZero() && !o.b.isZero()) throw new Error('Internal error: M² term');
+    return new MN(this.a.mul(o.a), this.a.mul(o.b).add(this.b.mul(o.a)));
+  }
+  divFr(f) { return new MN(this.a.div(f), this.b.div(f)); }
+  isZero() { return this.a.isZero() && this.b.isZero(); }
+  hasM() { return !this.b.isZero(); }
+  // M is bigger than any ordinary number, so the M-part decides first
+  sign() { return this.b.isZero() ? this.a.sign() : this.b.sign(); }
+  cmp(o) { const c = this.b.cmp(o.b); return c !== 0 ? c : this.a.cmp(o.a); }
+  str() {
+    const A = this.a, B = this.b;
+    if (B.isZero()) return A.str();
+    const bs = B.sign(), ab = bs < 0 ? B.neg() : B;
+    let coef;
+    if (ab.isOne()) coef = '';
+    else if (ab.d === 1n) coef = ab.n.toString();
+    else coef = '(' + ab.str() + ')';
+    const mp = (bs < 0 ? '-' : '') + coef + 'M';
+    if (A.isZero()) return mp;
+    return mp + (A.sign() < 0 ? ' - ' : ' + ') + (A.sign() < 0 ? A.neg() : A).str();
+  }
+}
+const MZERO = new MN(F0, F0);
+const MBIG = new MN(F0, F1);
+
+const H = s => String(s).replace(/-/g, '−');          // pretty minus for display
+const fs = x => { const s = H(x.str()); return /[ /]/.test(s) ? '(' + s + ')' : s; };   // wrap if compound
+
+function termsStr(coefs, names) {
+  let out = '';
+  coefs.forEach((c, j) => {
+    if (c.isZero()) return;
+    const neg = c.sign() < 0, ab = neg ? c.neg() : c;
+    const cs = ab.isOne() ? '' : (ab.d === 1n ? ab.n.toString() : '(' + ab.str() + ')');
+    const t = cs + names[j];
+    out += out === '' ? (neg ? '-' : '') + t : (neg ? ' - ' : ' + ') + t;
+  });
+  return H(out || '0');
+}
+
+// Z-row as an equation:   Z - 4x1 - x2 - M R1 = 0
+function zEqStr(entries, names, rhs, zName) {
+  let out = zName;
+  entries.forEach((e, j) => {
+    if (e.isZero()) return;
+    const neg = e.sign() < 0, ab = neg ? e.neg() : e;
+    let cs;
+    if (ab.b.isZero()) cs = ab.a.isOne() ? '' : (ab.a.d === 1n ? ab.a.n.toString() : '(' + ab.a.str() + ')');
+    else if (ab.a.isZero()) cs = (ab.b.isOne() ? 'M' : ab.str()) + ' ';
+    else cs = '(' + ab.str() + ')';
+    out += (neg ? ' - ' : ' + ') + cs + names[j];
+  });
+  return H(out + ' = ' + rhs.str());
+}
+
+// =====================================================================
+//  SIMPLEX ENGINE
+// =====================================================================
+function rowLabel(i, m, zName) { return i === m ? (zName || 'Z') : `Row${i + 1}`; }
+
+// Build a Z-row from a cost vector and eliminate the basic columns (records every operation)
+function startZRow(costArr, rows, basis, totalCols, m) {
+  const raw = new Array(totalCols).fill(MZERO);
+  for (let j = 0; j < totalCols - 1; j++) raw[j] = costArr[j].neg();
+  const row = raw.slice();
+  const ops = [];
+  for (let i = 0; i < m; i++) {
+    const coeff = row[basis[i]];
+    if (coeff.isZero()) continue;
+    const before = row.slice();
+    for (let j = 0; j < totalCols; j++) row[j] = row[j].sub(coeff.mul(rows[i][j]));
+    ops.push({ kind: 'eliminate', target: m, source: i, sourceNew: false, factor: coeff, before, after: row.slice(), basicCol: basis[i], isInit: true });
+  }
+  return { row, raw, ops };
+}
+
+function doPivot(table, basis, pivotRow, pivotCol, m, totalCols, varNames) {
+  const newTable = table.map(r => r.slice());
+  const pv = table[pivotRow][pivotCol].a;
+  const ops = [];
+  ops.push({ kind: 'pivot-info', pivotRow, pivotCol, value: pv });
+  for (let j = 0; j < totalCols; j++) newTable[pivotRow][j] = table[pivotRow][j].divFr(pv);
+  ops.push({ kind: 'normalize', target: pivotRow, factor: pv, before: table[pivotRow].slice(), after: newTable[pivotRow].slice() });
+  for (let i = 0; i <= m; i++) {
+    if (i === pivotRow) continue;
+    const factor = table[i][pivotCol];
+    if (factor.isZero()) { ops.push({ kind: 'skip', target: i, pivotCol }); continue; }
+    for (let j = 0; j < totalCols; j++) newTable[i][j] = table[i][j].sub(factor.mul(newTable[pivotRow][j]));
+    ops.push({ kind: 'eliminate', target: i, source: pivotRow, sourceNew: true, factor, before: table[i].slice(), after: newTable[i].slice(), pivotCol });
+  }
+  const newBasis = basis.slice();
+  newBasis[pivotRow] = pivotCol;
+  return { table: newTable, basis: newBasis, ops };
+}
+
+function ratioTestRows(table, pivotCol, m, totalCols) {
+  const rows = []; let minRatio = null, tied = [];
+  for (let i = 0; i < m; i++) {
+    const entry = table[i][pivotCol].a, rhs = table[i][totalCols - 1].a;
+    let ratio = null, excludeReason = '';
+    if (entry.sign() > 0) {
+      ratio = rhs.div(entry);
+      if (minRatio === null || ratio.cmp(minRatio) < 0) { minRatio = ratio; tied = [i]; }
+      else if (ratio.cmp(minRatio) === 0) tied.push(i);
+    } else if (entry.sign() < 0) {
+      excludeReason = 'negative entry — skipped (a negative entry never limits how far the entering variable can grow)';
+    } else {
+      excludeReason = 'zero entry — skipped (this row does not involve the entering variable, so it places no limit)';
+    }
+    rows.push({ row: i, entry, rhs, ratio, excludeReason });
+  }
+  return { rows, tied };
+}
+
+function runPhase(table, basis, m, totalCols, forbidden, phaseLabel, iterations, maxIter, varNames, zSign, zName, intro) {
+  let iterCount = 0, pendingOps = null, firstIntro = intro;
+  const base = () => ({ tableau: table.map(r => r.slice()), basis: basis.slice(), phase: phaseLabel, zSign, zName, rowOps: pendingOps, phaseIntro: firstIntro });
+  while (iterCount < maxIter) {
+    const objR = table[m];
+    const cands = [];
+    for (let j = 0; j < totalCols - 1; j++) {
+      if (forbidden.has(j)) continue;
+      if (objR[j].sign() < 0) cands.push({ col: j, val: objR[j] });
+    }
+    if (!cands.length) {
+      iterations.push({ ...base(), pivotRow: -1, pivotCol: -1, final: true });
+      return { status: 'optimal', table, basis };
+    }
+    let best = cands[0];
+    cands.forEach(cd => { if (cd.val.cmp(best.val) < 0) best = cd; });
+    const pivotCol = best.col;
+    const rt = ratioTestRows(table, pivotCol, m, totalCols);
+    if (!rt.tied.length) {
+      iterations.push({ ...base(), pivotRow: -1, pivotCol, unbounded: true, enterInfo: { cands, chosen: pivotCol }, ratioTest: { pivotCol, rows: rt.rows, tiedRows: [], chosenRow: -1 } });
+      return { status: 'unbounded', table, basis };
+    }
+    const pivotRow = rt.tied[0];
+    iterations.push({ ...base(), pivotRow, pivotCol, degenerate: rt.tied.length > 1, enterInfo: { cands, chosen: pivotCol }, ratioTest: { pivotCol, rows: rt.rows, tiedRows: rt.tied, chosenRow: pivotRow } });
+    firstIntro = null;
+    const res = doPivot(table, basis, pivotRow, pivotCol, m, totalCols, varNames);
+    table = res.table; basis = res.basis; pendingOps = res.ops;
+    iterCount++;
+  }
+  return { status: 'cycling', table, basis };
+}
+
+function readFrom(id, what) {
+  const raw = document.getElementById(id).value;
+  const v = parseFr(raw);
+  if (v === null) throw new Error(`Couldn't read "${raw}" in ${what}. Use whole numbers, decimals (0.5) or fractions (1/2).`);
+  return v;
+}
+
+function solveSimplex() {
+  try { solveSimplexInner(); }
+  catch (e) { console.error(e); document.getElementById('output').innerHTML = `<div class="error-box">⚠️ ${e.message}</div>`; }
+}
+
+function solveSimplexInner() {
+  const n = state.numVars, m = state.numCons;
+  const sense = document.getElementById('objSense').value;      // 'max' | 'min'
+  const method = document.getElementById('methodSel').value;    // 'twophase' | 'bigm'
+
+  const cOriginal = [];
+  for (let j = 0; j < n; j++) cOriginal.push(readFrom(`obj_${j}`, `the objective (x${j + 1})`));
+  const c = sense === 'min' ? cOriginal.map(v => v.neg()) : cOriginal.slice();   // internally always maximise
+
+  const origCons = [], rawCons = [];
+  for (let i = 0; i < m; i++) {
+    let a = [];
+    for (let j = 0; j < n; j++) a.push(readFrom(`a_${i}_${j}`, `constraint ${i + 1} (x${j + 1})`));
+    let op = document.getElementById(`op_${i}`).value;
+    let b = readFrom(`b_${i}`, `constraint ${i + 1} (right-hand side)`);
+    origCons.push({ a: a.slice(), op, b });
+    let flipped = false;
+    if (b.sign() < 0) { a = a.map(v => v.neg()); b = b.neg(); op = op === 'le' ? 'ge' : (op === 'ge' ? 'le' : op); flipped = true; }
+    rawCons.push({ a, op, b, flipped });
+  }
+
+  // ---- columns
+  const colDefs = [];
+  for (let j = 0; j < n; j++) colDefs.push({ type: 'x', name: `x${j + 1}` });
+  const rowExtraCols = [];
+  let sCount = 0, aCount = 0;
+  for (let i = 0; i < m; i++) {
+    const extra = { slackCol: -1, artCol: -1, slackSign: 0 };
+    if (rawCons[i].op === 'le') {
+      sCount++; extra.slackCol = colDefs.length; extra.slackSign = 1;
+      colDefs.push({ type: 'slack', name: `S${sCount}` });
+    } else if (rawCons[i].op === 'ge') {
+      sCount++; extra.slackCol = colDefs.length; extra.slackSign = -1;
+      colDefs.push({ type: 'surplus', name: `S${sCount}` });
+      aCount++; extra.artCol = colDefs.length;
+      colDefs.push({ type: 'artificial', name: `R${aCount}` });
+    } else {
+      aCount++; extra.artCol = colDefs.length;
+      colDefs.push({ type: 'artificial', name: `R${aCount}` });
+    }
+    rowExtraCols.push(extra);
+  }
+  const totalCols = colDefs.length + 1;
+  const varNames = colDefs.map(cd => cd.name);
+
+  const table = [];
+  for (let i = 0; i < m; i++) {
+    const row = new Array(totalCols).fill(MZERO);
+    for (let j = 0; j < n; j++) row[j] = MN.fr(rawCons[i].a[j]);
+    const ex = rowExtraCols[i];
+    if (ex.slackCol !== -1) row[ex.slackCol] = MN.fr(new Fr(ex.slackSign));
+    if (ex.artCol !== -1) row[ex.artCol] = MN.fr(F1);
+    row[totalCols - 1] = MN.fr(rawCons[i].b);
+    table.push(row);
+  }
+  let basis = rowExtraCols.map(ex => ex.artCol !== -1 ? ex.artCol : ex.slackCol);
+  const artificialCols = new Set(colDefs.map((cd, idx) => cd.type === 'artificial' ? idx : -1).filter(v => v !== -1));
+  const hasArtificial = artificialCols.size > 0;
+  const realZSign = sense === 'min' ? -1 : 1;
+
+  // ---- setup page (what we do and why)
+  const setupInfo = { sense, method: hasArtificial ? method : 'plain', hasArtificial, cOriginal, n, m,
+    cons: rawCons.map((rc, i) => {
+      const ex = rowExtraCols[i], oc = origCons[i];
+      const opSym = o => o === 'le' ? '≤' : (o === 'ge' ? '≥' : '=');
+      const xs = Array.from({ length: n }, (_, j) => `x${j + 1}`);
+      let lhs = termsStr(rc.a, xs);
+      if (ex.slackCol !== -1) lhs += (ex.slackSign > 0 ? ' + ' : ' − ') + varNames[ex.slackCol];
+      if (ex.artCol !== -1) lhs += ' + ' + varNames[ex.artCol];
+      return {
+        orig: `${termsStr(oc.a, xs)} ${opSym(oc.op)} ${H(oc.b.str())}`,
+        flipped: rc.flipped, flippedText: `${termsStr(rc.a, xs)} ${opSym(rc.op)} ${H(rc.b.str())}`,
+        eq: `${lhs} = ${H(rc.b.str())}`, op: rc.op,
+        slack: ex.slackCol !== -1 ? varNames[ex.slackCol] : null, art: ex.artCol !== -1 ? varNames[ex.artCol] : null,
+        basic: varNames[basis[i]]
+      };
+    })
+  };
+
+  const iterations = [{ setup: true, setupInfo }];
+  const maxIter = 80;
+  let outcome = 'optimal';
+  let tbl = table.map(r => r.slice());
+
+  const mkCost = (realCosts, artCost) => {
+    const arr = new Array(totalCols - 1).fill(MZERO);
+    if (realCosts) for (let j = 0; j < n; j++) arr[j] = MN.fr(realCosts[j]);
+    if (artCost) artificialCols.forEach(j => arr[j] = artCost);
+    return arr;
+  };
+
+  if (hasArtificial && method === 'bigm') {
+    const st = startZRow(mkCost(c, MZERO.sub(MBIG)), tbl, basis, totalCols, m);
+    tbl.push(st.row);
+    const intro = { kind: 'bigm', raw: st.raw, ops: st.ops, zSign: realZSign, zName: 'Z' };
+    const r = runPhase(tbl, basis, m, totalCols, new Set(), 'Big-M', iterations, maxIter, varNames, realZSign, 'Z', intro);
+    tbl = r.table; basis = r.basis; outcome = r.status;
+    if (outcome === 'optimal') {
+      for (let i = 0; i < m; i++) if (artificialCols.has(basis[i]) && !tbl[i][totalCols - 1].isZero()) { outcome = 'infeasible'; break; }
+    }
+  } else if (hasArtificial) {
+    const st = startZRow(mkCost(null, MN.fr(new Fr(-1))), tbl, basis, totalCols, m);
+    tbl.push(st.row);
+    const intro1 = { kind: 'phase1', raw: st.raw, ops: st.ops, zSign: 1, zName: 'W' };
+    const r1 = runPhase(tbl, basis, m, totalCols, new Set(), 'Phase 1', iterations, maxIter, varNames, 1, 'W', intro1);
+    tbl = r1.table; basis = r1.basis;
+    if (r1.status !== 'optimal') outcome = 'infeasible';
+    else if (!tbl[m][totalCols - 1].isZero()) outcome = 'infeasible';
+    else {
+      const st2 = startZRow(mkCost(c, null), tbl.slice(0, m), basis, totalCols, m);
+      tbl[m] = st2.row;
+      const intro2 = { kind: 'phase2', raw: st2.raw, ops: st2.ops, zSign: realZSign, zName: 'Z' };
+      const r2 = runPhase(tbl, basis, m, totalCols, artificialCols, 'Phase 2', iterations, maxIter, varNames, realZSign, 'Z', intro2);
+      tbl = r2.table; basis = r2.basis; outcome = r2.status;
+    }
+  } else {
+    const st = startZRow(mkCost(c, null), tbl, basis, totalCols, m);
+    tbl.push(st.row);
+    const intro = { kind: 'plain', raw: st.raw, ops: st.ops, zSign: realZSign, zName: 'Z' };
+    const r = runPhase(tbl, basis, m, totalCols, new Set(), 'Simplex', iterations, maxIter, varNames, realZSign, 'Z', intro);
+    tbl = r.table; basis = r.basis; outcome = r.status;
+  }
+
+  // ---- alternate optima
+  let alternateInfo = null;
+  if (outcome === 'optimal') {
+    const objR = tbl[m], basisSet = new Set(basis);
+    let altCol = -1;
+    for (let j = 0; j < totalCols - 1; j++) {
+      if (artificialCols.has(j) || basisSet.has(j)) continue;
+      if (objR[j].isZero()) { altCol = j; break; }
+    }
+    if (altCol !== -1) {
+      const rt = ratioTestRows(tbl, altCol, m, totalCols);
+      if (rt.tied.length) {
+        const pivotRow = rt.tied[0];
+        iterations.push({ tableau: tbl.map(r => r.slice()), basis: basis.slice(), pivotRow, pivotCol: altCol, phase: 'Alternate optimum', alternate: true, zSign: realZSign, zName: 'Z',
+          enterInfo: null, ratioTest: { pivotCol: altCol, rows: rt.rows, tiedRows: rt.tied, chosenRow: pivotRow } });
+        const r2 = doPivot(tbl, basis, pivotRow, altCol, m, totalCols, varNames);
+        iterations.push({ tableau: r2.table.map(r => r.slice()), basis: r2.basis.slice(), pivotRow: -1, pivotCol: -1, final: true, phase: 'Alternate optimum', alternate: true, zSign: realZSign, zName: 'Z', rowOps: r2.ops });
+        alternateInfo = { table: r2.table, basis: r2.basis };
+      } else alternateInfo = { infoOnly: true };
+    }
+  }
+
+  stepState = { iterations, finalBasis: basis, varNames, n, m, totalCols, outcome, alternateInfo, artificialCols, currentStep: 0, sense, method, cOriginal, cInternal: c, rawCons, colDefs, rowExtraCols };
+  renderStep();
+}
+
+// =====================================================================
+//  RENDERING HELPERS
+// =====================================================================
+const zc = (x, zSign) => zSign === -1 ? x.neg() : x;     // Z-row is shown in the textbook sign convention
+const cellH = x => H(x.str());
+
+function opText(op, m, zSign, zName, varNames) {
+  const L = i => rowLabel(i, m, zName);
+  if (op.kind === 'pivot-info') return `Pivot element: Row${op.pivotRow + 1}, column <b>${varNames[op.pivotCol]}</b> = <b>${fs(op.value)}</b>.`;
+  if (op.kind === 'normalize') return `${L(op.target)}_new = ${L(op.target)} ÷ ${fs(op.factor)}`;
+  if (op.kind === 'skip') return `${L(op.target)}: the <b>${varNames[op.pivotCol]}</b> entry is already 0 — nothing to do, ${L(op.target)} stays the same.`;
+  const f = op.target === m ? zc(op.factor, zSign) : op.factor;
+  const src = op.sourceNew ? `${L(op.source)}_new` : L(op.source);
+  const lhsNew = op.isInit ? `${L(op.target)}_new` : `${L(op.target)}_new`;
+  if (f.sign() < 0) return `${lhsNew} = ${L(op.target)} + ${fs(f.neg())} × ${src}`;
+  return `${lhsNew} = ${L(op.target)} − ${fs(f)} × ${src}`;
+}
+function opWhy(op, m, zSign, varNames) {
+  if (op.kind === 'normalize') return `Dividing the whole pivot row by the pivot element turns the pivot into <b>1</b>, so the entering variable can be read off directly from this row.`;
+  if (op.kind === 'eliminate' && op.isInit) return `${varNames[op.basicCol]} is a starting basic variable, so its Z-row entry must be <b>0</b>. Adding the right multiple of its row cancels that entry.`;
+  if (op.kind === 'eliminate') return `Using the new pivot row, this makes the <b>${varNames[op.pivotCol]}</b> entry in this row equal to <b>0</b>, so ${varNames[op.pivotCol]} appears only in the pivot row.`;
+  return '';
+}
+
+function renderOpsList(ops, varNames, m, zSign, zName, header) {
+  const colLabels = [...varNames, 'RHS'];
+  let html = '<div class="row-ops" style="margin-top:12px;">';
+  html += `<div style="font-weight:600; font-size:0.85rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.03em; margin-bottom:8px;">${header}</div>`;
+  ops.forEach(op => {
+    if (op.kind === 'pivot-info' || op.kind === 'skip') { html += `<div class="explain" style="margin-bottom:6px;">${opText(op, m, zSign, zName, varNames)}</div>`; return; }
+    html += `<div class="explain" style="margin-bottom:10px;">`;
+    html += `<div style="font-family:'JetBrains Mono', monospace; font-size:0.82rem; margin-bottom:4px;">${opText(op, m, zSign, zName, varNames)}</div>`;
+    const why = opWhy(op, m, zSign, varNames);
+    if (why) html += `<div style="font-size:0.8rem; margin-bottom:6px;">${why}</div>`;
+    const isZ = op.target === m;
+    const show = r => r.map(x => cellH(isZ ? zc(x, zSign) : x));
+    html += `<div class="table-scroll"><table class="tab-table" style="font-size:0.74rem;"><thead><tr><th></th>`;
+    colLabels.forEach(l => html += `<th>${l}</th>`);
+    html += `</tr></thead><tbody><tr><td class="basis-col">before</td>`;
+    show(op.before).forEach(v => html += `<td>${v}</td>`);
+    html += `</tr><tr><td class="basis-col">after</td>`;
+    show(op.after).forEach(v => html += `<td style="color:var(--accent2); font-weight:600;">${v}</td>`);
+    html += `</tr></tbody></table></div></div>`;
+  });
+  return html + '</div>';
+}
+
+function renderPhaseIntro(intro, varNames, m) {
+  const { kind, raw, ops, zSign, zName } = intro;
+  const shownRaw = raw.slice(0, -1).map(x => zc(x, zSign));
+  const eq = zEqStr(shownRaw, varNames, MZERO, zName);
+  let html = '<div class="why"><span class="tag">How the Z-row is built</span>';
+  if (kind === 'bigm') html += `Each artificial variable is charged a penalty of <b>M</b> in the objective, so the objective equation is <b>${eq}</b>. `;
+  else if (kind === 'phase1') html += `Phase 1 only cares about getting rid of the artificial variables, so its objective is <b>W = −(sum of artificial variables)</b> (we maximise W, i.e. minimise the sum). Written as an equation: <b>${eq}</b>. `;
+  else if (kind === 'phase2') html += `Phase 1 succeeded (W = 0), so we now bring back the <b>real objective</b>. Its equation is <b>${eq}</b>, and the artificial columns are frozen — they may not re-enter. `;
+  else html += `The objective as an equation is <b>${eq}</b>. `;
+  if (ops.length) {
+    html += `A basic variable must have <b>0</b> in the Z-row (it already is "in" the solution, so it has nothing left to improve). Right now ${ops.map(o => `<b>${varNames[o.basicCol]}</b>`).join(' and ')} ${ops.length > 1 ? 'are' : 'is'} basic but ${ops.length > 1 ? 'have' : 'has'} a non-zero entry, so we clean the Z-row with the operation${ops.length > 1 ? 's' : ''} below.`;
+  } else html += `Every starting basic variable already has 0 in the Z-row, so nothing needs cleaning.`;
+  html += '</div>';
+  if (ops.length) html += renderOpsList(ops, varNames, m, zSign, zName, '🧮 Cleaning the Z-row (making basic columns 0)');
+  return html;
+}
+
+function renderTableau(it, varNames, n, m, totalCols) {
+  const { tableau: tab, basis, pivotRow, pivotCol, zSign, zName } = it;
+  let html = '<div class="table-scroll"><table class="tab-table"><thead><tr><th class="basis-col">Basis</th>';
+  for (let j = 0; j < varNames.length; j++) html += `<th${j === pivotCol ? ' style="background:rgba(124,158,255,0.18)"' : ''}>${varNames[j]}</th>`;
+  html += '<th>RHS</th></tr></thead><tbody>';
+  for (let i = 0; i < m; i++) {
+    html += `<tr${i === pivotRow ? ' class="pivot-row"' : ''}><td class="basis-col">${varNames[basis[i]]}</td>`;
+    for (let j = 0; j < totalCols - 1; j++) {
+      const isPivot = i === pivotRow && j === pivotCol;
+      html += `<td class="${isPivot ? 'pivot-cell' : (j === pivotCol ? 'pivot-col' : '')}">${cellH(tab[i][j])}</td>`;
+    }
+    html += `<td>${cellH(tab[i][totalCols - 1])}</td></tr>`;
+  }
+  html += `<tr><td class="basis-col">${zName}</td>`;
+  for (let j = 0; j < totalCols - 1; j++) html += `<td class="${j === pivotCol ? 'pivot-col' : ''}">${cellH(zc(tab[m][j], zSign))}</td>`;
+  html += `<td>${cellH(zc(tab[m][totalCols - 1], zSign))}</td></tr></tbody></table></div>`;
+  return html;
+}
+
+function renderWhyEnter(it, varNames, sense) {
+  const { cands, chosen } = it.enterInfo;
+  const zs = it.zSign;
+  const kindWord = zs === 1 ? 'negative' : 'positive';
+  const mostWord = zs === 1 ? 'most negative' : 'most positive';
+  const prob = it.zName === 'W' ? 'Phase 1' : (sense === 'min' ? 'minimisation' : 'maximisation');
+  const list = cands.map(cd => `<b>${varNames[cd.col]}</b> (${cellH(zc(cd.val, zs))})`).join(', ');
+  const chosenVal = cands.find(cd => cd.col === chosen).val;
+  let html = `<div class="why"><span class="tag">Step A · Is it optimal yet?</span>Look at the Z-row. In this ${prob} problem, a <b>${kindWord}</b> Z-row entry means that increasing that variable (currently 0) would improve Z. Improving columns: ${list}. Since there is at least one, the current solution is <b>not optimal</b> — we must pivot.</div>`;
+  html += `<div class="why"><span class="tag">Step B · Entering column</span><b>${varNames[chosen]}</b> enters the basis because it has the <b>${mostWord}</b> Z-row entry (${cellH(zc(chosenVal, zs))}) — the biggest improvement of Z per unit increase.`;
+  if (cands.some(cd => cd.val.hasM())) html += ` Because <b>M</b> is larger than any ordinary number, entries are compared by their <b>M-part first</b> (e.g. 7M − 4 beats 4M − 1 since 7 &gt; 4), and only then by the plain number.`;
+  html += `</div>`;
+  return html;
+}
+
+function renderRatioTest(it, varNames, m) {
+  const { pivotCol, rows, tiedRows, chosenRow } = it.ratioTest;
+  const enterName = varNames[pivotCol];
+  let html = '<div class="row-ops" style="margin-top:12px;">';
+  html += `<div style="font-weight:600; font-size:0.85rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.03em; margin-bottom:8px;">➗ Step C · Minimum ratio test (leaving row)</div>`;
+  html += `<div class="why"><span class="tag">Why</span>As <b>${enterName}</b> grows from 0, the basic variables change; one of them will hit 0 first and must leave. For each row we compute <b>RHS ÷ (${enterName}-column entry)</b> = how far ${enterName} can grow before that row's basic variable reaches 0. Only <b>positive</b> entries count (a zero or negative entry never forces the variable down). The <b>smallest</b> ratio wins — it keeps every variable ≥ 0.</div>`;
+  html += `<div class="table-scroll"><table class="tab-table" style="font-size:0.78rem;"><thead><tr><th>Row</th><th>Basic var</th><th>RHS</th><th>${enterName} entry</th><th>Ratio</th><th>Result</th></tr></thead><tbody>`;
+  rows.forEach(r => {
+    const isChosen = r.row === chosenRow, isTied = tiedRows.includes(r.row);
+    let ratioCell, resultCell;
+    if (r.ratio === null) { ratioCell = '—'; resultCell = r.excludeReason; }
+    else {
+      ratioCell = `${H(r.rhs.str())} ÷ ${fs(r.entry)} = <b>${H(r.ratio.str())}</b>`;
+      if (isChosen) resultCell = tiedRows.length > 1 ? `🏆 smallest (tie — degenerate, first tied row chosen)` : `🏆 smallest — <b>${varNames[it.basis[r.row]]}</b> leaves`;
+      else if (isTied) resultCell = 'tied for smallest, but another tied row was chosen';
+      else resultCell = 'valid, but not the smallest';
+    }
+    html += `<tr${isChosen ? ' style="background:rgba(94,234,212,0.12);"' : ''}><td>Row${r.row + 1}</td><td>${varNames[it.basis[r.row]]}</td><td>${H(r.rhs.str())}</td><td>${H(r.entry.str())}</td><td style="font-family:'JetBrains Mono', monospace;">${ratioCell}</td><td style="text-align:left; white-space:normal;">${resultCell}</td></tr>`;
+  });
+  html += '</tbody></table></div>';
+  if (chosenRow === -1) html += `<div class="explain" style="margin-top:8px;">No row has a positive entry in the ${enterName} column, so nothing stops ${enterName} from growing forever while Z keeps improving. That means the problem is <b>unbounded</b>.</div>`;
+  else {
+    const piv = it.tableau[chosenRow][pivotCol].a;
+    html += `<div class="why"><span class="tag">Step D · Pivot</span>Entering column <b>${enterName}</b> and leaving row <b>Row${chosenRow + 1}</b> (variable <b>${varNames[it.basis[chosenRow]]}</b>) meet at the <b>pivot element ${fs(piv)}</b> (highlighted in the tableau). After pivoting, <b>${enterName}</b> takes the place of <b>${varNames[it.basis[chosenRow]]}</b> in the basis. Click “Next” to see the row operations that do this.</div>`;
+  }
+  return html + '</div>';
+}
+
+function buildSolution(tab, basis, n, m, totalCols) {
+  const sol = new Array(n).fill(F0);
+  for (let i = 0; i < m; i++) if (basis[i] < n) sol[basis[i]] = tab[i][totalCols - 1].a;
+  return sol;
+}
+
+function renderSetup(info, varNames) {
+  const { sense, method, hasArtificial, cOriginal, n, cons } = info;
+  const xs = Array.from({ length: n }, (_, j) => `x${j + 1}`);
+  let html = '<div class="iteration-block"><div class="iter-title">🧾 Step 0 · Convert the problem to standard form</div>';
+  html += `<div class="why"><span class="tag">Why</span>The simplex method works on <b>equations</b> with non-negative variables, and needs a starting “corner” where some variables (the <b>basic</b> ones) are easy to read off. So every inequality is turned into an equation by adding helper variables.</div>`;
+  html += '<div class="table-scroll"><table class="tab-table setup-table"><thead><tr><th>#</th><th>Your constraint</th><th>As an equation</th><th>What we added</th><th>Why</th></tr></thead><tbody>';
+  cons.forEach((cn, i) => {
+    let added, why;
+    if (cn.op === 'le') { added = `slack <b>${cn.slack}</b>`; why = `A “≤” has unused room on the right side. The slack variable <b>${cn.slack}</b> ≥ 0 measures that unused amount. It has +1 in its own row only, so it can start as the basic variable.`; }
+    else if (cn.op === 'ge') { added = `surplus <b>${cn.slack}</b> (subtracted) and artificial <b>${cn.art}</b>`; why = `A “≥” has an excess over the right side, so we <b>subtract</b> a surplus <b>${cn.slack}</b> ≥ 0. But −1 can't start as a basic variable (it would be negative), so we also add an <b>artificial</b> variable <b>${cn.art}</b> ≥ 0 as a temporary starter. Artificials are not real — they must be driven back to 0.`; }
+    else { added = `artificial <b>${cn.art}</b>`; why = `An “=” has no slack or surplus, so there is no ready-made starting basic variable. We add an <b>artificial</b> <b>${cn.art}</b> ≥ 0 as a temporary starter; it must end at 0.`; }
+    if (cn.flipped) why = `The right side was negative, so the row was multiplied by −1 (the inequality direction flips) to make it ≥ 0: <b>${cn.flippedText}</b>. ` + why;
+    html += `<tr><td>${i + 1}</td><td>${cn.orig}</td><td class="frac">${cn.eq}</td><td>${added}</td><td>${why}</td></tr>`;
+  });
+  html += '</tbody></table></div>';
+  html += `<div class="why"><span class="tag">Starting basis</span>The starting basic variables are: ${cons.map((cn, i) => `Row${i + 1} → <b>${cn.basic}</b>`).join(', ')}. All other variables start at 0, so each basic variable simply equals its row's right-hand side.</div>`;
+  html += `<div class="why"><span class="tag">Objective</span>${sense === 'min' ? 'Minimise' : 'Maximise'} <b>Z = ${termsStr(cOriginal, xs)}</b>. `;
+  if (sense === 'min') html += `The tableau's Z-row is written in the textbook way for minimisation: the variable with the <b>most positive</b> Z-row entry enters, and we stop when no entry is positive. `;
+  else html += `The variable with the <b>most negative</b> Z-row entry enters, and we stop when no entry is negative. `;
+  html += `</div>`;
+  if (hasArtificial && method === 'bigm') html += `<div class="why"><span class="tag">Big-M method</span>Artificial variables are not allowed in a real solution, so each one is given a penalty of <b>M</b> in the objective (−M·R in a maximisation, +M·R in a minimisation). <b>M is a symbol for a huge number</b> — bigger than any number in the problem. We never replace M by a number; we keep the letter M in the tableau and compare terms by their M-part first. If an artificial variable is still positive at the end, the problem is infeasible.</div>`;
+  else if (hasArtificial) html += `<div class="why"><span class="tag">Two-Phase method</span><b>Phase 1</b> minimises the sum of the artificial variables to find a genuine starting corner (if the sum can't reach 0, the problem is infeasible). <b>Phase 2</b> then optimises the real objective from that corner, with the artificial columns frozen.</div>`;
+  else html += `<div class="why"><span class="tag">Starting point</span>Every constraint is a “≤” with a non-negative right side, so the slack variables already give a feasible starting corner (all x = 0). No artificial variables are needed.</div>`;
+  return html + '</div>';
+}
+
+function renderStep() {
+  const { iterations, varNames, n, m, totalCols, outcome, alternateInfo, artificialCols, currentStep, sense, cOriginal, rawCons, colDefs, rowExtraCols } = stepState;
+  const outEl = document.getElementById('output');
+  const total = iterations.length;
+  const it = iterations[currentStep];
+  const isLast = currentStep === total - 1;
+
+  let html = '<div class="panel"><h2>📊 Step-by-step solution</h2><div class="progress-track">';
+  for (let s = 0; s < total; s++) html += `<div class="progress-seg ${s < currentStep ? 'done' : (s === currentStep ? 'active' : '')}"></div>`;
+  html += '</div>';
+  html += `<div class="row" style="justify-content:space-between; margin-bottom:16px;">
+    <div class="step-pill">${it.setup ? 'Setup' : `Step ${currentStep} of ${total - 1}`}${it.phase ? `<span class="phase-tag">${it.phase}</span>` : ''}</div>
+    <div class="row">
+      <button class="btn-secondary btn-small" id="prevStepBtn" ${currentStep === 0 ? 'disabled style="opacity:0.35;"' : ''}>◀ Previous</button>
+      <button class="btn-primary btn-small" id="nextStepBtn" ${isLast ? 'disabled style="opacity:0.35;"' : ''}>Next ▶</button>
+    </div></div>`;
+
+  if (it.setup) {
+    html += renderSetup(it.setupInfo, varNames);
+  } else {
+    html += '<div class="iteration-block">';
+    if (it.final) html += `<div class="iter-title">${it.alternate ? '🔀 Alternate optimal tableau' : '✅ Optimal tableau reached'}</div>`;
+    else if (it.unbounded) html += `<div class="iter-title">🚀 Unbounded — no finite optimum</div>`;
+    else html += `<div class="iter-title">${it.alternate ? '🔀 Pivoting to alternate optimum' : '⚙️ Pivot step'}${it.degenerate ? ' <span class="badge warn">Degenerate tie</span>' : ''}</div>`;
+
+    if (it.phaseIntro) html += renderPhaseIntro(it.phaseIntro, varNames, m);
+    if (it.rowOps && it.rowOps.length) html += renderOpsList(it.rowOps, varNames, m, it.zSign, it.zName, '🧮 Row operations that produced this tableau');
+
+    html += `<div style="font-weight:600; font-size:0.85rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.03em; margin:12px 0 6px;">Current tableau</div>`;
+    html += renderTableau(it, varNames, n, m, totalCols);
+
+    if (it.phase === 'Big-M' && it.basis.some(b => artificialCols.has(b))) {
+      html += `<div class="explain" style="border-left:3px solid var(--warn, #e0a030); padding-left:10px;">⚠️ <b>Z = ${cellH(zc(it.tableau[m][totalCols - 1], it.zSign))} here is not the real objective yet.</b> An artificial variable is still in the basis, so this Z includes the penalty term with <b>M</b>. Z only becomes a real number once every artificial variable has left the basis.</div>`;
+    }
+
+    if (!it.final && !it.unbounded && it.enterInfo) html += renderWhyEnter(it, varNames, sense);
+    if (it.unbounded && it.enterInfo) html += renderWhyEnter(it, varNames, sense);
+    if (it.ratioTest) html += renderRatioTest(it, varNames, m);
+
+    if (it.alternate && !it.final) {
+      html += `<div class="why"><span class="tag">Why</span>A non-basic variable (<b>${varNames[it.pivotCol]}</b>) has a <b>zero</b> Z-row entry at the optimum, so raising it does not change Z. That signals <b>multiple optimal solutions</b>. Pivoting on it reaches another corner with the same Z.</div>`;
+    } else if (it.final && !it.alternate) {
+      const need = it.zSign === 1 ? 'negative' : 'positive';
+      html += `<div class="why"><span class="tag">Why we stop</span>No Z-row entry is ${need} any more, so raising any non-basic variable could only make Z worse. This tableau is <b>optimal</b>.${it.phase === 'Phase 1' ? ' Phase 1 ends here; if W = 0 we have a real feasible corner and move on to Phase 2.' : ''}</div>`;
+    }
+    html += '</div>';
+  }
+  html += '</div>';
+
+  if (isLast && !it.setup) {
+    if (outcome === 'infeasible') {
+      html += `<div class="error-box">🚫 <b>Infeasible problem.</b> ${stepState.method === 'bigm' ? 'At the optimum an artificial variable is still positive' : 'Phase 1 could not drive the sum of artificial variables to 0'}, so no point satisfies all constraints at once. There is no feasible region.</div>`;
+    } else if (outcome === 'unbounded') {
+      html += `<div class="error-box">🚀 <b>Unbounded problem.</b> The objective can be improved forever inside the feasible region — there is no finite optimum. Check whether a constraint is missing.</div>`;
+    } else if (outcome === 'cycling') {
+      html += `<div class="error-box">🔁 <b>Stopped:</b> too many iterations (possible cycling on a degenerate problem).</div>`;
+    } else {
+      const tab = it.tableau, basis = it.basis;
+      const solution = buildSolution(tab, basis, n, m, totalCols);
+      let zVal = F0;
+      solution.forEach((v, j) => { zVal = zVal.add(v.mul(cOriginal[j])); });
+      const subst = cOriginal.map((cj, j) => cj.isZero() ? null : `${fs(cj)}·${fs(solution[j])}`).filter(Boolean).join(' + ') || '0';
+      const isDegenerateSolution = basis.some((b, i) => b < n + m && tab[i][totalCols - 1].isZero());
+
+      html += `<div class="result-box"><h3>${it.alternate ? 'Alternate Optimal Solution' : 'Optimal Solution'} <span class="badge">OPTIMAL</span></h3>`;
+      html += `<div style="font-size:0.95rem; line-height:1.8;">`;
+      for (let j = 0; j < n; j++) html += `x${j + 1} = <b class="frac">${H(solution[j].str())}</b>&nbsp;&nbsp;`;
+      html += `<br>${sense === 'min' ? 'Minimum' : 'Maximum'} Z = <b class="frac" style="color:var(--accent2); font-size:1.15rem;">${H(zVal.str())}</b>`;
+      html += `</div><div class="why"><span class="tag">How we read it</span>Basic variables equal the RHS of their rows; non-basic variables are 0. Then Z = ${H(termsStr(cOriginal, xs0(n)))} evaluated at the solution: <span class="frac">Z = ${H(subst)} = ${H(zVal.str())}</span>.</div>`;
+
+      if (!it.alternate && alternateInfo) {
+        if (alternateInfo.infoOnly) html += `<div class="explain" style="margin-top:10px;">Note: a non-basic variable has a zero Z-row entry, so <b>alternate optimal solutions</b> exist along an edge, though no second vertex could be displayed.</div>`;
+        else {
+          const altSol = buildSolution(alternateInfo.table, alternateInfo.basis, n, m, totalCols);
+          html += `<div class="explain" style="margin-top:10px;">⚠️ <b>Multiple optimal solutions exist.</b> Another vertex gives the same Z: ${altSol.map((v, j) => `x${j + 1} = ${H(v.str())}`).join(', ')} — every point on the segment between the two is also optimal. See the “Alternate optimum” steps.</div>`;
+        }
+      }
+      if (isDegenerateSolution) html += `<div class="explain" style="margin-top:6px;">ℹ️ This is a <b>degenerate solution</b>: some basic variable equals 0 at this vertex.</div>`;
+      html += `<div class="row" style="margin-top:14px; gap:8px;">
+        <button class="btn-secondary btn-small" id="exportCsvBtn">⬇ Export CSV</button>
+        <button class="btn-secondary btn-small" id="exportPdfBtn">🖨 Export / Print PDF</button></div></div>`;
+
+      html += renderSensitivity(tab, basis, colDefs, rowExtraCols, rawCons, n, m, totalCols, sense);
+      html += renderGraphical(n, m, rawCons, solution);
+    }
+  }
+
+  outEl.innerHTML = html;
+  const csvBtn = document.getElementById('exportCsvBtn'), pdfBtn = document.getElementById('exportPdfBtn');
+  if (csvBtn) csvBtn.addEventListener('click', () => exportCSV(stepState));
+  if (pdfBtn) pdfBtn.addEventListener('click', () => window.print());
+  if (document.getElementById('graphCanvas')) drawGraph();
+  const prevBtn = document.getElementById('prevStepBtn'), nextBtn = document.getElementById('nextStepBtn');
+  if (prevBtn) prevBtn.addEventListener('click', () => { if (stepState.currentStep > 0) { stepState.currentStep--; renderStep(); } });
+  if (nextBtn) nextBtn.addEventListener('click', () => { if (stepState.currentStep < stepState.iterations.length - 1) { stepState.currentStep++; renderStep(); } });
+  outEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+function xs0(n) { return Array.from({ length: n }, (_, j) => `x${j + 1}`); }
+
+// =====================================================================
+//  SENSITIVITY (exact)
+// =====================================================================
+function renderSensitivity(tab, basis, colDefs, rowExtraCols, rawCons, n, m, totalCols, sense) {
+  const cInt = stepState.cInternal;
+  const idCol = rowExtraCols.map(ex => ex.artCol !== -1 ? ex.artCol : ex.slackCol);
+  const cB = basis.map(b => b < n ? cInt[b] : F0);
+  const y = [];
+  for (let i = 0; i < m; i++) { let s = F0; for (let k = 0; k < m; k++) s = s.add(cB[k].mul(tab[k][idCol[i]].a)); y.push(s); }
+  const reduced = [];
+  for (let j = 0; j < n; j++) { let s = cInt[j]; for (let i = 0; i < m; i++) s = s.sub(y[i].mul(rawCons[i].a[j])); reduced.push(s); }
+  const flip = v => sense === 'min' ? v.neg() : v;
+
+  let html = '<div class="panel"><h2>📐 Sensitivity Analysis</h2>';
+  html += '<div class="table-scroll"><table class="tab-table sens-table"><thead><tr><th>Constraint</th><th>Shadow price</th><th>Interpretation</th></tr></thead><tbody>';
+  for (let i = 0; i < m; i++) {
+    const opSym = rawCons[i].op === 'le' ? '≤' : rawCons[i].op === 'ge' ? '≥' : '=';
+    const sp = flip(y[i]);
+    html += `<tr><td>Row${i + 1} (${opSym} ${H(rawCons[i].b.str())})</td><td class="frac"><b>${H(sp.str())}</b></td><td style="text-align:left; white-space:normal;">${sp.isZero() ? 'Not binding — changing this right-hand side slightly will not change Z.' : `Each +1 on the right-hand side changes the optimal Z by <b>${H(sp.str())}</b> (locally).`}</td></tr>`;
+  }
+  html += '</tbody></table></div><div class="hint" style="margin-top:10px;">Reduced costs of the decision variables:</div>';
+  html += '<div class="table-scroll"><table class="tab-table sens-table" style="margin-top:6px;"><thead><tr><th>Variable</th><th>Reduced cost</th></tr></thead><tbody>';
+  for (let j = 0; j < n; j++) html += `<tr><td>x${j + 1}</td><td class="frac"><b>${H(flip(reduced[j]).str())}</b></td></tr>`;
+  html += '</tbody></table></div>';
+  html += `<div class="explain" style="margin-top:10px;">A shadow price is how much the optimal Z changes per extra unit of a constraint's right-hand side (valid while the same basis stays optimal). A reduced cost is the penalty for forcing a non-basic variable into the solution.</div></div>`;
+  return html;
+}
+
+// =====================================================================
+//  GRAPH
+// =====================================================================
+function renderGraphical(n, m, rawConsFr, solutionFr) {
+  if (n !== 2) return '';
+  const rawCons = rawConsFr.map(c => ({ a: c.a.map(v => v.num()), op: c.op, b: c.b.num() }));
+  const solution = solutionFr.map(v => v.num());
+  let maxX = 10, maxY = 10;
+  rawCons.forEach(c => {
+    if (Math.abs(c.a[0]) > 1e-9) maxX = Math.max(maxX, Math.abs(c.b / c.a[0]) * 1.3);
+    if (Math.abs(c.a[1]) > 1e-9) maxY = Math.max(maxY, Math.abs(c.b / c.a[1]) * 1.3);
+  });
+  maxX = Math.max(maxX, solution[0] * 1.3, 1);
+  maxY = Math.max(maxY, solution[1] * 1.3, 1);
+  const size = 380, pad = 34;
+  window.__graphData = { rawCons, solution, maxX, maxY, size, pad };
+  let html = '<div class="panel"><h2>📈 Graphical Method (2-variable view)</h2>';
+  html += `<canvas id="graphCanvas" width="${size}" height="${size}" style="width:100%; max-width:420px; display:block; margin:0 auto; border-radius:12px; border:1px solid var(--border);"></canvas>`;
+  html += `<div class="hint" style="text-align:center; margin-top:8px;">Shaded region = feasible area. Red dot = optimal vertex (x1 = ${H(solutionFr[0].str())}, x2 = ${H(solutionFr[1].str())}).</div></div>`;
+  return html;
+}
+
+function cssVar(name, fallback) {
+  const v = getComputedStyle(document.documentElement).getPropertyValue(name);
+  return v && v.trim() ? v.trim() : fallback;
+}
+
+function drawGraph() {
+  const canvas = document.getElementById('graphCanvas');
+  if (!canvas || !window.__graphData) return;
+  const { rawCons, solution, maxX, maxY, size, pad } = window.__graphData;
+  const ctx = canvas.getContext('2d');
+  const plotSize = size - pad;
+  function feasible(x, y) {
+    if (x < -1e-9 || y < -1e-9) return false;
+    for (const c of rawCons) {
+      const lhs = c.a[0] * x + c.a[1] * y;
+      if (c.op === 'le' && lhs > c.b + 1e-6) return false;
+      if (c.op === 'ge' && lhs < c.b - 1e-6) return false;
+      if (c.op === 'eq' && Math.abs(lhs - c.b) > 1e-4 * Math.max(1, Math.abs(c.b))) return false;
+    }
+    return true;
+  }
+  ctx.fillStyle = cssVar('--panel2', '#1a1f38');
+  ctx.fillRect(0, 0, size, size);
+  ctx.fillStyle = 'rgba(124,158,255,0.28)';
+  const step = 3;
+  for (let px = 0; px <= plotSize; px += step)
+    for (let py = 0; py <= plotSize; py += step) {
+      const x = (px / plotSize) * maxX, y = ((plotSize - py) / plotSize) * maxY;
+      if (feasible(x, y)) ctx.fillRect(pad + px, py, step, step);
+    }
+  const toPx = (x, y) => [pad + (x / maxX) * plotSize, size - pad - (y / maxY) * plotSize];
+  ctx.strokeStyle = cssVar('--muted', '#8d93bd'); ctx.lineWidth = 1.5;
+  ctx.beginPath(); ctx.moveTo(pad, 0); ctx.lineTo(pad, size - pad); ctx.lineTo(size, size - pad); ctx.stroke();
+  const colors = ['#ff6b81', '#ffb84d', '#5eead4', '#7c9eff', '#c792ea', '#f78fb3', '#82e0aa', '#f5b7b1'];
+  rawCons.forEach((c, idx) => {
+    ctx.strokeStyle = colors[idx % colors.length]; ctx.lineWidth = 2;
+    let pts;
+    if (Math.abs(c.a[1]) < 1e-9) { const x = c.a[0] !== 0 ? c.b / c.a[0] : 0; pts = [[x, 0], [x, maxY]]; }
+    else pts = [[0, c.b / c.a[1]], [maxX, (c.b - c.a[0] * maxX) / c.a[1]]];
+    const [x1, y1] = toPx(pts[0][0], pts[0][1]), [x2, y2] = toPx(pts[1][0], pts[1][1]);
+    ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
+  });
+  const [ox, oy] = toPx(solution[0], solution[1]);
+  ctx.fillStyle = cssVar('--danger', '#ff6b81');
+  ctx.beginPath(); ctx.arc(ox, oy, 5.5, 0, Math.PI * 2); ctx.fill();
+  ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 1.5; ctx.stroke();
+}
+
+// =====================================================================
+//  CSV
+// =====================================================================
+function exportCSV(ss) {
+  const { iterations, varNames, m, totalCols, outcome, sense } = ss;
+  const plain = s => String(s).replace(/<[^>]+>/g, '').replace(/&gt;/g, '>').replace(/,/g, ';').replace(/−/g, '-');
+  const lines = ['Simplex Solver Export', `Objective sense,${sense === 'min' ? 'Minimize' : 'Maximize'}`, `Outcome,${outcome}`, ''];
+  iterations.forEach((it, idx) => {
+    if (it.setup) { lines.push('Setup (standard form)'); it.setupInfo.cons.forEach((cn, i) => lines.push(`Row${i + 1},"${plain(cn.orig)}","${plain(cn.eq)}"`)); lines.push(''); return; }
+    lines.push(`Step ${idx},${it.phase || ''}`);
+    const ops = [...(it.phaseIntro ? it.phaseIntro.ops : []), ...(it.rowOps || [])];
+    if (ops.length) { lines.push('Row operations:'); ops.forEach(op => lines.push(`"${plain(opText(op, m, it.zSign, it.zName, varNames))}"`)); }
+    lines.push(['Basis', ...varNames, 'RHS'].join(','));
+    for (let i = 0; i < m; i++) lines.push([varNames[it.basis[i]], ...it.tableau[i].map(x => x.str())].join(','));
+    lines.push([it.zName, ...it.tableau[m].map(x => zc(x, it.zSign).str())].join(','));
+    lines.push('');
+  });
+  const blob = new Blob([lines.join('\n')], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'simplex-solution.csv';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+document.getElementById('solveBtn').addEventListener('click', solveSimplex);
+rebuild();
+
+</script>
+</body>
+</html>

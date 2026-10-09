@@ -69,25 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".skill-card")
         .forEach(card => skillObserver.observe(card));
 
-    // Fade In
-    const fadeObserver = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = "1";
-                entry.target.style.transform = "translateY(0)";
-                fadeObserver.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll(
-        ".project-card, .cert-card, .skill-card"
-    ).forEach(el => {
-        el.style.opacity = "0";
-        el.style.transform = "translateY(24px)";
-        el.style.transition = "opacity .6s ease, transform .6s ease";
-        fadeObserver.observe(el);
-    });
+    // Fade-in / reveal animations now live in enhance.js
 
     // Contact Form
     const form = document.getElementById("contact-form");
