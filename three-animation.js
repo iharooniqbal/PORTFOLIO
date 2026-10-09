@@ -8,7 +8,7 @@
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const isMobile = window.innerWidth < 768;
   const COUNT = isMobile ? 70 : 130;
-  const LINK_DIST = isMobile ? 26 : 30;
+  const LINK_DIST = isMobile ? 22 : 24;
   const BOUND = 70;
 
   const scene = new THREE.Scene();
@@ -38,8 +38,18 @@
   const pGeo = new THREE.BufferGeometry();
   pGeo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
   pGeo.setAttribute("color", new THREE.BufferAttribute(col, 3));
+  // soft round sprite so particles are dots, not squares
+  const cv = document.createElement("canvas");
+  cv.width = cv.height = 64;
+  const cx = cv.getContext("2d");
+  const grad = cx.createRadialGradient(32, 32, 0, 32, 32, 32);
+  grad.addColorStop(0, "rgba(255,255,255,1)");
+  grad.addColorStop(0.35, "rgba(255,255,255,.85)");
+  grad.addColorStop(1, "rgba(255,255,255,0)");
+  cx.fillStyle = grad; cx.fillRect(0, 0, 64, 64);
   const points = new THREE.Points(pGeo, new THREE.PointsMaterial({
-    size: 1.7, vertexColors: true, transparent: true, opacity: 0.9, sizeAttenuation: true
+    size: isMobile ? 1.5 : 1.3, map: new THREE.CanvasTexture(cv), vertexColors: true,
+    transparent: true, opacity: 0.85, sizeAttenuation: true, depthWrite: false, alphaTest: 0.02
   }));
   scene.add(points);
 
@@ -50,7 +60,7 @@
   lGeo.setAttribute("position", new THREE.BufferAttribute(lPos, 3));
   lGeo.setDrawRange(0, 0);
   const lines = new THREE.LineSegments(lGeo, new THREE.LineBasicMaterial({
-    color: 0x10d9a0, transparent: true, opacity: 0.16
+    color: 0x10d9a0, transparent: true, opacity: 0.12
   }));
   scene.add(lines);
 

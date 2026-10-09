@@ -30,6 +30,15 @@
     topBtn.addEventListener("click", function () { window.scrollTo({ top: 0, behavior: "smooth" }); });
     document.body.appendChild(topBtn);
 
+    var timeline = $(".timeline");
+    if (timeline) timeline.classList.add("tl-draw");
+    function updateTimeline() {
+      if (!timeline) return;
+      var r = timeline.getBoundingClientRect();
+      var p = (window.innerHeight * 0.72 - r.top) / r.height;
+      timeline.style.setProperty("--tp", Math.max(0, Math.min(1, p)).toFixed(3));
+    }
+
     var header = $("header");
     var ticking = false;
     function onScroll() {
@@ -39,6 +48,8 @@
       bar.style.transform = "scaleX(" + p + ")";
       if (header) header.classList.toggle("scrolled", h.scrollTop > 30);
       topBtn.classList.toggle("show", h.scrollTop > 500);
+      aurora.style.setProperty("--sy", h.scrollTop);
+      updateTimeline();
       ticking = false;
     }
     window.addEventListener("scroll", function () {
@@ -70,16 +81,18 @@
       if (reduceMotion) {
         typingSpan.textContent = roles[0];
       } else {
-        var r = 0, c = 0, del = false;
-        (function tick() {
+        var r = 0, c = roles[0].length, del = false;
+        typingSpan.textContent = roles[0];
+        setTimeout(function () { del = true; tick(); }, 1800);
+        function tick() {
           var word = roles[r];
           c += del ? -1 : 1;
           typingSpan.textContent = word.slice(0, c);
           var wait = del ? 45 : 95;
           if (!del && c === word.length) { del = true; wait = 1500; }
-          else if (del && c === 0) { del = false; r = (r + 1) % roles.length; wait = 350; }
+          else if (del && c === 0) { del = false; r = (r + 1) % roles.length; wait = 220; }
           setTimeout(tick, wait);
-        })();
+        }
       }
     }
 
@@ -220,6 +233,67 @@
       b.appendChild(s);
       setTimeout(function () { s.remove(); }, 700);
     });
+
+    /* ---------- hero name: split into letters ---------- */
+    var h1 = $(".home-content h1");
+    if (h1 && !reduceMotion) {
+      var txt = h1.textContent.trim();
+      h1.setAttribute("aria-label", txt);
+      h1.classList.add("js-split");
+      h1.innerHTML = "";
+      var n = 0;
+      txt.split(" ").forEach(function (word, wi) {
+        if (wi > 0) h1.appendChild(document.createTextNode(" "));
+        var w = document.createElement("span");
+        w.className = "w";
+        w.setAttribute("aria-hidden", "true");
+        word.split("").forEach(function (ch) {
+          var sp = document.createElement("span");
+          sp.className = "ch";
+          sp.style.setProperty("--i", n++);
+          sp.textContent = ch;
+          w.appendChild(sp);
+        });
+        h1.appendChild(w);
+      });
+    }
+
+    /* ---------- cursor ring + sparkle trail (mouse devices only) ---------- */
+    if (canHover && !reduceMotion && window.innerWidth > 768) {
+      var ring = document.createElement("div");
+      ring.className = "cursor-ring";
+      document.body.appendChild(ring);
+      var rx = 0, ry = 0, cx = 0, cy = 0, seen = false;
+      document.addEventListener("mousemove", function (e) {
+        cx = e.clientX; cy = e.clientY;
+        if (!seen) { seen = true; rx = cx; ry = cy; ring.classList.add("on"); }
+      }, { passive: true });
+      document.addEventListener("mouseleave", function () { ring.classList.remove("on"); seen = false; });
+      (function follow() {
+        rx += (cx - rx) * 0.2; ry += (cy - ry) * 0.2;
+        ring.style.transform = "translate(" + rx.toFixed(1) + "px," + ry.toFixed(1) + "px)";
+        requestAnimationFrame(follow);
+      })();
+      document.addEventListener("mouseover", function (e) {
+        var hot = e.target.closest && e.target.closest("a, button, .gallery-btn, .read-more, .skill-tag, .tag, .project-card, .cert-card");
+        ring.classList.toggle("hot", !!hot);
+      });
+
+      var lastSpark = 0, alive = 0;
+      document.addEventListener("mousemove", function (e) {
+        var now = performance.now();
+        if (now - lastSpark < 55 || alive > 14) return;
+        lastSpark = now; alive++;
+        var sp = document.createElement("span");
+        sp.className = "spark" + (Math.random() < 0.5 ? " g" : "");
+        sp.style.left = e.clientX - 3 + "px";
+        sp.style.top = e.clientY - 3 + "px";
+        sp.style.setProperty("--dx", ((Math.random() - 0.5) * 40).toFixed(0) + "px");
+        sp.style.setProperty("--dy", (10 + Math.random() * 30).toFixed(0) + "px");
+        document.body.appendChild(sp);
+        setTimeout(function () { sp.remove(); alive--; }, 800);
+      }, { passive: true });
+    }
 
     /* ---------- gallery modal: animate each image swap ---------- */
     var modalImg = $("#galleryModalImg");

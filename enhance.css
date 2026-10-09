@@ -232,3 +232,134 @@ footer::before {
   #scroll-progress, footer::before { animation: none !important; }
   .h-line::after { width: 64%; transition: none; }
 }
+
+
+/* =====================================================================
+   ROUND 2 — more motion
+   ===================================================================== */
+
+/* drifting dot-grid under everything */
+.aurora::after {
+  content: ""; position: absolute; inset: -40px;
+  background-image: radial-gradient(rgba(255, 255, 255, .09) 1px, transparent 1.2px);
+  background-size: 34px 34px;
+  -webkit-mask-image: radial-gradient(ellipse at 50% 40%, #000 25%, transparent 78%);
+          mask-image: radial-gradient(ellipse at 50% 40%, #000 25%, transparent 78%);
+  animation: gridDrift 38s linear infinite;
+}
+@keyframes gridDrift { to { transform: translate(34px, 34px); } }
+
+/* orbs drift with scroll (uses the separate `translate` property, so no clash) */
+.aurora span:nth-child(1) { translate: 0 calc(var(--sy, 0) * -0.05px); }
+.aurora span:nth-child(2) { translate: 0 calc(var(--sy, 0) * -0.09px); }
+.aurora span:nth-child(3) { translate: 0 calc(var(--sy, 0) * -0.03px); }
+
+/* flowing gradient on headings */
+h2, .stat-card h3 { background-size: 200% auto; animation: gradFlow 8s linear infinite; }
+@keyframes gradFlow { to { background-position: 200% center; } }
+
+/* hero name: letter-by-letter entrance */
+.home-content h1.js-split { animation: none; opacity: 1; }
+.home-content h1 .w { display: inline-block; white-space: nowrap; }
+.home-content h1 .ch {
+  display: inline-block; opacity: 0;
+  transform: translateY(46px) rotateX(-80deg); transform-origin: 50% 100%; filter: blur(8px);
+  animation: chIn .9s cubic-bezier(.2, .8, .2, 1) forwards;
+  animation-delay: calc(.35s + var(--i) * .055s);
+}
+@keyframes chIn { to { opacity: 1; transform: none; filter: blur(0); } }
+.home-content h1 .ch:hover { color: var(--accent2); transform: translateY(-6px) scale(1.12); transition: transform .25s, color .25s; }
+
+/* hero buttons breathe */
+.home-btns .btn { animation: slideTop .8s ease 2.2s forwards, btnGlow 3.2s ease-in-out 3.4s infinite; }
+@keyframes btnGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16, 217, 160, .0); }
+  50%      { box-shadow: 0 0 26px 2px rgba(245, 185, 66, .38); }
+}
+
+/* floating stat cards (idle bob) */
+.stat-card { animation: bob 6s ease-in-out infinite; }
+.stat-card:nth-child(2) { animation-delay: -2s; }
+.stat-card:nth-child(3) { animation-delay: -4s; }
+@keyframes bob { 0%, 100% { translate: 0 0; } 50% { translate: 0 -7px; } }
+
+/* animated rainbow-ish border on hovered project cards */
+@property --ang { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
+.project-card::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.5px; z-index: 2;
+  background: conic-gradient(from var(--ang), var(--accent1), var(--accent2), transparent 38%, transparent 62%, var(--accent1));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  opacity: 0; transition: opacity .4s ease; pointer-events: none;
+  animation: spinAng 3.6s linear infinite;
+}
+.project-card:hover::before { opacity: 1; }
+@keyframes spinAng { to { --ang: 360deg; } }
+
+/* certificate images: light sweep on hover */
+.cert-img-wrap { position: relative; overflow: hidden; display: block; }
+.cert-img-wrap::after {
+  content: ""; position: absolute; top: 0; left: -90%; width: 60%; height: 100%; pointer-events: none;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, .28), transparent); transform: skewX(-20deg);
+}
+.cert-card:hover .cert-img-wrap::after { left: 140%; transition: left .9s ease; }
+
+/* experience timeline: line draws as you scroll */
+.timeline.tl-draw::before {
+  transform-origin: top; transform: scaleY(var(--tp, 0)); opacity: .95;
+  box-shadow: 0 0 12px rgba(16, 217, 160, .55);
+}
+
+/* tech marquee */
+.marquee {
+  position: relative; z-index: 1; overflow: hidden; padding: 16px 0;
+  border-top: 1px solid rgba(255, 255, 255, .06); border-bottom: 1px solid rgba(255, 255, 255, .06);
+  background: rgba(255, 255, 255, .02);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+.marquee-track { display: flex; width: max-content; animation: marquee 34s linear infinite; }
+.marquee:hover .marquee-track { animation-play-state: paused; }
+.marquee-track span {
+  display: inline-flex; align-items: center; gap: 28px; padding-right: 28px;
+  font-family: "Space Grotesk", sans-serif; font-size: 18px; font-weight: 600; letter-spacing: .5px;
+  color: var(--text-muted); white-space: nowrap; transition: color .25s;
+}
+.marquee-track span::after { content: "✦"; color: var(--accent1); font-size: 12px; }
+.marquee-track span:hover { color: #fff; }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+/* cursor ring + sparkle trail (desktop only; created by JS) */
+.cursor-ring {
+  position: fixed; left: 0; top: 0; width: 36px; height: 36px; margin: -18px 0 0 -18px;
+  border: 1.5px solid rgba(16, 217, 160, .7); border-radius: 50%; pointer-events: none; z-index: 2000;
+  transition: width .25s, height .25s, margin .25s, background .25s, border-color .25s, opacity .3s; opacity: 0;
+}
+.cursor-ring.on { opacity: 1; }
+.cursor-ring.hot {
+  width: 58px; height: 58px; margin: -29px 0 0 -29px;
+  background: rgba(245, 185, 66, .12); border-color: rgba(245, 185, 66, .85);
+}
+.spark {
+  position: fixed; width: 6px; height: 6px; border-radius: 50%; pointer-events: none; z-index: 1999;
+  background: var(--accent2); box-shadow: 0 0 10px var(--accent2);
+  animation: sparkOut .8s ease-out forwards;
+}
+.spark.g { background: var(--accent1); box-shadow: 0 0 10px var(--accent1); }
+@keyframes sparkOut { to { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(.1); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .stat-card, h2, .stat-card h3, .marquee-track, .project-card::before, .aurora::after,
+  .home-btns .btn, .home-content h1 .ch { animation: none !important; }
+  .home-content h1 .ch { opacity: 1; transform: none; filter: none; }
+  .cursor-ring, .spark { display: none; }
+}
+@media (max-width: 768px) {
+  .marquee-track span { font-size: 15px; }
+  .cursor-ring, .spark { display: none; }
+}
+
+/* keep the hero name on one line at every desktop width */
+@media (min-width: 769px) {
+  .home-content h1 { font-size: clamp(36px, 4.7vw, 64px); white-space: nowrap; }
+}
