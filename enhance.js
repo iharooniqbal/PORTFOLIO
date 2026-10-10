@@ -7,6 +7,7 @@
 
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var canHover = window.matchMedia("(hover: hover)").matches;
+  var lite = window.matchMedia("(max-width: 768px), (hover: none) and (pointer: coarse)").matches;
 
   function $(sel, root) { return (root || document).querySelector(sel); }
   function $$(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
@@ -48,7 +49,7 @@
       bar.style.transform = "scaleX(" + p + ")";
       if (header) header.classList.toggle("scrolled", h.scrollTop > 30);
       topBtn.classList.toggle("show", h.scrollTop > 500);
-      aurora.style.setProperty("--sy", h.scrollTop);
+      if (!lite) aurora.style.setProperty("--sy", h.scrollTop);
       updateTimeline();
       ticking = false;
     }
@@ -112,7 +113,7 @@
       if (el.matches(".about-image, .timeline-item:nth-child(odd)")) el.classList.add("rv-left");
       else if (el.matches(".about-content > *, .timeline-item:nth-child(even)")) el.classList.add("rv-right");
       else if (el.matches(".stat-card, .ring-card")) el.classList.add("rv-zoom");
-      var d = Math.min(idx, 6) * 0.09;
+      var d = lite ? 0 : Math.min(idx, 6) * 0.09;
       el.style.setProperty("--d", d + "s");
     }
 
@@ -236,7 +237,7 @@
 
     /* ---------- hero name: split into letters ---------- */
     var h1 = $(".home-content h1");
-    if (h1 && !reduceMotion) {
+    if (h1 && !reduceMotion && !lite) {
       var txt = h1.textContent.trim();
       h1.setAttribute("aria-label", txt);
       h1.classList.add("js-split");

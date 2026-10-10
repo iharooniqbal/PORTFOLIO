@@ -363,3 +363,52 @@ h2, .stat-card h3 { background-size: 200% auto; animation: gradFlow 8s linear in
 @media (min-width: 769px) {
   .home-content h1 { font-size: clamp(36px, 4.7vw, 64px); white-space: nowrap; }
 }
+
+
+/* =====================================================================
+   LITE MODE — phones / touch devices: no blur, no WebGL, no idle loops
+   ===================================================================== */
+@media (max-width: 768px), (hover: none) and (pointer: coarse) {
+  /* blur is the single most expensive thing on mobile GPUs */
+  * { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+  header, header.scrolled { background: rgba(7, 20, 15, .96) !important; }
+
+  /* glow orbs -> a richer but fully static gradient + faint dot grid (no blur, no animation) */
+  .aurora span { display: none !important; }
+  .aurora::after {
+    display: block !important; animation: none !important; transform: none !important;
+    -webkit-mask-image: none !important; mask-image: none !important;
+    background-image: radial-gradient(rgba(255, 255, 255, .07) 1px, transparent 1.2px);
+    background-size: 30px 30px;
+  }
+  .aurora {
+    background:
+      radial-gradient(420px 360px at 8% 6%,  rgba(245, 185, 66, .20), transparent 70%),
+      radial-gradient(460px 420px at 100% 32%, rgba(16, 217, 160, .20), transparent 70%),
+      radial-gradient(520px 460px at 0% 78%,  rgba(16, 217, 160, .14), transparent 70%),
+      radial-gradient(380px 320px at 92% 96%, rgba(245, 185, 66, .14), transparent 70%);
+  }
+
+  /* everything that loops forever */
+  .stat-card, h2, .stat-card h3, .timeline-icon, .new-ribbon, footer::before,
+  #scroll-progress, .marquee-track, .project-card::before, .ring-card:hover .ring-icon,
+  .hero-card, .hero-card::before, .about-img, .scan-line, .typing-text span::after {
+    animation: none !important;
+  }
+  .typing-text span::after { animation: cursor .8s infinite !important; }   /* keep the blinking caret only */
+  .home-btns .btn { animation: slideTop .8s ease 2.2s forwards !important; }  /* start hidden -> must still fade in */
+  .home-image .scene::before, .orbit, .scroll-hint, .cursor-light, .cursor-ring, .spark { display: none !important; }
+  .marquee-track { animation: marquee 60s linear infinite !important; }
+
+  /* lighter reveals: short fade + small lift, no scale, no stagger */
+  .rv { transform: translateY(14px) !important; transition: opacity .45s ease, transform .45s ease !important; transition-delay: 0s !important; }
+  .rv.in { transform: none !important; opacity: 1 !important; }
+  .rv.rv-left, .rv.rv-right, .rv.rv-zoom { transform: translateY(14px) !important; }
+
+  /* no soft shadows that need big repaints */
+  .project-card, .cert-card, .exp-card, .skill-group, .stat-card, .info-card, .ring-card, .contact-card {
+    box-shadow: none !important; transform-style: flat;
+  }
+  .project-card::after, .cert-card::after, .exp-card::after, .skill-group::after,
+  .stat-card::after, .info-card::after, .ring-card::after, .contact-card::after { display: none; }
+}
