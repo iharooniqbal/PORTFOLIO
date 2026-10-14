@@ -356,7 +356,6 @@ h2, .stat-card h3 { background-size: 200% auto; animation: gradFlow 8s linear in
 }
 @media (max-width: 768px) {
   .marquee-track span { font-size: 15px; }
-  .cursor-ring, .spark { display: none; }
 }
 
 /* keep the hero name on one line at every desktop width */
@@ -368,7 +367,7 @@ h2, .stat-card h3 { background-size: 200% auto; animation: gradFlow 8s linear in
 /* =====================================================================
    LITE MODE — phones / touch devices: no blur, no WebGL, no idle loops
    ===================================================================== */
-@media (max-width: 768px), (hover: none) and (pointer: coarse) {
+@media (hover: none) and (pointer: coarse) {
   /* blur is the single most expensive thing on mobile GPUs */
   * { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
   header, header.scrolled { background: rgba(7, 20, 15, .96) !important; }
@@ -411,4 +410,18 @@ h2, .stat-card h3 { background-size: 200% auto; animation: gradFlow 8s linear in
   }
   .project-card::after, .cert-card::after, .exp-card::after, .skill-group::after,
   .stat-card::after, .info-card::after, .ring-card::after, .contact-card::after { display: none; }
+}
+
+
+/* ---------- calmer layout on phones ---------- */
+@media (max-width: 768px) {
+  .experience { padding: 76px 4% 60px; }
+  .experience .timeline::before { left: 16px; }
+  .experience .timeline .timeline-item { padding-left: 46px; }
+  .experience .timeline .timeline-icon { width: 34px; height: 34px; font-size: 16px; }
+  .experience .exp-card { padding: 16px; }
+  html[dir="rtl"] .experience .timeline::before { left: auto; right: 16px; }
+  html[dir="rtl"] .experience .timeline .timeline-item { padding: 0 46px 40px 0; }
+  html[dir="rtl"] .experience .timeline .timeline-item:last-child { padding-bottom: 0; }
+  html[dir="rtl"] .experience .timeline .timeline-icon { left: auto; right: 0; }
 }

@@ -5,9 +5,10 @@
 (function () {
   "use strict";
 
+  var root = document.documentElement;
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var canHover = window.matchMedia("(hover: hover)").matches;
-  var lite = window.matchMedia("(max-width: 768px), (hover: none) and (pointer: coarse)").matches;
+  var lite = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
 
   function $(sel, root) { return (root || document).querySelector(sel); }
   function $$(sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); }
@@ -48,7 +49,7 @@
       var p = max > 0 ? h.scrollTop / max : 0;
       bar.style.transform = "scaleX(" + p + ")";
       if (header) header.classList.toggle("scrolled", h.scrollTop > 30);
-      topBtn.classList.toggle("show", h.scrollTop > 500);
+      topBtn.classList.toggle("show", h.scrollTop > 160);
       if (!lite) aurora.style.setProperty("--sy", h.scrollTop);
       updateTimeline();
       ticking = false;
@@ -77,16 +78,21 @@
     var typingHost = $(".typing-text");
     var typingSpan = typingHost && $("span", typingHost);
     if (typingSpan) {
-      var roles = ["Data Analyst", "Web Developer", "Python Developer", "AI Enthusiast", "Freelancer"];
+      var rolesEn = ["Data Analyst", "Web Developer", "Python Developer", "AI Enthusiast", "Freelancer"];
+      var rolesUr = ["\u0688\u06CC\u0679\u0627 \u0627\u06CC\u0646\u0627\u0644\u0633\u0679 \u06C1\u0648\u06BA", "\u0648\u06CC\u0628 \u0688\u0648\u06CC\u0644\u067E\u0631 \u06C1\u0648\u06BA", "\u067E\u0627\u0626\u062A\u06BE\u0646 \u0688\u0648\u06CC\u0644\u067E\u0631 \u06C1\u0648\u06BA", "\u0627\u06D2 \u0622\u0626\u06CC \u06A9\u0627 \u0634\u0648\u0642\u06CC\u0646 \u06C1\u0648\u06BA", "\u0641\u0631\u06CC \u0644\u0627\u0646\u0633\u0631 \u06C1\u0648\u06BA"];
+      var roles = rolesEn;
+      function pickRoles() { roles = root.lang === "ur" ? rolesUr : rolesEn; }
+      pickRoles();
+      document.addEventListener("portfolio:lang", function () { pickRoles(); r = 0; c = roles[0].length; del = false; typingSpan.textContent = roles[0]; });
+      var r = 0, c = 0, del = false;
       typingHost.classList.add("js-typed");
       if (reduceMotion) {
         typingSpan.textContent = roles[0];
       } else {
-        var r = 0, c = roles[0].length, del = false;
-        typingSpan.textContent = roles[0];
+        c = roles[0].length; typingSpan.textContent = roles[0];
         setTimeout(function () { del = true; tick(); }, 1800);
         function tick() {
-          var word = roles[r];
+          var word = roles[r % roles.length];
           c += del ? -1 : 1;
           typingSpan.textContent = word.slice(0, c);
           var wait = del ? 45 : 95;
@@ -237,7 +243,17 @@
 
     /* ---------- hero name: split into letters ---------- */
     var h1 = $(".home-content h1");
-    if (h1 && !reduceMotion && !lite) {
+    var isUr = function () { return root.lang === "ur"; };
+    if (h1) {
+      // Arabic-script text must not be split letter-by-letter (it would break the joined letters)
+      document.addEventListener("portfolio:lang", function (e) {
+        if (e.detail === "ur" && h1.classList.contains("js-split")) {
+          h1.textContent = h1.getAttribute("aria-label") || h1.textContent;
+          h1.classList.remove("js-split"); h1.removeAttribute("aria-label");
+        }
+      });
+    }
+    if (h1 && !reduceMotion && !lite && !isUr()) {
       var txt = h1.textContent.trim();
       h1.setAttribute("aria-label", txt);
       h1.classList.add("js-split");
@@ -260,7 +276,7 @@
     }
 
     /* ---------- cursor ring + sparkle trail (mouse devices only) ---------- */
-    if (canHover && !reduceMotion && window.innerWidth > 768) {
+    if (canHover && !reduceMotion) {
       var ring = document.createElement("div");
       ring.className = "cursor-ring";
       document.body.appendChild(ring);
@@ -280,6 +296,7 @@
         ring.classList.toggle("hot", !!hot);
       });
 
+      /* sparkle trail */
       var lastSpark = 0, alive = 0;
       document.addEventListener("mousemove", function (e) {
         var now = performance.now();

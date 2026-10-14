@@ -3,7 +3,7 @@
    - theme colours (gold + emerald), drifting particles joined by faint lines
    - mouse + scroll parallax, pauses when the tab is hidden */
 (function () {
-  const lite = window.matchMedia("(max-width: 768px), (hover: none) and (pointer: coarse)").matches;
+  const lite = window.matchMedia("(hover: none) and (pointer: coarse)").matches;
   const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const holder = document.getElementById("three-container");
   if (!holder || reduce) return;
@@ -23,18 +23,18 @@
     const ctx = cv.getContext("2d");
     const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
     let W = 0, H = 0, P = [];
-    const LINK = 120;
+    const LINK = 100;
     function size() {
       W = window.innerWidth; H = window.innerHeight;
       cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const n = Math.max(22, Math.min(34, Math.round(W * H / 14000)));
+      const n = Math.max(14, Math.min(20, Math.round(W * H / 20000)));
       P = [];
       for (let i = 0; i < n; i++) {
         P.push({
           x: Math.random() * W, y: Math.random() * H,
           vx: (Math.random() - 0.5) * 0.35, vy: (Math.random() - 0.5) * 0.35,
-          r: 1.4 + Math.random() * 1.8, c: Math.random() < 0.3 ? "245,185,66" : "16,217,160"
+          r: 1.1 + Math.random() * 1.3, c: Math.random() < 0.3 ? "245,185,66" : "16,217,160"
         });
       }
     }
@@ -57,12 +57,12 @@
         for (let j = i + 1; j < P.length; j++) {
           const b = P[j], dx = a.x - b.x, dy = a.y - b.y, d2 = dx * dx + dy * dy;
           if (d2 < LINK * LINK) {
-            ctx.strokeStyle = "rgba(16,217,160," + (0.22 * (1 - Math.sqrt(d2) / LINK)).toFixed(3) + ")";
+            ctx.strokeStyle = "rgba(16,217,160," + (0.10 * (1 - Math.sqrt(d2) / LINK)).toFixed(3) + ")";
             ctx.lineWidth = 1;
             ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
           }
         }
-        ctx.fillStyle = "rgba(" + a.c + ",.85)";
+        ctx.fillStyle = "rgba(" + a.c + ",.55)";
         ctx.beginPath(); ctx.arc(a.x, a.y, a.r, 0, 6.2832); ctx.fill();
       }
     }
@@ -117,7 +117,7 @@
   cx.fillStyle = grad; cx.fillRect(0, 0, 64, 64);
   const points = new THREE.Points(pGeo, new THREE.PointsMaterial({
     size: isMobile ? 1.5 : 1.3, map: new THREE.CanvasTexture(cv), vertexColors: true,
-    transparent: true, opacity: 0.85, sizeAttenuation: true, depthWrite: false, alphaTest: 0.02
+    transparent: true, opacity: 0.7, sizeAttenuation: true, depthWrite: false, alphaTest: 0.02
   }));
   scene.add(points);
 
@@ -128,7 +128,7 @@
   lGeo.setAttribute("position", new THREE.BufferAttribute(lPos, 3));
   lGeo.setDrawRange(0, 0);
   const lines = new THREE.LineSegments(lGeo, new THREE.LineBasicMaterial({
-    color: 0x10d9a0, transparent: true, opacity: 0.12
+    color: 0x10d9a0, transparent: true, opacity: 0.09
   }));
   scene.add(lines);
 

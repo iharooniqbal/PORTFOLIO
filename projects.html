@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>(function(){try{var d=document.documentElement,t=localStorage.getItem('theme'),l=localStorage.getItem('lang');if(t==='light'||t==='dark')d.setAttribute('data-theme',t);if(l==='ur'){d.lang='ur';d.dir='rtl';}}catch(e){}})();</script>
+  <meta name="theme-color" content="#07140f">
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Projects by Abdullah Iqbal – HARNECT, Infinity-X AI, Social Links Hub, MySQL Payroll System.">
@@ -18,6 +21,7 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="enhance.css">
   <link rel="stylesheet" href="assistant.css">
+  <link rel="stylesheet" href="themelang.css">
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
 
   <style>
@@ -318,7 +322,7 @@
             <i class='bx bx-images'></i> View Screenshots
           </button>
           <div class="project-links">
-            <a href="https://direct-execute-app.lovable.app" class="demo" target="_blank" rel="noopener">
+            <a href="https://share-my-app-59.lovable.app" class="demo" target="_blank" rel="noopener">
               <i class='bx bx-link-external'></i> Live Demo
             </a>
             <a href="demos/stockwise-pitch-deck.html" class="source" target="_blank" rel="noopener">
@@ -351,7 +355,49 @@
         </div>
       </div>
 
-      <!-- Project 5 — Social Links -->
+      <!-- Project 5 — Modern Calculator -->
+      <div class="project-card">
+        <img src="images/calculator.jpg" alt="Modern Calculator web app">
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="tag">Web App</span>
+            <span class="tag">Google AI Studio</span>
+            <span class="tag">UI Design</span>
+          </div>
+          <h3>Modern Calculator</h3>
+          <p>A modern, clean calculator web app built with Google AI Studio — a simple, focused tool with a polished interface for everyday calculations.</p>
+          <div class="project-links">
+            <a href="https://ais-pre-vf62gvbygy5rc2d7yj72al-122770670590.asia-east1.run.app/" class="demo" target="_blank" rel="noopener">
+              <i class='bx bx-link-external'></i> Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 6 — Haroon Office (walkable portfolio) -->
+      <div class="project-card">
+        <img src="images/office.jpg" alt="Haroon Office - walkable 3D portfolio">
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="tag">JavaScript</span>
+            <span class="tag">Canvas</span>
+            <span class="tag">Interactive</span>
+            <span class="tag">Day / Night</span>
+          </div>
+          <h3>Haroon Office – Walkable 3D Portfolio</h3>
+          <p>An interactive version of this portfolio built as a walkable isometric office. Click the floor or use the arrow keys / WASD to walk between six rooms (Reception, Work Studio, Meeting Room, Learning Hub, Operations and Boss Cabin) that hold his projects, experience, education and skills. Includes a day / night switch, zoom, a replayable entrance and a plain CV view.</p>
+          <button class="gallery-btn" data-gallery="office-gallery">
+            <i class='bx bx-images'></i> View Screenshots
+          </button>
+          <div class="project-links">
+            <a href="demos/office.html" class="demo" target="_blank" rel="noopener">
+              <i class='bx bx-link-external'></i> Live Demo
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 7 — Social Links -->
       <div class="project-card">
         <img src="images/image3.jpeg" alt="Social Links Hub">
 
@@ -377,7 +423,7 @@
         </div>
       </div>
 
-      <!-- Project 6 — MySQL -->
+      <!-- Project 8 — MySQL -->
       <div class="project-card">
         <img src="images/database.jpg" alt="MySQL Employee Payroll System">
         <div class="project-body">
@@ -427,6 +473,9 @@
   <script src="three-animation.js"></script>
   <script src="script.js"></script>
   <script src="enhance.js"></script>
+  <script src="themelang.js"></script>
+  <script src="i18n-ur.js"></script>
+  <script src="i18n.js"></script>
   <script src="assistant.js"></script>
   <script>
     (function(){
@@ -493,6 +542,11 @@
           { src: "images/gallery/simplex-steps.jpg", alt: "Simplex Solver step-by-step tableau" },
           { src: "images/gallery/simplex-result.jpg", alt: "Simplex Solver optimal solution" },
           { src: "images/gallery/simplex-graph.jpg", alt: "Simplex Solver graphical method" }
+        ],
+        "office-gallery": [
+          { src: "images/gallery/office-1.jpg", alt: "Haroon Office reception with the guide dialog" },
+          { src: "images/gallery/office-2.jpg", alt: "Walking through the office floor" },
+          { src: "images/gallery/office-3.jpg", alt: "Haroon Office in night mode" }
         ],
         "harnect-gallery": [
           { src: "images/gallery/harnect-welcome.jpg", alt: "HARNECT welcome screen" },

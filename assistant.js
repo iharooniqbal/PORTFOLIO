@@ -23,9 +23,11 @@
     insta: { t: "Instagram", h: "https://www.instagram.com/iharoon_iqbal", ext: true, alt: true },
     wa: { t: "WhatsApp", h: "https://wa.me/923156664014", ext: true },
     mail: { t: "Email him", h: "mailto:harooniqbal.ahi@gmail.com" },
-    stockLive: { t: "StockWise live demo", h: "https://direct-execute-app.lovable.app", ext: true },
+    stockLive: { t: "StockWise live demo", h: "https://share-my-app-59.lovable.app", ext: true },
     stockDeck: { t: "Pitch deck", h: "demos/stockwise-pitch-deck.html", ext: true, alt: true },
-    simplexLive: { t: "Try the solver", h: "demos/simplex-solver.html", ext: true }
+    simplexLive: { t: "Try the solver", h: "demos/simplex-solver.html", ext: true },
+    calcLive: { t: "Open the calculator", h: "https://ais-pre-vf62gvbygy5rc2d7yj72al-122770670590.asia-east1.run.app/", ext: true },
+    officeLive: { t: "Walk the office", h: "demos/office.html", ext: true }
   };
 
   var MAIN_CHIPS = ["Who is Abdullah?", "Projects", "Skills", "Experience", "Education", "Certificates", "Contact", "Download CV"];
@@ -72,8 +74,8 @@
     },
     {
       id: "experience",
-      keys: [["experience", 4], ["work", 2], ["job", 3], ["internship", 4], ["intern", 4], ["meezan", 5], ["bank", 3], ["banking", 3], ["branch", 3], ["account opening", 4], ["career", 3], ["employment", 3], ["worked", 3], ["jahanian", 4], ["professional", 2]],
-      html: "<p><b>Branch Service Intern — Meezan Bank</b> (Jahanian Branch, 4 Jul – 16 Aug 2026).</p><ul><li>Handled account opening for new customers and checked forms and documents for accuracy and compliance.</li><li>Worked with the Account Opening Form for individual, joint and sole-proprietorship accounts (CNIC, NTN, FATCA fields).</li><li>Used the bank's internal software to enter and process customer account records.</li><li>Dealt directly with customers, guiding them through account opening steps.</li></ul>",
+      keys: [["experience", 4], ["work", 2], ["job", 3], ["internship", 4], ["intern", 4], ["meezan", 5], ["bank", 3], ["banking", 3], ["branch", 3], ["account opening", 4], ["career", 3], ["employment", 3], ["worked", 3], ["jahanian", 4], ["professional", 2], ["independent", 3], ["trainee", 3]],
+      html: "<p>Abdullah's experience:</p><ul><li><b>Branch Service Intern — Meezan Bank</b> (Jahanian Branch, 4 Jul – 16 Aug 2026): account opening, document checks for accuracy and compliance, and the bank's internal software.</li><li><b>Independent Software Developer</b> (2025 – present): self-directed full-stack projects — HARNECT, Infinity-X, StockWise, the Simplex Solver and more.</li><li><b>Training:</b> Pakistan Red Crescent YABC (Sep 2026), DigiSkills Data Analytics &amp; Freelancing (Dec 2025), Simplilearn web development, SEO and affiliate marketing (2025).</li><li><b>Leadership &amp; volunteering:</b> CASPAM COLT Executive Member (2024–25) and BZU Job Fair volunteer (Apr 2025).</li></ul>",
       links: [L.exp, L.certs],
       chips: ["Leadership", "Projects", "Education"]
     },
@@ -87,9 +89,9 @@
     {
       id: "projects",
       keys: [["projects", 4], ["project", 4], ["built", 3], ["build", 2], ["made", 2], ["created", 2], ["apps", 2], ["applications", 2], ["work samples", 3], ["portfolio work", 3], ["github", 1], ["demo", 2], ["showcase", 2]],
-      html: "<p>Abdullah's main projects:</p><ul><li><b>HARNECT</b> — Instagram-style social media web app (Flask)</li><li><b>Infinity-X</b> — self-learning AI chatbot with LLM failover</li><li><b>StockWise</b> — inventory &amp; expiry alerts with ML forecasting</li><li><b>Simplex Solver</b> — step-by-step linear programming tool</li><li><b>Employee Payroll System</b> — MySQL database project</li><li><b>Social Links Hub</b> — one link for all his profiles</li></ul><p>Ask about any of them for details.</p>",
+      html: "<p>Abdullah's main projects:</p><ul><li><b>HARNECT</b> — Instagram-style social media web app (Flask)</li><li><b>Infinity-X</b> — self-learning AI chatbot with LLM failover</li><li><b>StockWise</b> — inventory &amp; expiry alerts with ML forecasting</li><li><b>Simplex Solver</b> — step-by-step linear programming tool</li><li><b>Modern Calculator</b> — a clean calculator web app</li><li><b>Haroon Office</b> — this portfolio as a walkable 3D office</li><li><b>Employee Payroll System</b> — MySQL database project</li><li><b>Social Links Hub</b> — one link for all his profiles</li></ul><p>Ask about any of them for details.</p>",
       links: [L.proj, L.github],
-      chips: ["HARNECT", "Infinity-X", "StockWise", "Simplex Solver"]
+      chips: ["HARNECT", "Infinity-X", "StockWise", "Haroon Office"]
     },
     {
       id: "harnect",
@@ -118,6 +120,20 @@
       html: "<p>The <b>Simplex Algorithm Solver</b> is an interactive linear-programming tool that teaches as it solves.</p><ul><li>Step-by-step tableaus that explain the reason for every pivot</li><li>Two-Phase and Big-M methods</li><li>Detects unbounded, infeasible, degenerate and alternate-optima cases</li><li>Sensitivity analysis, a graphical 2-variable view and CSV / PDF export</li></ul><p>Built with JavaScript, HTML, CSS and Canvas.</p>",
       links: [L.simplexLive],
       chips: ["StockWise", "HARNECT", "Skills"]
+    },
+    {
+      id: "calculator",
+      keys: [["calculator", 6], ["calculators", 6], ["calc", 4], ["ai studio", 4], ["google ai studio", 5]],
+      html: "<p>The <b>Modern Calculator</b> is a clean, modern calculator web app Abdullah built with Google AI Studio — a simple, focused tool for everyday calculations.</p>",
+      links: [L.calcLive, L.proj],
+      chips: ["Haroon Office", "Simplex Solver", "Projects"]
+    },
+    {
+      id: "office",
+      keys: [["haroon office", 6], ["walkable", 5], ["3d office", 5], ["isometric", 5], ["virtual office", 5], ["office portfolio", 5], ["office", 3], ["boss cabin", 4], ["work studio", 4]],
+      html: "<p><b>Haroon Office</b> is an interactive version of this portfolio built as a walkable isometric office. Click the floor or use the arrow keys / WASD to walk between six rooms — Reception, Work Studio, Meeting Room, Learning Hub, Operations and Boss Cabin — that hold his projects, experience, education and skills.</p><p>It has a day / night switch, zoom, a replayable entrance and a plain CV view.</p>",
+      links: [L.officeLive, L.proj],
+      chips: ["Modern Calculator", "StockWise", "Projects"]
     },
     {
       id: "payroll",
@@ -183,8 +199,8 @@
     },
     {
       id: "site",
-      keys: [["this website", 5], ["this site", 5], ["this portfolio", 5], ["website", 3], ["how was this made", 5], ["built with", 3], ["made with", 3], ["three.js", 4], ["animation", 2], ["animations", 2], ["github pages", 3]],
-      html: "<p>This portfolio is a hand-built static site using <b>HTML, CSS and JavaScript</b>, with a Three.js particle background on desktop and a lighter mode on phones. It's hosted on GitHub Pages.</p>",
+      keys: [["dark mode", 5], ["light mode", 5], ["night mode", 4], ["theme", 4], ["urdu version", 5], ["in urdu", 5], ["read in urdu", 6], ["translate", 4], ["translation", 4], ["switch language", 5], ["change language", 5], ["this website", 5], ["this site", 5], ["this portfolio", 5], ["website", 3], ["how was this made", 5], ["built with", 3], ["made with", 3], ["three.js", 4], ["animation", 2], ["animations", 2], ["github pages", 3]],
+      html: "<p>This portfolio is a hand-built static site using <b>HTML, CSS and JavaScript</b>, with a Three.js particle background on desktop and a lighter mode on phones. It's hosted on GitHub Pages.</p><p>Use the <b>sun / moon button</b> in the top bar to switch between light and dark mode, and the <b>اردو / EN</b> button to read the whole site in Urdu (right-to-left) or English. I answer in English either way.</p>",
       links: [L.proj],
       chips: ["Projects", "Skills"]
     },
@@ -263,7 +279,7 @@
       it.keys.forEach(function (k) { if (hasWord(text, tokens, k[0])) s += k[1]; });
       if (s > bestScore) { bestScore = s; best = it; }
     });
-    var specific = best && ["harnect", "infinity", "stockwise", "simplex", "payroll", "hub"].indexOf(best.id) > -1 && bestScore >= 4;
+    var specific = best && ["harnect", "infinity", "stockwise", "simplex", "calculator", "office", "payroll", "hub"].indexOf(best.id) > -1 && bestScore >= 4;
     if (specific) return best;
 
     // 2. "does he know <tech>?"
@@ -294,7 +310,7 @@
 
   var CHIP_TO_QUERY = {
     "Hire him": "hire", "Employee Payroll": "payroll", "Leadership": "leadership",
-    "Simplex Solver": "simplex solver", "Infinity-X": "infinity-x"
+    "Simplex Solver": "simplex solver", "Infinity-X": "infinity-x", "Haroon Office": "haroon office", "Modern Calculator": "calculator"
   };
 
   /* ------------------------------------------------------------------
@@ -332,8 +348,8 @@
       '<div class="ai-head"><div class="ai-avatar">' + ICON_BOT + '</div>' +
       '<div><div class="ai-title">Abdullah\u2019s Assistant</div><div class="ai-sub">Online \u00b7 answers from this portfolio</div></div>' +
       '<button class="ai-close" aria-label="Close chat">\u2715</button></div>' +
-      '<div class="ai-msgs" aria-live="polite"></div>' +
-      '<div class="ai-chips"></div>' +
+      '<div class="ai-msgs" aria-live="polite" data-no-i18n></div>' +
+      '<div class="ai-chips" data-no-i18n></div>' +
       '<form class="ai-form"><input class="ai-input" type="text" placeholder="Ask about projects, skills\u2026" autocomplete="off" maxlength="200" aria-label="Your question">' +
       '<button class="ai-send" type="submit" aria-label="Send">' + ICON_SEND + '</button></form>' +
       '<div class="ai-foot">Automated assistant \u00b7 not a general AI</div>';
@@ -425,10 +441,19 @@
     document.addEventListener("keydown", function (e) { if (e.key === "Escape" && panel.classList.contains("open")) setOpen(false); });
     form.addEventListener("submit", function (e) { e.preventDefault(); ask(input.value); });
 
+    // phones: tuck the round button away while the page is scrolling so it never covers text
+    var hideT = null;
+    window.addEventListener("scroll", function () {
+      if (window.innerWidth > 768 || panel.classList.contains("open") || window.scrollY < 120) return;
+      launcher.classList.add("away");
+      clearTimeout(hideT);
+      hideT = setTimeout(function () { launcher.classList.remove("away"); }, 650);
+    }, { passive: true });
+
     var wasOpen = false, teased = false;
     try { wasOpen = sessionStorage.getItem(STORE + "Open") === "1"; teased = sessionStorage.getItem(STORE + "Teased") === "1"; } catch (e) {}
     if (wasOpen) { panel.classList.add("open"); launcher.classList.add("open"); launcher.setAttribute("aria-expanded", "true"); scrollDown(); }
-    else if (!teased) {
+    else if (!teased && window.innerWidth > 600) {
       setTimeout(function () {
         if (!panel.classList.contains("open")) {
           teaser.classList.add("show");

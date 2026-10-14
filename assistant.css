@@ -154,11 +154,11 @@
   #ai-launcher { right: 14px; bottom: 14px; width: 54px; height: 54px; }
   #ai-teaser { right: 14px; bottom: 80px; }
   .ai-panel { right: 10px; left: 10px; width: auto; max-width: none; bottom: 80px; height: min(74vh, 580px); max-height: calc(100vh - 100px); border-radius: 18px; }
-  #to-top { right: 17px !important; bottom: 80px !important; }
+  #to-top { right: 17px !important; bottom: 82px !important; width: 44px; height: 44px; }   /* sits just above the chat button */
 }
 
 /* lite mode (phones): no pulsing ring, no entrance transforms */
-@media (max-width: 768px), (hover: none) and (pointer: coarse) {
+@media (hover: none) and (pointer: coarse) {
   #ai-launcher::after { animation: none; display: none; }
   .ai-row { animation: none; }
   .ai-panel { transition: opacity .15s ease, visibility 0s linear .15s; transform: none; }
@@ -168,3 +168,6 @@
   #ai-launcher::after, .ai-typing i, .ai-row { animation: none !important; }
   .ai-panel, #ai-teaser { transition: none; }
 }
+
+/* phones: step aside while scrolling */
+#ai-launcher.away { transform: translateY(86px) scale(.85); opacity: 0; pointer-events: none; transition: transform .25s ease, opacity .2s ease; }
