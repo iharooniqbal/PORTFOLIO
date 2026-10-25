@@ -425,3 +425,17 @@ h2, .stat-card h3 { background-size: 200% auto; animation: gradFlow 8s linear in
   html[dir="rtl"] .experience .timeline .timeline-item:last-child { padding-bottom: 0; }
   html[dir="rtl"] .experience .timeline .timeline-icon { left: auto; right: 0; }
 }
+
+
+/* ---------- two profile photos that take turns ---------- */
+.hero-card .pic-layer { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; will-change: opacity, transform; }
+.hero-card .scan-line { z-index: 5; }
+.hero-card::before { z-index: 6; }
+.pic-dots { position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%); display: flex; gap: 7px; z-index: 7; }
+.pic-dots button {
+  width: 8px; height: 8px; padding: 0; border: 0; border-radius: 6px; cursor: pointer;
+  background: rgba(255, 255, 255, .6); box-shadow: 0 1px 4px rgba(0, 0, 0, .45);
+  transition: width .35s ease, background .35s ease;
+}
+.pic-dots button.on { width: 22px; background: var(--accent1); }
+@media (prefers-reduced-motion: reduce) { .pic-dots { display: none; } }

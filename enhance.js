@@ -92,6 +92,7 @@
         c = roles[0].length; typingSpan.textContent = roles[0];
         setTimeout(function () { del = true; tick(); }, 1800);
         function tick() {
+          pickRoles();
           var word = roles[r % roles.length];
           c += del ? -1 : 1;
           typingSpan.textContent = word.slice(0, c);
@@ -246,12 +247,16 @@
     var isUr = function () { return root.lang === "ur"; };
     if (h1) {
       // Arabic-script text must not be split letter-by-letter (it would break the joined letters)
-      document.addEventListener("portfolio:lang", function (e) {
-        if (e.detail === "ur" && h1.classList.contains("js-split")) {
+      var unsplit = function () {
+        if (root.lang === "ur" && h1.classList.contains("js-split")) {
           h1.textContent = h1.getAttribute("aria-label") || h1.textContent;
           h1.classList.remove("js-split"); h1.removeAttribute("aria-label");
+          if (window.PortfolioLang && window.PortfolioLang.refresh) window.PortfolioLang.refresh();
         }
-      });
+      };
+      document.addEventListener("portfolio:lang", unsplit);
+      // safety net: also react to the page language attribute itself changing
+      if ("MutationObserver" in window) new MutationObserver(unsplit).observe(root, { attributes: true, attributeFilter: ["lang"] });
     }
     if (h1 && !reduceMotion && !lite && !isUr()) {
       var txt = h1.textContent.trim();
@@ -312,6 +317,80 @@
         setTimeout(function () { sp.remove(); alive--; }, 800);
       }, { passive: true });
     }
+
+    /* ---------- profile photos: two pictures that take turns ---------- */
+    (function () {
+      var heroImg = $(".hero-card img"), aboutImg = $(".about-avatar");
+      if (reduceMotion || (!heroImg && !aboutImg)) return;
+      var PHOTO_B = "images/profilepic-alt.jpg";
+      var pre = new Image(); pre.src = PHOTO_B;               // load the second photo early
+      var cur = 0, busy = false, timer = null;
+      var dotSets = [];
+
+      function dots(host, pick) {
+        var box = document.createElement("div");
+        box.className = "pic-dots";
+        var btns = [0, 1].map(function (i) {
+          var b = document.createElement("button");
+          b.type = "button"; b.setAttribute("aria-label", "Show photo " + (i + 1));
+          b.addEventListener("click", function (ev) { ev.stopPropagation(); pick(i, true); });
+          box.appendChild(b); return b;
+        });
+        host.appendChild(box);
+        dotSets.push(btns);
+      }
+      function paintDots() { dotSets.forEach(function (bs) { bs.forEach(function (b, i) { b.classList.toggle("on", i === cur); }); }); }
+
+      /* home page: two stacked layers, the new one dissolves in on top of the old one */
+      var A = null, B = null;
+      if (heroImg) {
+        var card = heroImg.parentElement;
+        A = heroImg; B = heroImg.cloneNode(false);
+        B.src = PHOTO_B; B.alt = ""; B.setAttribute("aria-hidden", "true");
+        A.classList.add("pic-layer"); B.classList.add("pic-layer");
+        A.style.zIndex = 2; B.style.zIndex = 1; B.style.opacity = 0;
+        card.insertBefore(B, A.nextSibling);
+        dots(card, function (i, manual) { show(i, manual); });
+      }
+      function swapHero(to) {
+        var inEl = to === 1 ? B : A, outEl = to === 1 ? A : B;
+        inEl.style.transition = "none"; inEl.style.zIndex = 3; inEl.style.opacity = 0;
+        if (!lite) inEl.style.transform = "scale(1.08)";
+        void inEl.offsetWidth;
+        inEl.style.transition = lite ? "opacity .9s ease" : "opacity 1.1s ease, transform 1.8s cubic-bezier(.2,.7,.2,1)";
+        inEl.style.opacity = 1; if (!lite) inEl.style.transform = "scale(1)";
+        outEl.style.zIndex = 2;
+        setTimeout(function () { outEl.style.opacity = 0; outEl.style.zIndex = 1; if (!lite) outEl.style.transform = ""; }, 1250);
+      }
+
+      /* about page: the floating photo dissolves through to the other one */
+      var photoA = aboutImg ? aboutImg.getAttribute("src") : null;
+      if (aboutImg) {
+        var wrap = aboutImg.closest(".image-wrap") || aboutImg.parentElement;
+        dots(wrap, function (i, manual) { show(i, manual); });
+      }
+      function swapAbout(to) {
+        aboutImg.style.transition = "opacity .45s ease, filter .45s ease, transform .15s ease-out";
+        aboutImg.style.opacity = 0; if (!lite) aboutImg.style.filter = "blur(6px)";
+        setTimeout(function () {
+          aboutImg.src = to === 1 ? PHOTO_B : photoA;
+          requestAnimationFrame(function () { aboutImg.style.opacity = 1; aboutImg.style.filter = "none"; });
+        }, 460);
+      }
+
+      function show(to, manual) {
+        if (busy || to === cur) return;
+        busy = true; cur = to; paintDots();
+        if (A) swapHero(to);
+        if (aboutImg) swapAbout(to);
+        setTimeout(function () { busy = false; }, 1300);
+        if (manual) restart();
+      }
+      function restart() { clearInterval(timer); timer = setInterval(function () { if (!document.hidden) show(1 - cur, false); }, 5600); }
+
+      paintDots();
+      setTimeout(function () { if (!document.hidden) show(1, false); restart(); }, 4200);   // first change a few seconds after the page opens
+    })();
 
     /* ---------- gallery modal: animate each image swap ---------- */
     var modalImg = $("#galleryModalImg");

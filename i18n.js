@@ -139,6 +139,7 @@
 
   window.PortfolioLang = {
     get: function () { return active ? "ur" : "en"; },
+    refresh: function () { if (active) applyTo(document.body); },
     set: setLang,
     /* handy for finding text that still needs a translation */
     missing: function () {

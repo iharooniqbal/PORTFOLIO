@@ -516,3 +516,28 @@ html[dir="rtl"] .ai-msgs, html[dir="rtl"] .ai-chips { direction: ltr; text-align
 html[dir="rtl"] .ai-row.user { justify-content: flex-end; }
 /* lists keep bullets on the correct side */
 html[dir="rtl"] .exp-card ul, html[dir="rtl"] .about-content ul { padding-right: 20px; padding-left: 0; }
+
+/* safeguard: if the hero name is ever split into letters, keep each word in reading order */
+html[dir="rtl"] .home-content h1 .w { direction: ltr; unicode-bidi: isolate; }
+
+/* =====================================================================
+   Tidy-up: calmer desktop navbar + centred hero buttons (English & Urdu)
+   ===================================================================== */
+/* the three hero buttons are always centred under the text (the old fixed left margin broke right-to-left) */
+.home-content .home-btns { margin-left: 0; margin-right: 0; justify-content: center; }
+.home-content .cv-btn-wrapper { display: flex; justify-content: center; }
+
+@media (min-width: 769px) {
+  /* text-only links: the little icons made the bar feel crowded */
+  .navbar a i { display: none; }
+  .navbar a { padding: 8px 14px; font-weight: 500; color: var(--text-dim); }
+  .navbar a:hover { color: var(--text); background: transparent; }
+  /* theme / language switches: quiet icon buttons behind a thin divider */
+  .hdr-tools { margin-left: 0; margin-inline-start: 14px; padding-inline-start: 14px; gap: 4px;
+               border-inline-start: 1px solid rgba(255, 255, 255, .14); }
+  .hdr-btn { height: 32px; min-width: 32px; padding: 0 9px; background: transparent; border-color: transparent; }
+  .hdr-btn:hover { background: rgba(16, 217, 160, .14); border-color: transparent; transform: none; }
+  html[data-theme="light"] .hdr-tools { border-inline-start-color: rgba(14, 70, 45, .16); }
+  html[data-theme="light"] .hdr-btn { background: transparent; border-color: transparent; }
+  html[data-theme="light"] .hdr-btn:hover { background: rgba(7, 154, 112, .14); }
+}
