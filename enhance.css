@@ -372,26 +372,27 @@ h2, .stat-card h3 { background-size: 200% auto; animation: gradFlow 8s linear in
   * { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
   header, header.scrolled { background: rgba(7, 20, 15, .96) !important; }
 
-  /* glow orbs -> a richer but fully static gradient + faint dot grid (no blur, no animation) */
-  .aurora span { display: none !important; }
+  /* soft glows that drift slowly - no blur filter (that was the costly part), just gradients moved by the GPU */
+  .aurora span { display: block !important; filter: none !important; opacity: .55; }
+  .aurora span:nth-child(1) { width: 340px; height: 340px; left: -120px; top: -90px; animation-duration: 26s; }
+  .aurora span:nth-child(2) { width: 320px; height: 320px; right: -130px; top: 32%; animation-duration: 30s; }
+  .aurora span:nth-child(3) { width: 360px; height: 360px; left: 8%; bottom: -170px; animation-duration: 34s; }
   .aurora::after {
-    display: block !important; animation: none !important; transform: none !important;
+    display: block !important; transform: none; animation: gridDrift 46s linear infinite !important;
     -webkit-mask-image: none !important; mask-image: none !important;
-    background-image: radial-gradient(rgba(255, 255, 255, .07) 1px, transparent 1.2px);
+    background-image: radial-gradient(rgba(255, 255, 255, .08) 1px, transparent 1.2px);
     background-size: 30px 30px;
   }
   .aurora {
     background:
-      radial-gradient(420px 360px at 8% 6%,  rgba(245, 185, 66, .20), transparent 70%),
-      radial-gradient(460px 420px at 100% 32%, rgba(16, 217, 160, .20), transparent 70%),
-      radial-gradient(520px 460px at 0% 78%,  rgba(16, 217, 160, .14), transparent 70%),
-      radial-gradient(380px 320px at 92% 96%, rgba(245, 185, 66, .14), transparent 70%);
+      radial-gradient(420px 360px at 8% 6%,  rgba(245, 185, 66, .14), transparent 70%),
+      radial-gradient(460px 420px at 100% 32%, rgba(16, 217, 160, .14), transparent 70%);
   }
 
   /* everything that loops forever */
-  .stat-card, h2, .stat-card h3, .timeline-icon, .new-ribbon, footer::before,
+  .timeline-icon, .new-ribbon, footer::before, h2, .stat-card h3,
   #scroll-progress, .marquee-track, .project-card::before, .ring-card:hover .ring-icon,
-  .hero-card, .hero-card::before, .about-img, .scan-line, .typing-text span::after {
+  .hero-card::before, .about-img, .scan-line, .typing-text span::after {
     animation: none !important;
   }
   .typing-text span::after { animation: cursor .8s infinite !important; }   /* keep the blinking caret only */

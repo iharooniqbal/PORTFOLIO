@@ -23,18 +23,18 @@
     const ctx = cv.getContext("2d");
     const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
     let W = 0, H = 0, P = [];
-    const LINK = 100;
+    const LINK = 110;
     function size() {
       W = window.innerWidth; H = window.innerHeight;
       cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const n = Math.max(14, Math.min(20, Math.round(W * H / 20000)));
+      const n = Math.max(24, Math.min(34, Math.round(W * H / 12000)));
       P = [];
       for (let i = 0; i < n; i++) {
         P.push({
           x: Math.random() * W, y: Math.random() * H,
-          vx: (Math.random() - 0.5) * 0.35, vy: (Math.random() - 0.5) * 0.35,
-          r: 1.1 + Math.random() * 1.3, c: Math.random() < 0.3 ? "245,185,66" : "16,217,160"
+          vx: (Math.random() - 0.5) * 0.5, vy: (Math.random() - 0.5) * 0.5,
+          r: 1.2 + Math.random() * 1.6, c: Math.random() < 0.3 ? "245,185,66" : "16,217,160"
         });
       }
     }
@@ -43,27 +43,34 @@
 
     let last = 0, running = true;
     document.addEventListener("visibilitychange", function () { running = !document.hidden; if (running) requestAnimationFrame(loop); });
+    let sy = 0;
+    window.addEventListener("scroll", function () { sy = window.scrollY; }, { passive: true });
     function loop(ts) {
       if (!running) return;
       requestAnimationFrame(loop);
       if (ts - last < 33) return;            // ~30 fps is plenty for a background
       last = ts;
       ctx.clearRect(0, 0, W, H);
+      const off = sy * 0.12;
       for (let i = 0; i < P.length; i++) {
         const a = P[i];
         a.x += a.vx; a.y += a.vy;
         if (a.x < 0 || a.x > W) a.vx *= -1;
         if (a.y < 0 || a.y > H) a.vy *= -1;
+        a.dy = (((a.y - off) % H) + H) % H;  // drawn position (slides with scrolling)
+      }
+      for (let i = 0; i < P.length; i++) {
+        const a = P[i];
         for (let j = i + 1; j < P.length; j++) {
-          const b = P[j], dx = a.x - b.x, dy = a.y - b.y, d2 = dx * dx + dy * dy;
+          const b = P[j], dx = a.x - b.x, dy = a.dy - b.dy, d2 = dx * dx + dy * dy;
           if (d2 < LINK * LINK) {
-            ctx.strokeStyle = "rgba(16,217,160," + (0.10 * (1 - Math.sqrt(d2) / LINK)).toFixed(3) + ")";
+            ctx.strokeStyle = "rgba(16,217,160," + (0.17 * (1 - Math.sqrt(d2) / LINK)).toFixed(3) + ")";
             ctx.lineWidth = 1;
-            ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(a.x, a.dy); ctx.lineTo(b.x, b.dy); ctx.stroke();
           }
         }
-        ctx.fillStyle = "rgba(" + a.c + ",.55)";
-        ctx.beginPath(); ctx.arc(a.x, a.y, a.r, 0, 6.2832); ctx.fill();
+        ctx.fillStyle = "rgba(" + a.c + ",.78)";
+        ctx.beginPath(); ctx.arc(a.x, a.dy, a.r, 0, 6.2832); ctx.fill();
       }
     }
     requestAnimationFrame(loop);
